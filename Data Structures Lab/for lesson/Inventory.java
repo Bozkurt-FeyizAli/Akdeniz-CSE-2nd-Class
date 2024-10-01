@@ -5,17 +5,19 @@ import java.util.List;
 public class Inventory {
     
     List<Guitar> guitars;
+    List<Guitar> matchingGuitars;
     
 
     public Inventory(){
         guitars= new LinkedList<>();
+        matchingGuitars=  new LinkedList<>();;
     }
 
     public void addGuitar(String serialNumber, double price,
         Builder builder, String model,
         Type type, Wood backWood, Wood topWood) {
-        Guitar guitar=new Guitar(serialNumber, price, builder,
-        model, type, backWood, topWood);
+        Guitar guitar=new Guitar(serialNumber, price, new GuitarSpec(builder,
+        model, type, 5, backWood, topWood));
         guitars.add(guitar);
     }
 
@@ -29,34 +31,19 @@ public class Inventory {
         return null;
     }
 
-    // public Guitar search(Guitar searchGuitar) {
-    //  for (Iterator<Guitar> i = guitars.iterator(); i.hasNext(); ) {
-    //  Guitar guitar = (Guitar)i.next();
-    //  // Ignore serial number and price since they're unique
-    //  if (searchGuitar.getBuilder() != guitar.getBuilder()) continue;
-    //  String model = searchGuitar.getModel().toLowerCase();
-    //  if ((model != null) && (!model.equals("")) && (!model.equals(guitar.getModel().toLowerCase()))) 
-    // continue;
-    //  if (searchGuitar.getType() != guitar.getType()) continue;
-    //  if (searchGuitar.getBackWood() != guitar.getBackWood()) continue;
-    //  if (searchGuitar.getTopWood() != guitar.getTopWood()) continue;
-    //  return guitar;
-    //  }
-    //  return null;
-    // }
+    
 
-    public Guitar search(Guitar searchGuitar) {
-        for(Iterator<Guitar> i =guitars.iterator(); i.hasNext(); ) {
-        Guitar guitar=(Guitar)i.next();
-        // Ignoreserialnumberandpricesince theyareunique
-        if(searchGuitar.getBuilder()!=guitar.getBuilder())continue;
-        if(searchGuitar.getModel()!=guitar.getModel())continue;
-        if(searchGuitar.getType()!=guitar.getType())continue;
-        if(searchGuitar.getBackWood()!=guitar.getBackWood()) continue;
-        if (searchGuitar.getTopWood() != guitar.getTopWood()) continue;
-        return guitar;
-        }
-        return null;
-        }
+    
+        public List search(GuitarSpec searchSpec) {
+            matchingGuitars= new LinkedList<>();
+            for(Iterator<Guitar> i =guitars.iterator(); i.hasNext(); ) {
+            Guitar guitar=(Guitar)i.next();
+            // Ignoreserialnumberandpricesince theyareunique
+            GuitarSpec guitarSpec=guitar.getSpec();
+            if(guitar.getSpec().matches(searchSpec))
+                matchingGuitars.add(guitar);
+            }
+            return matchingGuitars;
+            }
 
 }
