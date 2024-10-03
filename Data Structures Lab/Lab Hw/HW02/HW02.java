@@ -104,10 +104,12 @@ class Node<T> implements INode<T> {
 class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
     private Node<T> tail;
     private int size;
+    private Node<T> current;
 
     public DoublyCircularLinkedList(){  // denendi
         tail=null;
         size=0;
+        current=null;
     }
 
     @Override
@@ -117,12 +119,14 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             tail=newNode;
             tail.setNext(newNode);
             tail.setPrev(newNode);
+            current=tail; //sonradan eklenedi
         }
         else{
             newNode.setNext(tail.getNext());
             newNode.setPrev(tail);
             tail.getNext().setPrev(newNode);
             tail.setNext(newNode);
+            current=newNode;  //sonradan eklenedi
         }
         size++;
     }
@@ -134,6 +138,7 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             tail=newNode;
             tail.setNext(newNode);
             tail.setPrev(newNode);
+            current=tail; //sonradan eklenedi
         }
         else{
             newNode.setNext(tail.getNext());
@@ -156,13 +161,16 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             if(size==1){
                 tail.setNext(tail);
                 tail.setPrev(tail);
+                current=tail; //sonradan eklenedi
             }
             else if(size==0){
                 tail=null;
+                current=null; //sonradan eklenedi
             }
             else{
                 tail.getNext().setPrev(tail);
                 tail.setNext(tail.getNext().getNext());
+                current=tail.getNext(); //sonradan eklenedi
             }  
             return h.getData();
         }
@@ -186,6 +194,7 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             }
             else if(size==0){
                 tail=null;
+                current=null; //sonradan eklenedi
             }
             else{
                 tail.getPrev().setNext(tail.getNext());
@@ -264,20 +273,32 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
 
     @Override
     public T next() throws NoSuchElementException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'next'");
+        if(isEmpty())
+            throw new NoSuchElementException();
+        if(current==null)
+            current=tail.getNext();
+        else
+            current=current.getNext(); 
+        return current.getData();
     }
 
     @Override
     public T previous() throws NoSuchElementException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'previous'");
+        if(isEmpty())
+            throw new NoSuchElementException();
+        if(current==null)
+            current=tail;
+        else
+        current=current.getPrev(); 
+        return current.getData();
     }
 
     @Override
     public T getCurrent() throws NoSuchElementException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCurrent'");
+       if(isEmpty()){
+        throw new NoSuchElementException();
+       }
+       return current.getData();
     }
 
     @Override
