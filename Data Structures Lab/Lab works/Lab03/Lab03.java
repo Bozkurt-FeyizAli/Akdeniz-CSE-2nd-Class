@@ -16,7 +16,15 @@ public class Lab03 {
     public static void main(String[] args) {
         List<Integer> array_list = new ArrayList<>();
         List<Integer> linked_list = new LinkedList<>();
-        int[] n = {1000, 10000, 100000, 1000000, 1000000000};
+        int[] n = {1000, 10000, 100000};
+
+        int[] test={12,23,45,67,0};
+        mergeSort(test, 0, 4);
+        for (int i : test) {
+            System.out.println(i);
+        }
+
+        
         for (int i = 0; i < n.length; i++) {
             int[] array = generateRandomArray(n[i]);
             //int[] array = generateSortedArray(n[i]);
@@ -28,6 +36,33 @@ public class Lab03 {
             
             double timeTaken = measureExecutionTime(algorithm);
             System.out.printf("accessing element took: %.4f seconds; n: %d\n", timeTaken, n[i]);
+            
+
+            Runnable algorithm1 = () -> findMax(array.clone());
+            //Runnable algorithm = () -> listInsertion(currentN, linked_list);
+            
+            double timeTaken1 = measureExecutionTime(algorithm1);
+            System.out.printf("findMax took: %.4f seconds; n: %d\n", timeTaken1, n[i]);
+
+            Runnable algorithm2 = () -> bubbleSort(array.clone());
+            //Runnable algorithm = () -> listInsertion(currentN, linked_list);
+            
+            double timeTaken2 = measureExecutionTime(algorithm2);
+            System.out.printf("bubble sort took: %.4f seconds; n: %d\n", timeTaken2, n[i]);
+
+            int[] arrayTest=array.clone();
+            Runnable algorithm3 = () -> mergeSort(arrayTest, 0, arrayTest.length-1);
+            //Runnable algorithm = () -> listInsertion(currentN, linked_list);
+            
+            double timeTaken3 = measureExecutionTime(algorithm3);
+            System.out.printf("mergesort took: %.4f seconds; n: %d\n", timeTaken3, n[i]);
+
+            int[] array2 = generateSortedArray(n[i]);
+            Runnable algorithm4 = () -> binarySearch(array2.clone(), 65451465);
+            //Runnable algorithm = () -> listInsertion(currentN, linked_list);
+            
+            double timeTaken4 = measureExecutionTime(algorithm4);
+            System.out.printf("binarySearch took: %.4f seconds; n: %d\n", timeTaken4, n[i]);
             array_list.clear();
             linked_list.clear();
         }
@@ -146,8 +181,9 @@ function merge(ARRAY, LEFT, MID, RIGHT):
  */
 
  public static void merge(int[] array, int left, int mid, int right){
-    int[] l=Arrays.copyOfRange(array, left, mid);
-    int[] r=Arrays.copyOfRange(array, mid+1, right);
+    int[] l=Arrays.copyOfRange(array, left, mid+1);  // i forget add 1 to last index that reason a big problem
+    int[] r=Arrays.copyOfRange(array, mid+1, right+1);
+
     int i=0, j=0, k=left;
     while(i<l.length&&j<r.length){
         if(l[i]<=r[j]){
@@ -160,7 +196,22 @@ function merge(ARRAY, LEFT, MID, RIGHT):
         }
         k++;
     }
+    // copyArraytoArray(l, array, i, k);
+    // copyArraytoArray(r, array, j, k);
+    while (i < l.length) {
+        array[k++] = l[i++];
+    }
+    while (j < r.length) {
+        array[k++] = r[j++];
+    }
+
     // copy_remaining_elements(l, array, i, k);
+ }
+
+ public static void copyArraytoArray(int[] arrayCopy, int[] arrayBase, int i, int k){
+    for (int j = i; j<k; j++) {
+        arrayBase[j]=arrayCopy[j];
+    }
  }
 
  public static void mergeSort(int[] array, int left, int right){
@@ -169,9 +220,20 @@ function merge(ARRAY, LEFT, MID, RIGHT):
         int mid=(left + right) / 2;
         mergeSort(array, left, mid);
         mergeSort(array, mid + 1, right);
-        merge(array, left, right, right);
+        merge(array, left, mid, right);
     }
  }
+
+ 
+
+ /**
+  * function mergeSort(ARRAY, LEFT, RIGHT):
+    if LEFT < RIGHT:
+        MID ← (LEFT + RIGHT) / 2
+        mergeSort(ARRAY, LEFT, MID)
+        mergeSort(ARRAY, MID + 1, RIGHT)
+        merge(ARRAY, LEFT, MID, RIGHT)
+  */
 
  /*
 function binarySearch(ARRAY, TARGET):
