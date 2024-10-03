@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 /*
@@ -15,7 +16,7 @@ public class Lab03 {
     public static void main(String[] args) {
         List<Integer> array_list = new ArrayList<>();
         List<Integer> linked_list = new LinkedList<>();
-        int[] n = {1000, 10000, 100000};
+        int[] n = {1000, 10000, 100000, 1000000, 1000000000};
         for (int i = 0; i < n.length; i++) {
             int[] array = generateRandomArray(n[i]);
             //int[] array = generateSortedArray(n[i]);
@@ -71,6 +72,7 @@ function accessElement(ARRAY, INDEX):
  */
 
         public static int accessElement(int[] array, int index){
+            System.out.println("O(1)");
             return array[index];
         }
 
@@ -83,12 +85,13 @@ function findMax(ARRAY):
     return MAX
 */
         public static int findMax(int[] array){
-            int first=array[0];
+            System.out.println("O(n)");
+            int max=array[0];
             for (int i = 1; i < array.length; i++) {
-                if(array[i]>first)
-                    first=array[i];
+                if(array[i]>max)
+                    max=array[i];
             }
-            return first;
+            return max;
         }
 /*
 
@@ -101,6 +104,7 @@ function bubbleSort(ARRAY):
                 swap(ARRAY[j], ARRAY[j + 1])
  */
         public static void bubbleSort(int[] array){
+            System.out.println("O(n**2)");
             int n=array.length;
             for (int i = 0; i < n-1; i++) {
                 for (int j = 0; j < n-i-2; j++) {
@@ -141,6 +145,34 @@ function merge(ARRAY, LEFT, MID, RIGHT):
     copy_remaining_elements(R, ARRAY, j, k)
  */
 
+ public static void merge(int[] array, int left, int mid, int right){
+    int[] l=Arrays.copyOfRange(array, left, mid);
+    int[] r=Arrays.copyOfRange(array, mid+1, right);
+    int i=0, j=0, k=left;
+    while(i<l.length&&j<r.length){
+        if(l[i]<=r[j]){
+            array[k]=l[i];
+            i++;
+        }
+        else{
+            array[k]=r[j];
+            j++;
+        }
+        k++;
+    }
+    // copy_remaining_elements(l, array, i, k);
+ }
+
+ public static void mergeSort(int[] array, int left, int right){
+    System.out.println("O(nlogn)");
+    if(left<right){
+        int mid=(left + right) / 2;
+        mergeSort(array, left, mid);
+        mergeSort(array, mid + 1, right);
+        merge(array, left, right, right);
+    }
+ }
+
  /*
 function binarySearch(ARRAY, TARGET):
     LOW ← 0
@@ -158,6 +190,7 @@ function binarySearch(ARRAY, TARGET):
   */
 
   public static int binarySearch(int[] array, int key){
+    System.out.println("O(logn)");
     int low=0;
     int high=array.length-1;
     while(low<=high){
