@@ -212,6 +212,7 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             throw new IndexOutOfBoundsException();
         }
         else{
+            if(isEmpty()){return null;}
             Node<T> h= tail.getNext();
             for (int i = 0; i < index; i++) {
                 h=h.getNext();
@@ -251,18 +252,26 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             if(size==1){
                 this.tail=null;
                 current=null;
+                size--;
             }
             else{
                 Node<T> h= tail.getNext();
-                while(!h.equals(tail.getNext())){
-                    if(data.equals(h)){
-                        Node<T> now=h.getNext();
-                        now.setPrev(h.getPrev());
-                        h.getPrev().setNext(now);
-                        return true;
-                    }   
-                    h=h.getNext();    
+                while(h!=data){
+                    h=h.getNext();
                 }
+                h.getNext().setPrev(h.getPrev());
+                h.getPrev().setNext(h.getNext());
+                // while(!h.equals(tail.getNext())){
+                //     if(data.equals(h)){
+                //         Node<T> now=h.getNext();
+                //         now.setPrev(h.getPrev());
+                //         h.getPrev().setNext(now);
+                //         return true;
+                //     }   
+                //     h=h.getNext();    
+                // }
+                size--;
+                return true;
             }
         }
         return false;
