@@ -138,7 +138,7 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             tail=newNode;
             tail.setNext(newNode);
             tail.setPrev(newNode);
-            current=tail; //sonradan eklenedi
+            current=tail; //sonradan eklenedi 
         }
         else{
             newNode.setNext(tail.getNext());
@@ -226,7 +226,8 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             throw new NoSuchElementException();
         }
         else{
-            return removeFirst();
+            current=tail.getNext();
+            return current.getData();
         }
     }
 
@@ -236,7 +237,8 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             throw new NoSuchElementException();
         }
         else{
-            return removeLast();
+            current=tail;
+            return current.getData();
         }
     }
 
@@ -246,16 +248,21 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             return false;
         }
         else{
-            Node<T> h= tail.getNext();
-            while(!h.equals(tail.getNext())){
-                if(data.equals(h)){
-                    Node<T> now=h.getNext();
-                    now.setPrev(h.getPrev());
-                    h.getPrev().setNext(now);
-                    return true;
+            if(size==1){
+                this.tail=null;
+                current=null;
+            }
+            else{
+                Node<T> h= tail.getNext();
+                while(!h.equals(tail.getNext())){
+                    if(data.equals(h)){
+                        Node<T> now=h.getNext();
+                        now.setPrev(h.getPrev());
+                        h.getPrev().setNext(now);
+                        return true;
+                    }   
+                    h=h.getNext();    
                 }
-                    
-                h=h.getNext();    
             }
         }
         return false;
@@ -298,7 +305,11 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
        if(isEmpty()){
         throw new NoSuchElementException();
        }
-       return current.getData();
+       if(current==null){return tail.getNext().getData();}
+       else{
+        return current.getData();
+       }
+
     }
 
     @Override
