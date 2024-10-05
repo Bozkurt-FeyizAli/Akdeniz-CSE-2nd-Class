@@ -7,11 +7,24 @@ public class HW02 {
         DoublyCircularLinkedList<Integer> dcll= new DoublyCircularLinkedList<>(); 
         dcll.addFirst(20);
         dcll.addFirst(10);
-        dcll.addFirst(5);
+        dcll.addFirst(11);
         dcll.addLast(21);
+        System.out.println(dcll.toString());
         dcll.removeLast();
         System.out.println(dcll.toString());
-        System.out.println(dcll.getHead().toString());
+        // System.out.println(dcll.getHead().toString());
+        DoublyCircularLinkedList<Integer> pyramidRight= new DoublyCircularLinkedList<>();
+        DoublyCircularLinkedList<Integer> pyramidLeft= new DoublyCircularLinkedList<>();
+        for (int i = 1; i < 10; i++) {
+            pyramidRight.addFirst(i);
+            pyramidLeft.addLast(i);
+            String s="";
+            for (int j = 0; j <10- i; j++) {
+                s+="  ";
+            }
+            System.out.print(s+pyramidLeft.toString());
+            System.out.println(pyramidRight.toString());
+        }
                 
     }
 }
@@ -119,7 +132,7 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             tail=newNode;
             tail.setNext(newNode);
             tail.setPrev(newNode);
-            current=tail; //sonradan eklenedi
+            current=newNode; //sonradan eklenedi
         }
         else{
             newNode.setNext(tail.getNext());
@@ -135,10 +148,12 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
     public void addLast(T data) {  // denendi
         Node<T> newNode=new Node<T>(data, null, null);
         if(isEmpty()){
-            tail=newNode;
-            tail.setNext(newNode);
-            tail.setPrev(newNode);
-            current=tail; //sonradan eklenedi 
+            // tail=newNode;
+            // tail.setNext(newNode);
+            // tail.setPrev(newNode);
+            // current=tail; //sonradan eklenedi  yukarının aynısı
+            addFirst(data);
+            return;
         }
         else{
             newNode.setNext(tail.getNext());
@@ -157,21 +172,21 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
         }
         else{
             Node<T> h=tail.getNext();
-            size--;
-            if(size==1){
-                tail.setNext(tail);
-                tail.setPrev(tail);
-                current=tail; //sonradan eklenedi
+            if(current.equals(h)){
+                if(size==1){current=null;}
+                else current=current.getNext();
             }
-            else if(size==0){
+            size--;
+            if(size==0){
                 tail=null;
                 current=null; //sonradan eklenedi
             }
             else{
-                tail.getNext().setPrev(tail);
-                tail.setNext(tail.getNext().getNext());
-                current=tail.getNext(); //sonradan eklenedi
+                tail.setNext(h.getNext());
+                h.getNext().setPrev(tail);
+                //current=tail.getNext(); //sonradan eklenedi emin değilim
             }  
+            
             return h.getData();
         }
     }
@@ -208,7 +223,7 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
 
     @Override
     public T get(int index) throws IndexOutOfBoundsException {
-        if(index>size||index<0){
+        if(index>=size||index<0){
             throw new IndexOutOfBoundsException();
         }
         else{
@@ -248,32 +263,26 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
         if(isEmpty()){
             return false;
         }
+        Node<T> h= tail.getNext();
+        if(data.equals(tail)){
+            removeLast();
+        }
+        else if(data.equals(tail.getNext())){
+            removeFirst();
+        }
         else{
-            if(size==1){
-                this.tail=null;
-                current=null;
-                size--;
+            while(!h.equals(data)){
+                h=h.getNext();
+                if(h.equals(tail)){break;}
             }
-            else{
-                Node<T> h= tail.getNext();
-                while(h!=data){
-                    h=h.getNext();
-                }
-                h.getNext().setPrev(h.getPrev());
+            if(h.equals(data)){
                 h.getPrev().setNext(h.getNext());
-                // while(!h.equals(tail.getNext())){
-                //     if(data.equals(h)){
-                //         Node<T> now=h.getNext();
-                //         now.setPrev(h.getPrev());
-                //         h.getPrev().setNext(now);
-                //         return true;
-                //     }   
-                //     h=h.getNext();    
-                // }
+                h.getNext().setPrev(h.getPrev());
                 size--;
                 return true;
             }
-        }
+        }               
+
         return false;
     }
 
@@ -305,7 +314,7 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
         if(current==null)
             current=tail;
         else
-        current=current.getPrev(); 
+            current=current.getPrev(); 
         return current.getData();
     }
 
@@ -316,7 +325,7 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
        }
        if(current==null){return tail.getNext().getData();}
        else{
-        return current.getData();
+            return current.getData();
        }
 
     }
@@ -334,12 +343,16 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
         StringBuilder sb= new StringBuilder();
         if(isEmpty()){return "boşluk";}
         Node<T> h=tail.getNext();
-        sb.append(h.toString()+" ");
-        while(!h.equals(tail)){
+        do{
+            sb.append(h.toString()).append(" ");
             h=h.getNext();
-            sb.append(h.toString()+" ");
-        }
+        }while(!h.equals(tail.getNext()));
         return sb.toString();
     }
  
 }
+
+/*
+ * Teacher while i was testing my code i found that if there is one music in list and if we remove it while it palys, it still plays. but lis is empty. 
+ * I think it is about music player class behavior, is that a bug
+ */
