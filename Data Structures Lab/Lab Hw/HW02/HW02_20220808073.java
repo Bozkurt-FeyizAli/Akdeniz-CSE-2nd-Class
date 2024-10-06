@@ -79,7 +79,7 @@ public class HW02 {
             pyramidRight.addFirst(i);
             pyramidLeft.addLast(i);
             String s="";
-            for (int j = 0; j <10- i; j++) {
+            for (int j = 0; j <10- i-1; j++) {
                 s+="  ";
             }
             System.out.print(s+pyramidLeft.toString());
