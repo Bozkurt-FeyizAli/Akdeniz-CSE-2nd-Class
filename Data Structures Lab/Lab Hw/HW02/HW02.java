@@ -3,8 +3,68 @@ import java.util.NoSuchElementException;
 public class HW02 {
     public static void main(String[] args) {
 
-        MusicPlayer mp = new MusicPlayer("./Musics");
+        // MusicPlayer mp = new MusicPlayer("./Musics");
         DoublyCircularLinkedList<Integer> dcll= new DoublyCircularLinkedList<>(); 
+
+        System.out.println(false==dcll.remove(0));
+
+        dcll.addLast(1);
+        dcll.addLast(2);
+        dcll.addLast(3);
+    
+        System.out.println(true==dcll.remove(2));
+        System.out.println(2==dcll.size());
+        System.out.println(1==dcll.getHead().getData());
+        System.out.println(3==dcll.getHead().getNext().getData());
+        System.out.println(1==dcll.getHead().getNext().getNext().getData());
+        System.out.println(3==dcll.getHead().getPrev().getData());
+        System.out.println(1==dcll.getHead().getPrev().getPrev().getData());
+    
+        System.out.println(true==dcll.remove(3));
+        System.out.println(1==dcll.size());
+        System.out.println(1==dcll.getHead().getData());
+        System.out.println(1==dcll.getHead().getNext().getData());
+        System.out.println(1==dcll.getHead().getPrev().getData());
+    
+        System.out.println(false==dcll.remove(3));
+        System.out.println(true==dcll.remove(1));
+        System.out.println(0==dcll.size());
+    
+        DoublyCircularLinkedList<String> ll = new DoublyCircularLinkedList<>();
+        ll.addLast("one");
+        ll.addLast("two");
+        ll.addLast("three");
+        ll.addLast("four");
+        ll.addLast("five");
+        ll.addLast("six");
+        ll.addLast("seven");
+    
+        System.out.println(false==ll.remove("eight"));
+        System.out.println(7==ll.size());
+    
+        System.out.println(true==ll.remove("one"));
+        System.out.println(6==ll.size());
+        System.out.println("two"==ll.getHead().getData());
+        System.out.println("seven"==ll.getHead().getPrev().getData());
+        System.out.println(true==ll.remove("seven"));
+        System.out.println(5==ll.size());
+        System.out.println("two"==ll.getHead().getData());
+        System.out.println("six"==ll.getHead().getPrev().getData());
+    
+        System.out.println("three"==ll.getHead().getNext().getData());
+        System.out.println("four"==ll.getHead().getNext().getNext().getData());
+        System.out.println("five"==ll.getHead().getNext().getNext().getNext().getData());
+        System.out.println("six"==ll.getHead().getNext().getNext().getNext().getNext().getData());
+        System.out.println("two"==ll.getHead().getNext().getNext().getNext().getNext().getNext().getData());
+    
+        System.out.println(true==ll.remove("three"));
+        System.out.println(4==ll.size());
+        System.out.println("two"==ll.getHead().getData());
+        System.out.println("four"==ll.getHead().getNext().getData());
+        System.out.println("six"==ll.getHead().getPrev().getData());
+        System.out.println("five"==ll.getHead().getPrev().getPrev().getData());
+        System.out.println("four"==ll.getHead().getPrev().getPrev().getPrev().getData());
+        System.out.println("two"==ll.getHead().getPrev().getPrev().getPrev().getPrev().getData());
         dcll.addFirst(20);
         dcll.addFirst(10);
         dcll.addFirst(11);
@@ -132,14 +192,14 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             tail=newNode;
             tail.setNext(newNode);
             tail.setPrev(newNode);
-            current=newNode; //sonradan eklenedi
+            // current=newNode; //sonradan eklenedi
         }
         else{
             newNode.setNext(tail.getNext());
             newNode.setPrev(tail);
             tail.getNext().setPrev(newNode);
             tail.setNext(newNode);
-            current=newNode;  //sonradan eklenedi
+            // current=newNode;  //sonradan eklenedi
         }
         size++;
     }
@@ -172,10 +232,11 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
         }
         else{
             Node<T> h=tail.getNext();
-            if(current.equals(h)){
-                if(size==1){current=null;}
-                else current=current.getNext();
-            }
+            if(current!=null)
+                if(current.equals(h)){
+                    if(size==1){current=null;}
+                    else current=current.getNext();
+                }
             size--;
             if(size==0){
                 tail=null;
@@ -206,6 +267,11 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
                 tail.getPrev().setNext(tail.getPrev());
                 tail.getNext().setPrev(tail.getNext());
                 tail=tail.getPrev();
+                if(current!=null)
+                    if(current.equals(tail)){
+                        current=current.getPrev();
+                    }
+                
             }
             else if(size==0){
                 tail=null;
@@ -214,9 +280,12 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             else{
                 tail.getPrev().setNext(tail.getNext());
                 tail.getNext().setPrev(tail.getPrev());
+                if(current!=null)
+                    if(current.equals(tail)){
+                        current=current.getPrev();
+                    }
                 tail=tail.getPrev();
             }
-            
             return t.getData();
         }
     }
@@ -264,25 +333,28 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
             return false;
         }
         Node<T> h= tail.getNext();
-        if(data.equals(tail)){
+        if(data.equals(tail.getData())){
             removeLast();
+            return true;
         }
-        else if(data.equals(tail.getNext())){
+        else if(data.equals(tail.getNext().getData())){
             removeFirst();
+            return true;
         }
         else{
-            while(!h.equals(data)){
+            while(true){
                 h=h.getNext();
-                if(h.equals(tail)){break;}
-            }
-            if(h.equals(data)){
-                h.getPrev().setNext(h.getNext());
-                h.getNext().setPrev(h.getPrev());
-                size--;
-                return true;
+                if(h.getData().equals(data)){h.getPrev().setNext(h.getNext());
+                    h.getNext().setPrev(h.getPrev());
+                    size--;
+                    if(current!=null)
+                        if(current.getData().equals(data)){
+                        current=current.getNext();
+                        }
+                    return true;}
+                    if(h.equals(tail)){break;}
             }
         }               
-
         return false;
     }
 
@@ -327,7 +399,6 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
        else{
             return current.getData();
        }
-
     }
 
     @Override
