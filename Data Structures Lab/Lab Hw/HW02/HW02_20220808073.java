@@ -1,9 +1,9 @@
 import java.util.NoSuchElementException;
 
-public class HW02 {
+public class HW02_20220808073 {
     public static void main(String[] args) {
 
-        // MusicPlayer mp = new MusicPlayer("./Musics");
+        MusicPlayer mp = new MusicPlayer("./Musics");
         DoublyCircularLinkedList<Integer> dcll= new DoublyCircularLinkedList<>(); 
 
         System.out.println(false==dcll.remove(0));
@@ -72,9 +72,10 @@ public class HW02 {
         System.out.println(dcll.toString());
         dcll.removeLast();
         System.out.println(dcll.toString());
-        // System.out.println(dcll.getHead().toString());
+        System.out.println(dcll.getHead().toString());
         DoublyCircularLinkedList<Integer> pyramidRight= new DoublyCircularLinkedList<>();
         DoublyCircularLinkedList<Integer> pyramidLeft= new DoublyCircularLinkedList<>();
+        String piramit="";
         for (int i = 1; i < 10; i++) {
             pyramidRight.addFirst(i);
             pyramidLeft.addLast(i);
@@ -82,8 +83,15 @@ public class HW02 {
             for (int j = 0; j <10- i-1; j++) {
                 s+="  ";
             }
-            System.out.print(s+pyramidLeft.toString());
-            System.out.println(pyramidRight.toString());
+            piramit+=s+pyramidLeft.toString();
+            piramit+=pyramidRight.toString()+"\n";
+        }
+        String[] pi=piramit.split("\n");
+        for (int i = 0; i < pi.length; i++) {
+            pi[i]=pi[i].substring(0,16)+pi[i].substring(18, pi[i].length());
+        }
+        for (String string : pi) {
+            System.out.println(string);
         }
                 
     }
@@ -232,17 +240,16 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
         }
         else{
             Node<T> h=tail.getNext();
-            if(current!=null)
-                if(current.equals(h)){
-                    if(size==1){current=null;}
-                    else current=current.getNext();
-                }
             size--;
             if(size==0){
                 tail=null;
                 current=null; //sonradan eklenedi
             }
             else{
+                if(current!=null)
+                    if(h.equals(current)){
+                    next();
+                    }
                 tail.setNext(h.getNext());
                 h.getNext().setPrev(tail);
                 //current=tail.getNext(); //sonradan eklenedi emin değilim
@@ -266,11 +273,11 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
                 // tail.getNext().setPrev(tail.getPrev());
                 tail.getPrev().setNext(tail.getPrev());
                 tail.getNext().setPrev(tail.getNext());
-                tail=tail.getPrev();
                 if(current!=null)
-                    if(current.equals(tail)){
-                        current=current.getPrev();
+                    if(current.equals(t)){
+                        next();
                     }
+                tail=tail.getPrev();
                 
             }
             else if(size==0){
@@ -281,8 +288,8 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
                 tail.getPrev().setNext(tail.getNext());
                 tail.getNext().setPrev(tail.getPrev());
                 if(current!=null)
-                    if(current.equals(tail)){
-                        current=current.getPrev();
+                    if(current.equals(t)){
+                        next();
                     }
                 tail=tail.getPrev();
             }
@@ -344,12 +351,13 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
         else{
             while(true){
                 h=h.getNext();
-                if(h.getData().equals(data)){h.getPrev().setNext(h.getNext());
+                if(h.getData().equals(data)){
+                    h.getPrev().setNext(h.getNext());
                     h.getNext().setPrev(h.getPrev());
                     size--;
                     if(current!=null)
-                        if(current.getData().equals(data)){
-                        current=current.getNext();
+                        if(h.equals(current)){
+                            next();
                         }
                     return true;}
                     if(h.equals(tail)){break;}
@@ -395,7 +403,9 @@ class DoublyCircularLinkedList<T> implements IDoublyCircularLinkedList<T> {
        if(isEmpty()){
         throw new NoSuchElementException();
        }
-       if(current==null){return tail.getNext().getData();}
+       if(current==null){
+            current=tail.getNext();
+            return current.getData();}
        else{
             return current.getData();
        }
