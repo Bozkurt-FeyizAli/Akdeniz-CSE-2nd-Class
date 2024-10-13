@@ -1,6 +1,6 @@
 public class PEuler{
     public static void main(String[] args) {
-        
+        System.out.println(isDecimal(1));
 
     }
 

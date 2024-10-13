@@ -14,8 +14,8 @@ public class Lab04 {
         // System.out.println(s.toString());
         // s.reverse(s.head );
         // System.out.println(s);
-        generatePermutations("abc", "");
-
+        // generatePermutations("abc", "");
+        // System.out.println(factorial(32));
         
     }
 
