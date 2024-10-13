@@ -1,15 +1,6 @@
 public class PEuler{
     public static void main(String[] args) {
-        int[] s = new int[36];
-       s[0] = 1; // İlk elemanı 1 olarak ayarla
-        s[1] = 1; // İkinci elemanı 1 olarak ayarla
-        Question2( 31, s);
-        long sum=0;
-        for (int i : s) {
-            // if(i<4000000&&i>0)
-            sum+=i;
-        }
-        System.out.println(sum);
+        System.out.println(LargestPrimeFactor(600851475143L));
     }
 
 
@@ -34,5 +25,28 @@ public class PEuler{
                 sequence[n]=Question2(n-1, sequence)+Question2(n-2, sequence);
             return sequence[n];
         }
+    }
+
+    public static int LargestPrimeFactor(Long n){
+        int result=0;
+        double d=Math.sqrt(n);
+        for (int i = 1; i < d; i++) {
+            if(n%i==0&&isPrime(i))
+                result=i;
+        }
+        return result;
+    }
+
+    public static boolean isPrime(long n){
+        if(n<2)
+            return false;
+        if(n<4)
+            return true;
+        double d=Math.sqrt(n);
+        for (int i = 2; i < d; i++) {
+            if((n%i==0))
+            return false;
+        }
+        return true;
     }
 }
