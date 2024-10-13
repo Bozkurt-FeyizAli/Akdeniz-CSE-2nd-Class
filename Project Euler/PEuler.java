@@ -1,6 +1,6 @@
 public class PEuler{
     public static void main(String[] args) {
-        System.out.println(smallestMultiple(1, 20));
+        System.out.println(Question6(100));
     }
 
 
@@ -85,5 +85,14 @@ public class PEuler{
                 continue;
             return i;
         }
+    }
+
+    public static long Question6(int n){
+        int sum=(n*(n+1))/2;
+        int sumSquare=0;
+        for (int i = 0; i <= n; i++) {
+            sumSquare+=Math.pow(i, 2);
+        }
+        return sum*sum-sumSquare;
     }
 }
