@@ -1,10 +1,6 @@
 public class PEuler{
     public static void main(String[] args) {
-        int[] s= specialPythagoreanTriplet(1000);
-        for (int i : s) {
-            System.out.println(i);
-        }
-        System.out.println(200*375*425);
+        System.out.println(summationofPrimes(2000000));
     }
 
 
@@ -175,4 +171,15 @@ public class PEuler{
             return false;
         return true;
     }
+
+    public static long summationofPrimes(int n){
+        long result=0;
+        for (int i = 0; i < n; i++) {
+            if(isPrime(i))
+                result+=i; 
+        }
+        return result;
+    }
+
+
 }
