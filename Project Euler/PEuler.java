@@ -1,7 +1,10 @@
 public class PEuler{
     public static void main(String[] args) {
-        
-    
+        int[] s= specialPythagoreanTriplet(1000);
+        for (int i : s) {
+            System.out.println(i);
+        }
+        System.out.println(200*375*425);
     }
 
 
@@ -129,5 +132,47 @@ public class PEuler{
             l/=10;
         }
         return result;
+    }
+
+    public static int[] specialPythagoreanTriplet(int n){
+        int[] result= new int[10];
+        int index=0;
+        for (int i = 1; i < n/2; i++) {
+            for (int j = 1; j < n/2; j++) {
+                int k=(int)(Math.sqrt(j*j+i*i));
+                if(isDecimal(Math.sqrt(j*j+i*i)))
+                if(isTriangle(i, j, k))
+                    if(k+i+j==n){
+                        result[index]=i;
+                        index++;
+                        result[index]=j;
+                        index++;
+                        result[index]=k;
+                        index++;
+                    }                
+            }
+        }
+        
+        return result;
+    }
+
+    public static boolean isDecimal(double d){
+        String dd= Double.toString(d);
+        dd=dd.substring(dd.indexOf(".")+1);
+        for (int i = 0; i < dd.length(); i++) {
+            if(dd.charAt(i)!='0')
+                return false;
+        }
+        return true;
+    }
+
+    public static boolean isTriangle(int a, int b, int c){
+        if(Math.abs(a-b)>=c)
+            return false;
+        else if(Math.abs(a-c)>=b)
+            return false;
+        else if(Math.abs(c-b)>=a)
+            return false;
+        return true;
     }
 }
