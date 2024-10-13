@@ -1,9 +1,8 @@
 public class PEuler{
     public static void main(String[] args) {
-        System.out.println(summationofPrimes(2000000));
+        
+
     }
-
-
 
     public static int Question1(int n, int m){
         if(m>n) return 0;
@@ -179,6 +178,37 @@ public class PEuler{
                 result+=i; 
         }
         return result;
+    }
+
+    public static long largestProductinaGrid(int[][] grid){
+        int maxProduct = 0;
+
+        for (int row = 0; row < grid.length; row++) {
+            for (int col = 0; col < grid[0].length; col++) {
+
+                if (col + 3 < grid[0].length) {
+                    int product = grid[row][col] * grid[row][col + 1] * grid[row][col + 2] * grid[row][col + 3];
+                    maxProduct = Math.max(maxProduct, product);
+                }
+
+                if (row + 3 < grid.length) {
+                    int product = grid[row][col] * grid[row + 1][col] * grid[row + 2][col] * grid[row + 3][col];
+                    maxProduct = Math.max(maxProduct, product);
+                }
+
+                if (row + 3 < grid.length && col + 3 < grid[0].length) {
+                    int product = grid[row][col] * grid[row + 1][col + 1] * grid[row + 2][col + 2] * grid[row + 3][col + 3];
+                    maxProduct = Math.max(maxProduct, product);
+                }
+
+                if (row + 3 < grid.length && col - 3 >= 0) {
+                    int product = grid[row][col] * grid[row + 1][col - 1] * grid[row + 2][col - 2] * grid[row + 3][col - 3];
+                    maxProduct = Math.max(maxProduct, product);
+                }
+            }
+            
+        }
+        return maxProduct;
     }
 
 
