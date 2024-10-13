@@ -1,6 +1,6 @@
 public class PEuler{
     public static void main(String[] args) {
-        System.out.println(Question4(3));
+        System.out.println(smallestMultiple(1, 20));
     }
 
 
@@ -70,4 +70,20 @@ public class PEuler{
         }
         return result;
     } 
+
+    public static long smallestMultiple(int start, int last){
+        long i=0;
+        boolean divide=true;
+        while(true){
+            i++;
+            divide=true;
+            for (int j = start; j <= last; j++) {
+                if(i%j!=0)
+                    divide=false;
+            }
+            if(!divide)
+                continue;
+            return i;
+        }
+    }
 }
