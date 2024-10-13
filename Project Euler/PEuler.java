@@ -1,6 +1,7 @@
 public class PEuler{
     public static void main(String[] args) {
-        System.out.println(Question6(100));
+        
+    
     }
 
 
@@ -43,7 +44,7 @@ public class PEuler{
         if(n<4)
             return true;
         double d=Math.sqrt(n);
-        for (int i = 2; i < d; i++) {
+        for (int i = 2; i <= d; i++) {
             if((n%i==0))
             return false;
         }
@@ -94,5 +95,39 @@ public class PEuler{
             sumSquare+=Math.pow(i, 2);
         }
         return sum*sum-sumSquare;
+    }
+
+    public static long nthPrimeNumber(int n){
+        int count=0;
+        for (long i = 0; i < Long.MAX_VALUE; i++) {
+            if(isPrime(i))
+                count++;
+            if(count==n)
+                return i;
+        }
+        return -1;
+    }
+
+    public static long biggestNNumber(String s, int n){
+        long result =0;
+        long l=0;
+        for (int i = 0; i < s.length()-n-1; i++) {
+            l= Long.parseLong(s.substring(i, i+n));
+            // if(s.substring(i, i+13).contains("0"))
+            //     continue;
+            if(basasmkCarpim(l)>result)
+                result=basasmkCarpim(l);
+        }
+        System.out.println(l);
+        return result;
+    }
+
+    public static long basasmkCarpim(long l){
+        long result=1;
+        while (l!=0) {
+            result*=l%10;
+            l/=10;
+        }
+        return result;
     }
 }
