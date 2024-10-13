@@ -1,6 +1,6 @@
 public class PEuler{
     public static void main(String[] args) {
-        System.out.println(LargestPrimeFactor(600851475143L));
+        System.out.println(Question4(3));
     }
 
 
@@ -49,4 +49,25 @@ public class PEuler{
         }
         return true;
     }
+
+    public static boolean isPalindrome(int n){
+        String numb=Integer.toString(n);
+        for (int i = 0; i < numb.length()/2; i++) {
+            if(numb.charAt(i)!=numb.charAt(numb.length()-1-i))
+                return false;
+        }
+        return true;
+    }
+
+    public static int Question4(int n){
+        int result=0;
+        for (int i = 0; i < Math.pow(10, n); i++) {
+            for (int j = 0; j < Math.pow(10, n); j++) {
+                if(isPalindrome(i*j))
+                    if(i*j>result)
+                        result=i*j;
+            }
+        }
+        return result;
+    } 
 }
