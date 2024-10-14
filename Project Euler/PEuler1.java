@@ -3,7 +3,7 @@ import java.util.*;
 public class PEuler1 {
     public static void main(String[] args) {
 
-    System.out.println(longestCollatzSequence(1000000));
+    System.out.println(latticePaths(20));
     }   
 
     public static long highlyDivisibleTriangularNumber(int n){
@@ -123,8 +123,38 @@ public class PEuler1 {
                 number = i;
             }
         }
-    
         return number;
+    }
+
+    public static long latticePaths(int n){
+        int[] grid= new int[2*n];
+        long a=0;
+        int i=0;
+        while (!isAllTheSma(grid, 1)) {
+            if(grid[i]==0){
+                grid[i]=1;
+            }
+            else{
+                grid[i]=0;
+                grid[i+1]+=1;
+            }
+            if(i<grid.length)
+                if(grid[i+1]==2){
+                    grid[i+1]=0;
+                    grid[i+2]+=1;
+                }
+            a++;
+            i++;
+        }
+        return a;
+    }
+
+    public static boolean isAllTheSma(int[] n, int i){
+        for (int j : n) {
+            if(j!=i)
+                return false;
+        }
+        return true;
     }
     
 }
