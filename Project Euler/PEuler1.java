@@ -1,10 +1,9 @@
-import java.util.Iterator;
-import java.util.HashMap;
+import java.util.*;
 
 public class PEuler1 {
     public static void main(String[] args) {
 
-    System.out.println(highlyDivisibleTriangularNumber1(499));
+    System.out.println(longestCollatzSequence(1000000));
     }   
 
     public static long highlyDivisibleTriangularNumber(int n){
@@ -97,4 +96,35 @@ public class PEuler1 {
                         }
          */
     }
+
+
+    public static long longestCollatzSequence(int n) {
+        int maxSet = 0;
+        long number = 0;
+    
+        for (long i = 1; i < n; i++) {
+            int count = 1; 
+            long currentNumber = i;
+            HashSet<Long> set = new HashSet<>(); 
+            set.add(currentNumber);
+            while (currentNumber != 1) {
+                if (currentNumber % 2 == 0) {
+                    currentNumber /= 2;
+                } else {
+                    currentNumber = currentNumber * 3 + 1;
+                }
+                if (!set.add(currentNumber)) { 
+                    break;
+                }
+            }
+            count=set.size()+1;
+            if (count > maxSet) {
+                maxSet = count;
+                number = i;
+            }
+        }
+    
+        return number;
+    }
+    
 }
