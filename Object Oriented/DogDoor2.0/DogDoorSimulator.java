@@ -3,7 +3,22 @@ import java.util.TimerTask;
 
 public class DogDoorSimulator{ 
     public static void main(String[] args) { 
-    
+        DogDoor door =new DogDoor(); 
+        BarkRecognizer recognizer=new BarkRecognizer(door); 
+        Remote remote =new Remote(door); 
+        // Simulatethehardware hearing a bark
+         System.out.println("Fidostartsbarking."); 
+        recognizer.recognize("Woof"); 
+        System.out.println("\nFido has goneoutside..."); 
+        System.out.println("\nFido’salldone..."); 
+        try{ 
+        Thread.currentThread().sleep(10000); 
+        } catch(InterruptedException e) { } 
+        System.out.println("...but he’sstuck outside!"); 
+        // Simulatethehardware hearing a bark again
+         System.out.println("Fidostartsbarking."); 
+        recognizer.recognize("Woof"); 
+        System.out.println("\nFido’sback inside..."); 
     } 
     }
     class DogDoor { 
@@ -67,7 +82,9 @@ public class DogDoorSimulator{
                      "Heard a ‘" + bark + "’"); 
                     door.open(); 
                     }
-                }    
+                }
+                
+                
 
 
 
