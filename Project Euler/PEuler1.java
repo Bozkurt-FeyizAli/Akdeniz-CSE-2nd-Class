@@ -1,9 +1,13 @@
+
 import java.util.*;
 
 public class PEuler1 {
     public static void main(String[] args) {
-
-    System.out.println(latticePaths(20));
+        String result="";
+        for (int i = 0; i <= 1001; i++) {
+            result+=new Number(i).toString();
+        }
+    System.out.println(result.replace(" ", ""));
     }   
 
     public static long highlyDivisibleTriangularNumber(int n){
@@ -101,23 +105,21 @@ public class PEuler1 {
     public static long longestCollatzSequence(int n) {
         int maxSet = 0;
         long number = 0;
-    
         for (long i = 1; i < n; i++) {
             int count = 1; 
             long currentNumber = i;
-            HashSet<Long> set = new HashSet<>(); 
-            set.add(currentNumber);
+            
             while (currentNumber != 1) {
                 if (currentNumber % 2 == 0) {
                     currentNumber /= 2;
                 } else {
                     currentNumber = currentNumber * 3 + 1;
                 }
-                if (!set.add(currentNumber)) { 
+                count++;
+                if (currentNumber==1) { 
                     break;
                 }
             }
-            count=set.size()+1;
             if (count > maxSet) {
                 maxSet = count;
                 number = i;
@@ -127,25 +129,26 @@ public class PEuler1 {
     }
 
     public static long latticePaths(int n){
-        int[] grid= new int[2*n];
+        // int[] grid= new int[2*n];
         long a=0;
-        int i=0;
-        while (!isAllTheSma(grid, 1)) {
-            if(grid[i]==0){
-                grid[i]=1;
-            }
-            else{
-                grid[i]=0;
-                grid[i+1]+=1;
-            }
-            if(i<grid.length)
-                if(grid[i+1]==2){
-                    grid[i+1]=0;
-                    grid[i+2]+=1;
-                }
-            a++;
-            i++;
-        }
+        // int i=0;
+        // while (!isAllTheSma(grid, 1)) {
+        //     if(grid[i]==0){
+        //         grid[i]=1;
+        //     }
+        //     else{
+        //         grid[i]=0;
+        //         grid[i+1]+=1;
+        //     }
+        //     if(i<grid.length)
+        //         if(grid[i+1]==2){
+        //             grid[i+1]=0;
+        //             grid[i+2]+=1;
+        //         }
+        //     a++;
+        //     i++;
+        // }
+
         return a;
     }
 
@@ -156,5 +159,129 @@ public class PEuler1 {
         }
         return true;
     }
+
+    public static long factorial(int n){
+        if(n<2)
+            return n;
+        return n*factorial(n-1);
+    }
+
+    public static int powerDigitSum2(int n, int m){
+        
+        int result=0;
+        // int basamak=0;
+        // String s= Double.toString(Math.pow(n, m));
+        // int a=0;
+        // for (int i = 0; i < number.length(); i++) {
+        //     result+=(int)number.charAt(i)-48;
+        // }
+        return result;
+    }
     
+}
+class Number{
+    String number;
+    public Number(int n){
+        number=numberasString(n);
+    }
+
+    public static String numberasString(int n){
+        String result="";
+        if(n<21){
+            return tenthDigit(n);
+        }
+        else if(n<=100){
+            result=digitAsString(n/10);
+            n%=10;
+            return result+tenthDigit(n);
+        }
+        else if(n<1000){
+            result=tenthDigit(n)+"hundred and";
+            n%=10;
+            result+=digitAsString(n/10);
+            n%=10;
+            return result+tenthDigit(n);
+        }
+        else{
+            result="one thousand";
+        }
+        return "";
+    }
+
+    public static String digitAsString(int n){
+        switch (n) {
+            case 1:
+            return "";
+            case 2:
+            return "twenty";
+            case 3:
+            return "thity";
+            case 4:
+            return "fourty";
+            case 5:
+            return "fivety";
+            case 6:
+            return "sixty";
+            case 7:
+            return "seventy";
+            case 8:
+            return "eighty";
+            case 9:
+            return "ninety";        
+            default:
+                return "";
+        }
+    }
+
+    public static String tenthDigit(int n){
+        switch (n) {
+            case 1:
+            return "one";
+            case 2:
+            return "two";
+            case 3:
+            return "three";
+            case 4:
+            return "four";
+            case 5:
+            return "five";
+            case 6:
+            return "six";
+            case 7:
+            return "seven";
+            case 8:
+            return "eight";
+            case 9:
+            return "nine";
+            case 10:
+            return "ten";
+            case 11:
+            return "eleven";
+            case 12:
+            return "twelve";
+            case 13:
+            return "thirteen";
+            case 14:
+            return "fouteen";
+            case 15:
+            return "fifteen";
+            case 16:
+            return "sixteen";
+            case 17:
+            return "seventeen";
+            case 18:
+            return "eighteen";      
+            case 19:
+            return "nineteen";
+            case 20:
+            return "twenty";    
+            default:
+                return "";
+        }
+    }
+
+    @Override
+    public String toString() {
+        return number;
+    }
 }
