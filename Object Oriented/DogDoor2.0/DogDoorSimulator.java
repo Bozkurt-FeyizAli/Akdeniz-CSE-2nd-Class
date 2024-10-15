@@ -22,7 +22,18 @@ public class DogDoorSimulator{
     } 
     }
     class DogDoor { 
-        boolean open;
+        private boolean open; 
+private String allowedBark; 
+public DogDoor() { 
+open=false; 
+} 
+public void setAllowedBark(String bark) { 
+this.allowedBark=bark; 
+} 
+public String getAllowedBark() { 
+return allowedBark; 
+} 
+
         public void open() { 
         System.out.println("Thedog dooropens."); 
         open= true; 
@@ -38,6 +49,12 @@ public class DogDoorSimulator{
         System.out.println("Thedog doorcloses."); 
         open= false; 
         } 
+
+        public boolean getOpen(){
+            return open;
+        }
+
+        
         }
 
         class Remote { 
@@ -58,7 +75,7 @@ public class DogDoorSimulator{
     
             public void pressButton() { 
                 System.out.println("Pressing the remote control button..."); 
-                if (door.open) { 
+                if (door.getOpen()) { 
                 door.close(); 
                 } else { 
                 door.open(); 
