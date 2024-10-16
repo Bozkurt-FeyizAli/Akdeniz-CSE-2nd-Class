@@ -102,8 +102,7 @@ class Stack<T> implements IStack<T>{
 
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return index+1;
     }
     
 }
