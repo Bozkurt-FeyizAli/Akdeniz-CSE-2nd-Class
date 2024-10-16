@@ -48,16 +48,16 @@ interface IStack<T> {
 }
 
 class Stack<T> implements IStack<T>{
-    private final static int defaultCapacity=100;
+    private final static int defaultCapacity=50;
     private T[] array;
-    private int capacity;
+    private final static int capacity=100;
     private int index;
     
     public Stack() {
         this(defaultCapacity);
     }
     public Stack(int capacity) {
-        this.capacity = capacity;
+        this.array= (T[])new Object[capacity];
     }
 
     
@@ -71,8 +71,7 @@ class Stack<T> implements IStack<T>{
 
     @Override
     public boolean isFull() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isFull'");
+        return index+1==capacity;
     }
 
     @Override
