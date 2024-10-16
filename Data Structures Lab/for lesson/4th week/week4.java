@@ -58,6 +58,7 @@ class Stack<T> implements IStack<T>{
     }
     public Stack(int capacity) {
         this.array= (T[])new Object[capacity];
+        index=0;
     }
 
     
@@ -76,19 +77,27 @@ class Stack<T> implements IStack<T>{
 
     @Override
     public T peek() {
-       return array[index];
+        if(array==null)
+            return null;
+        return array[index];
     }
 
     @Override
     public T pop() {
+        if(array==null)
+            return null;
         index--;
-       return array[index+1];
+        return array[index+1];
     }
 
     @Override
     public void push(T item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'push'");
+        if(array==null)
+            throw new IllegalAccessError();
+        else{
+            array[index+1]=item;
+            index++;
+        }
     }
 
     @Override
