@@ -76,8 +76,8 @@ class Stack<T> implements IStack<T>{
 
     @Override
     public T peek() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'peek'");
+       index--;
+       return array[index+1];
     }
 
     @Override
