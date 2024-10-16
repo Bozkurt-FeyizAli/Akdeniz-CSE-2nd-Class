@@ -76,14 +76,13 @@ class Stack<T> implements IStack<T>{
 
     @Override
     public T peek() {
-       index--;
-       return array[index+1];
+       return array[index];
     }
 
     @Override
     public T pop() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'pop'");
+        index--;
+       return array[index+1];
     }
 
     @Override
