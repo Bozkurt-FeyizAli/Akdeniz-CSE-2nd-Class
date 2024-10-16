@@ -58,7 +58,7 @@ class Stack<T> implements IStack<T>{
     }
     public Stack(int capacity) {
         this.array= (T[])new Object[capacity];
-        index=0;
+        index=-1;
     }
 
     
@@ -67,7 +67,7 @@ class Stack<T> implements IStack<T>{
 
     @Override
     public boolean isEmpty() {
-       return index==0;
+       return index==-1;
     }
 
     @Override
@@ -84,6 +84,8 @@ class Stack<T> implements IStack<T>{
 
     @Override
     public T pop() {
+        if(index==-1)
+            throw new IllegalAccessError();
         if(array==null)
             return null;
         index--;
@@ -92,7 +94,9 @@ class Stack<T> implements IStack<T>{
 
     @Override
     public void push(T item) {
-        if(array==null)
+        if(isFull())
+            throw new IllegalAccessError();
+        else if(array==null)
             throw new IllegalAccessError();
         else{
             array[index+1]=item;
