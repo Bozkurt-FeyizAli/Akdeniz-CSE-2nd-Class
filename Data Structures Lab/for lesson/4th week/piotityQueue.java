@@ -11,6 +11,7 @@ interface IPriorityQueueNode<T> {
      * @return Öncelik değeri (daha yüksek değer, daha yüksek öncelik anlamına gelebilir)
      */
     int getPriority();
+    T getData();
 }
 
 interface IPriorityQueue<T> {
@@ -49,5 +50,26 @@ interface IPriorityQueue<T> {
 }
 
 
+
+class PriorityQueueNode<T> implements IPriorityQueueNode<T>{
+    T data;
+    int priority;
+
+    public PriorityQueueNode(T data, int priority){
+        this.data=data;
+        this.priority=priority;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
+    }
+
+    @Override
+    public T getData() {
+       return data;
+    }
+
+}
 
 
