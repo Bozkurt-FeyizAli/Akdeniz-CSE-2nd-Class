@@ -22,7 +22,7 @@ interface IPriorityQueue<T> {
      * Yeni bir öğe öncelik sırasına ekler.
      * @param item Eklenecek öğe.
      */
-    void enqueue(T item);
+    void enqueue(PriorityQueueNode<T> priorityQueueNode);
     
     /**
      * En yüksek öncelikli öğeyi öncelik sırasından kaldırır ve döndürür.
@@ -65,9 +65,26 @@ class PiorityQueue<T> implements IPriorityQueue<T>{
         this(capacity);
     }
     @Override
-    public void enqueue(T item) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
+    public void enqueue(PriorityQueueNode<T> priorityQueueNode) {
+        if (isEmpty() || datas == null)
+            throw new NoSuchElementException();
+        if(size==datas.length)
+            System.out.println("Error.");
+        else{
+        int priority=size-1;
+        T priotiryNode=null;
+        for (int i = size-1; i>=0; i--) {
+            if(datas[i].getPriority()<priority){
+                priority=i;
+                break;
+            }
+        }
+
+        for (int i = size-1; i >= priority; i--) {
+            datas[i+1]=datas[i];
+        }
+        datas[priority]=priorityQueueNode;
+        }
     }
 
     @Override
@@ -82,6 +99,7 @@ class PiorityQueue<T> implements IPriorityQueue<T>{
                 priority=datas[i].getPriority();
             }
         }
+        if(priority!=-1){
         for (int i = priority; i < size; i++) {
             if(priority+1!=datas.length){
                 datas[i]=datas[i+1];
@@ -91,6 +109,8 @@ class PiorityQueue<T> implements IPriorityQueue<T>{
             }
         }
         return priotiryNode;
+        }
+        return null;
     }
 
     @Override
