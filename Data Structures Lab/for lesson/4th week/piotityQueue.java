@@ -72,15 +72,32 @@ class PiorityQueue<T> implements IPriorityQueue<T>{
 
     @Override
     public T dequeue() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dequeue'");
+        if (isEmpty() || datas == null)
+            throw new NoSuchElementException();
+        int priority=-1;
+        T priotiryNode=null;
+        for (int i = 0; i < size; i++) {
+            if(datas[i].getPriority()>priority){
+                priotiryNode=datas[i].getData();
+                priority=datas[i].getPriority();
+            }
+        }
+        for (int i = priority; i < size; i++) {
+            if(priority+1!=datas.length){
+                datas[i]=datas[i+1];
+            }
+            else{
+                datas[size-1]=datas[size-2];
+            }
+        }
+        return priotiryNode;
     }
 
     @Override
     public T peek() {
         if (isEmpty() || datas == null)
             throw new NoSuchElementException();
-        int priority=0;
+        int priority=-1;
         T priotiryNode=null;
         for (int i = 0; i < size; i++) {
             if(datas[i].getPriority()>priority){
