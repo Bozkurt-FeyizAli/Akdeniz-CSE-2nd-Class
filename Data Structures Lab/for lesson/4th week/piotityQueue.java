@@ -72,7 +72,6 @@ class PiorityQueue<T> implements IPriorityQueue<T>{
             System.out.println("Error.");
         else{
         int priority=size-1;
-        T priotiryNode=null;
         for (int i = size-1; i>=0; i--) {
             if(datas[i].getPriority()<priority){
                 priority=i;
@@ -85,6 +84,7 @@ class PiorityQueue<T> implements IPriorityQueue<T>{
         }
         datas[priority]=priorityQueueNode;
         }
+        size++;
     }
 
     @Override
