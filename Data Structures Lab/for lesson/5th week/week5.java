@@ -74,8 +74,9 @@ class LinkedQueue <E> implements IQueue <E> {
 
     @Override
     public E first() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'first'");
+        if(isEmpty())
+            return null;
+        return tail.getData();
     }
     
 }
