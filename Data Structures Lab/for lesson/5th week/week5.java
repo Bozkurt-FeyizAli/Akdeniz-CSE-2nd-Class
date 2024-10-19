@@ -44,11 +44,19 @@ class LinkedQueue <E> implements IQueue <E> {
            return size==0;
         }
 
-    @Override
-    public void enqueue(E e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
-    }
+        @Override
+        public void enqueue(E e) {
+            Node<E> node= new Node<E>(e, null);
+            if(isEmpty()){
+                tail=node;
+                head=node;
+            }
+            else{
+                node.setNext(head);
+                head=node;
+            }
+            size++;
+        }
 
     @Override
     public E dequeue() {
