@@ -20,8 +20,19 @@ interface List <E> {
 class LinkedQueue <E> implements IQueue <E> {
 
     private int size;
-    private Node<E> head;
-    private Node<E> tail;
+        private Node<E> head;
+        private Node<E> tail;
+        private int capacity;
+    
+        public LinkedQueue(int capacity){
+            size=0;
+            head=null;
+            tail=null;
+            this.capacity=capacity;
+        }
+        public LinkedQueue(){
+            this(1000);
+        }
 
     @Override
     public int size() {
