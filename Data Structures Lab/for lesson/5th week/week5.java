@@ -1,6 +1,13 @@
 public class week5{
 public static void main(String[] args) {
+    LinkedQueue<Integer> queue = new LinkedQueue<>();
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
     
+    System.out.println("First element: " + queue.first()); // Should print 1
+    System.out.println("Dequeue: " + queue.dequeue()); // Should print 1
+    System.out.println("First element after dequeue: " + queue.first()); 
 }
 }
 
@@ -46,16 +53,18 @@ class LinkedQueue <E> implements IQueue <E> {
 
         @Override
         public void enqueue(E e) {
-            Node<E> node= new Node<E>(e, null);
-            if(isEmpty()){
-                tail=node;
-                head=node;
+            if(size<capacity){
+                Node<E> node= new Node<E>(e, null);
+                if(isEmpty()){
+                    tail=node;
+                    head=node;
+                }
+                else{
+                    node.setNext(head);
+                    head=node;
+                }
+                size++;
             }
-            else{
-                node.setNext(head);
-                head=node;
-            }
-            size++;
         }
 
         @Override
@@ -63,7 +72,7 @@ class LinkedQueue <E> implements IQueue <E> {
             if(isEmpty()){
                 return null;
             }
-            Node<E> t=tail;
+            Node<E> t=head;
             E e=tail.getData();
             while (t.getNext()!=tail) {
                 t=t.getNext();
