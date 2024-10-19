@@ -34,17 +34,15 @@ class LinkedQueue <E> implements IQueue <E> {
             this(1000);
         }
 
-    @Override
-    public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
-    }
-
-    @Override
-    public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
-    }
+        @Override
+        public int size() {
+            return size;
+        }
+    
+        @Override
+        public boolean isEmpty() {
+           return size==0;
+        }
 
     @Override
     public void enqueue(E e) {
