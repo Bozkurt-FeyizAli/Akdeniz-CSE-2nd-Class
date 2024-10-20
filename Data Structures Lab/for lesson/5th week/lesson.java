@@ -7,9 +7,11 @@ public class lesson {
          * int[][] arr={{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}};
         System.out.println(recursiveSum2DArray(arr, 1, 1, 1));
          */
-
+        
         int[] arr={1,2,3,4,5,6};
         System.out.println(binarySearch(arr, 0, 5, 1));
+
+        System.out.println(isPalindrome(1221));
 
         
     }   
@@ -208,5 +210,21 @@ public class lesson {
         }
         return -1;
     }
+
+    public static boolean isPalindrome(int x) {
+        String n=Integer.toString(x);
+        if(n.length()==1)
+            return true;
+        if(n.charAt(0)!=n.charAt(n.length()-1))
+            return false;
+        if(n.length()==2)
+            return true;
+        else return isPalindrome(Integer.parseInt(n.substring(1, n.length()-1)));
+         
+    }
+
+
+
+
 
 }
