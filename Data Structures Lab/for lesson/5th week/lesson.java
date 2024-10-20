@@ -8,10 +8,7 @@ public class lesson {
         System.out.println(recursiveSum2DArray(arr, 1, 1, 1));
          */
         
-        int[] arr={1,2,3,4,5,6};
-        System.out.println(binarySearch(arr, 0, 5, 1));
-
-        System.out.println(isPalindrome(1221));
+        System.out.println(reverse(-123));
 
         
     }   
@@ -221,6 +218,18 @@ public class lesson {
             return true;
         else return isPalindrome(Integer.parseInt(n.substring(1, n.length()-1)));
          
+    }
+
+    public static int reverse(int x) {
+        String n=Integer.toString(x);
+        String result="";
+        if(n.charAt(0)=='-'){
+            n=n.substring(1);
+            result+='-';
+        }
+        for(int i=n.length()-1;i>=0;i--)
+            result+=n.charAt(i);
+        return Integer.parseInt(result);
     }
 
 
