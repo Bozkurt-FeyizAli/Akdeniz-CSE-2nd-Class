@@ -9,10 +9,7 @@ public class lesson {
          */
 
         int[] arr={1,2,3,4,5,6};
-        recursiveReverseArray(arr, 0, 5);
-        for (int i : arr) {
-            System.out.println(i);
-        }
+        System.out.println(binarySearch(arr, 0, 5, 1));
 
         
     }   
@@ -197,6 +194,19 @@ public class lesson {
             arr[f]=swap;
         }
         recursiveReverseArray(arr, s+1, f-1);
+    }
+
+    public static int binarySearch(int[] arr, int s, int f, int target){
+        while (s<=f) {
+            int mid=(s+f)/2;
+            if(arr[mid]==target)
+                return mid;
+            else if(arr[mid]>target)
+                f--;
+            else 
+                s++;
+        }
+        return -1;
     }
 
 }
