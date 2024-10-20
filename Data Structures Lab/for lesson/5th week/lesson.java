@@ -1,4 +1,4 @@
-import java.util.Iterator;
+
 import java.util.Stack;
 
 public class lesson {
@@ -8,7 +8,13 @@ public class lesson {
         System.out.println(recursiveSum2DArray(arr, 1, 1, 1));
          */
 
-        System.out.println(parantezMatch("{(w[e]r)t}y{}"));
+        int[] arr={1,2,3,4,5,6};
+        recursiveReverseArray(arr, 0, 5);
+        for (int i : arr) {
+            System.out.println(i);
+        }
+
+        
     }   
 
     public static int recursiveSum2DArray(int[][] arr, int x, int y, int valueX){
@@ -59,5 +65,138 @@ public class lesson {
         }
         return parantezler.isEmpty();
     }
+
+    public static int evaluate(String expression) {
+        /*
+         * Write a function to evaluate a given arithmetic expression containing integers,
+         *  parentheses, and operators. The function should correctly follow the order of
+         *  operations (precedence) and handle parentheses appropriately.
+         *  Your task is to complete the evaluate(String expression) method
+         *  which returns the result of the expression.
+         * 
+         * You may also need following methods or any other:
+         * boolean isOperator(char c): returns true if given character is an operator
+         * int precedance(char op): returns the precedance of the character
+         * int applyOp(char op, int b, int a): applys the operator on operands
+         */
+        // Your code here..
+        Stack<Integer> valStk= new Stack<>();
+        Stack<Character> opStk= new Stack<>();
+        expression+=" $";
+
+        for (int i = 0; i < expression.length(); i++) {
+            char c= expression.charAt(i);
+            if (c==' ')
+                continue;
+            if (Character.isDigit(c)) {
+                String result="";
+                while (i< expression.length()&&Character.isDigit(expression.charAt(i)))
+                    result+=expression.charAt(i++);
+                valStk.push(Integer.parseInt(result));
+                i--; 
+            } 
+            else if (isOperator(c)||c=='$') {
+                repeatOps(c, valStk, opStk);
+                opStk.push(c); 
+            }
+        }
+        repeatOps('$', valStk, opStk);
+        return valStk.pop();
+    }
+
+    public static void repeatOps(char refOp, Stack<Integer> valStk, Stack<Character> opStk) {
+        while (valStk.size()>1&&precedance(refOp)<=precedance(opStk.peek())) {
+            doOp(valStk, opStk);
+        }
+    }
+
+    public static void doOp(Stack<Integer> valStk, Stack<Character> opStk) {
+        int x= valStk.pop();
+        int y= valStk.pop();
+        char op= opStk.pop();
+        valStk.push(applyOp(op, y, x)); 
+    }
+
+    public static int evalutaPart(String expression){
+        Stack<Integer> valueStack= new Stack<>();
+        Stack<Character> progresStack= new Stack<>();
+        char[] characters=expression.toCharArray();
+        for (char c : characters) {
+            if(c<10)
+                valueStack.add((int)c);
+            else if(isOperator(c))
+                progresStack.add(c);
+            else 
+                throw new IllegalArgumentException();
+        }
+
+
+        return 0;
+    }
+
+    public static int applyOp(char op, int b, int a){
+        switch(op){
+            case('-'):
+                return b-a;
+            case('+'):
+                return b+a;
+            case('*'):
+                return b*a;
+            case('/'):
+                return b/a;
+            
+            default: return 0;
+        }
+    }
+
+    public static boolean isOperator(char c){
+        switch(c){
+            case('-'):
+                return true;
+            case('+'):
+                return true;
+            case('*'):
+                return true;
+            case('/'):
+                return true;
+            case(')'): return true;
+            default: return false;
+        }
+    }
+
+    public static int precedance(char op){
+        switch(op){
+            case('-'):
+                return 1;
+            case('+'):
+                return 1;
+            case('*'):
+                return 2;
+            case('/'):
+                return 2;
+            // case('<'):
+            //     return 1;
+            // case('+'):
+            //     return 1;
+            // case('*'):
+            //     return 2;
+            // case('/'):
+            //     return 2;
+            default: return 0;
+        }
+    }
     
+    public static void recursiveReverseArray(int[] arr, int s, int f){
+        if(s<0||f>=arr.length)
+            return;
+        if(s<f){
+            if(s==f||s+1==f)
+                return;
+            int swap=arr[s];
+            arr[s]=arr[f];
+            arr[f]=swap;
+        }
+        recursiveReverseArray(arr, s+1, f-1);
+    }
+
 }
