@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.Stack;
 
 public class lesson {
@@ -7,15 +8,7 @@ public class lesson {
         System.out.println(recursiveSum2DArray(arr, 1, 1, 1));
          */
 
-        System.out.println(htmlMatch("<html> \n" + //
-                        "<body>\n" + //
-                        "\n" + //
-                        "<h1>My First Heading</h1>\n" + //
-                        "\n" + //
-                        "<p>My first paragraph.</p>\n" + //
-                        "\n" + //
-                        "</body>\n" + //
-                        "</html>"));
+        System.out.println(parantezMatch("{(w[e]r)t}y{}"));
     }   
 
     public static int recursiveSum2DArray(int[][] arr, int x, int y, int valueX){
@@ -45,6 +38,26 @@ public class lesson {
             html=html.substring(last+1);
         }
         return tags.isEmpty();
+    }
+
+    public static boolean parantezMatch(String metin){
+        Stack<Character> parantezler= new Stack<>();
+        String open="({[";
+        String close=")}]";
+        char[] caharacters= metin.toCharArray();
+        for (char c : caharacters) {
+            if(open.indexOf(c)!=-1)
+                parantezler.add(c);
+            else if(close.indexOf(c)!=-1){
+                if(parantezler.isEmpty())
+                    return false;
+                if(close.indexOf(c)==open.indexOf(parantezler.peek()))
+                    parantezler.pop();
+                else    return false;
+            }
+                
+        }
+        return parantezler.isEmpty();
     }
     
 }
