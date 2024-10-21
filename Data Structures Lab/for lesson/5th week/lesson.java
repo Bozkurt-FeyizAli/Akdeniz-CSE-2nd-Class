@@ -8,7 +8,7 @@ public class lesson {
         System.out.println(recursiveSum2DArray(arr, 1, 1, 1));
          */
         
-        System.out.println(reverse(-123));
+        System.out.println(evaluate1("(4+3)*9"));
 
         
     }   
@@ -178,6 +178,7 @@ public class lesson {
             //     return 2;
             // case('/'):
             //     return 2;
+            case('$'): return 0;
             default: return 0;
         }
     }
@@ -231,6 +232,54 @@ public class lesson {
             result+=n.charAt(i);
         return Integer.parseInt(result);
     }
+
+
+    public static int evaluate1(String s){
+        Stack<Character> opStk= new Stack<>();
+        Stack<Integer> valStk= new Stack<>();
+        s+="$";
+        s.replace(" ", "");
+        for (int i = 0; i < s.length(); i++) {
+            char c=s.charAt(i);
+            if (Character.isDigit(c)) {
+                String result="";
+                while (i< s.length()&&Character.isDigit(s.charAt(i)))
+                    result+=s.charAt(i++);
+                valStk.push(Integer.parseInt(result));
+                i--; 
+            } 
+            else if (isOperator(c)||c=='$') {
+                repeatOps(c, valStk, opStk);
+                opStk.push(c); 
+            }
+        }
+        repeatOps('$', valStk, opStk);
+        return valStk.pop();
+    }
+
+    
+    public static void doOp1(Stack<Integer> valStk, Stack<Character> opStk){
+        int x=valStk.pop();
+        int y=valStk.pop();
+        char op=opStk.pop();
+        switch(op){
+            case('+'): valStk.push(x+y); break;
+            case('-'): valStk.push(x-y); break;
+            case('*'): valStk.push(x*y); break;
+            case('/'): valStk.push(x/y); break;
+            default: System.out.println("problem in doOp");
+
+        }
+    }
+
+    public static void repeatOps1(char refOp, Stack<Integer> valStk, Stack<Character> opStk){
+        while (valStk.size()>1&&precedance(refOp)<=precedance(opStk.peek())) {
+            doOp1(valStk, opStk);
+        }
+    }
+
+
+
 
 
 
