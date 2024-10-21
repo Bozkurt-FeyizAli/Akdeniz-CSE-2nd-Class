@@ -1,3 +1,4 @@
+import java.util.*;
 public class week1{
     public static void main(String[] args) {
         System.out.println(longestCommonPrefix(new String[]{"flower","flow","flight"}));
@@ -37,5 +38,25 @@ public class week1{
 
         }
         return result;
+    }
+
+    public static boolean isValid(String metin){
+        Stack<Character> parantezler= new Stack<>();
+        String open="({[";
+        String close=")}]";
+        char[] caharacters= metin.toCharArray();
+        for (char c : caharacters) {
+            if(open.indexOf(c)!=-1)
+                parantezler.add(c);
+            else if(close.indexOf(c)!=-1){
+                if(parantezler.isEmpty())
+                    return false;
+                if(close.indexOf(c)==open.indexOf(parantezler.peek()))
+                    parantezler.pop();
+                else    return false;
+            }
+                
+        }
+        return parantezler.isEmpty();
     }
 }
