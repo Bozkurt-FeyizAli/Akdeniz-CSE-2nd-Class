@@ -2,7 +2,7 @@ import java.util.*;
 
 public class week6 {
     public static void main(String[] args) {
-        
+        System.out.println(longestPalindrome("babad"));
     }
 
     public int maxUniqueSplit(String s) {  // dont work
@@ -41,4 +41,43 @@ public class week6 {
         }
         return result/(nums1.length+nums2.length);
     }
+
+    public static String longestPalindrome(String s) {
+        String result="";
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i; j < s.length(); j++){
+                if(i<j){
+                String str=s.substring(i, j);
+                if(isPalindrome(str))
+                if(str.length()>result.length())
+                    result=str;
+                }
+            }
+            
+         
+
+        }
+        /*
+         * or (int i = s.length()-1; i>=0; i--) {
+            for (int j = s.length()-1-i; j>=0; j--) {
+                String str=s.substring(j, i+1);
+                if(isPalindrome(str))
+                    if(str.length()>result.length())
+                        result=str;
+    
+            }
+
+        }
+         */
+
+        return result;
+    }
+
+    public static boolean isPalindrome(String s){
+        if(s.isEmpty()||s.length()==1)
+            return true;
+        else if(s.charAt(0)!=s.charAt(s.length()-1))
+            return false;
+        else return isPalindrome(s.substring(1, s.length()-1));
+    } 
 }
