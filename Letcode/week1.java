@@ -59,4 +59,47 @@ public class week1{
         }
         return parantezler.isEmpty();
     }
+
+    public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode result= new ListNode();
+        boolean l1= true;
+        boolean l2=true;
+        if(l1){
+                result.val=list1.val;
+                if(list2.next!=null)
+                result.next=list2.next;
+            }
+        else 
+            result.val=list2.val;
+        while (l2==false&&l1==false) {
+            if(l1)
+                result.next=list1.next;
+            if(l2)
+                result.next=list2.next;
+            if(list1.next==null)
+                l1=false;
+            if(list2.next==null)
+                l2=false;
+
+        }
+
+        return result;
+    }
+
+
+
+ 
+}
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(){
+
+    }
+    ListNode(int val){
+        this.val=val;
+    }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+
 }
