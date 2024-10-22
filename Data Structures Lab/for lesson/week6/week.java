@@ -1,11 +1,7 @@
 public class week{
     public static void main(String[] args) {
 
-        int[] arr= {1,2,3,4,5,6,7,8,9};
-        clearArray(arr);
-        for (int i : arr) {
-            System.out.println(i);
-        }
+        System.out.println(pow(2, 10));
         
     }
 
@@ -18,5 +14,18 @@ public class week{
                 clearArray(array);
         }
         return;
+    }
+
+    public static double pow(double x, int n) {
+        if(n<0)
+            return 1/pow(x, 0-n);
+        if(n==0)
+            return 1;
+        else{
+            double a=pow(x, n/2);
+            if(n%2==1)
+                return a*a*x;
+            else return a*a;
+        }
     }
 }
