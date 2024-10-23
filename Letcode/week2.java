@@ -9,7 +9,7 @@ public class week2 {
         rotateRight(ln5, 2);
         
 
-        plusOne(new int[]{1,2,3});
+        System.out.println(binaryToİnteger("1100"));
 
     
     }
@@ -76,6 +76,34 @@ public class week2 {
 
         }
         return result;
+    }
+
+    public static int binaryToİnteger(String a){
+        int result=0;
+        for (int i = a.length()-1; i>=0; i--) {
+            result+=Math.pow(2, a.length()-1-i)*(a.charAt(i)-48);
+            
+        }
+        return result;
+    }
+
+    public static String integerToBinary(int a){
+        String result="";
+        while(a!=0){
+            int rmnd=a%2;
+            if(rmnd==0){
+                result='0'+result;
+            }
+            else{
+                result='1'+result;
+            }
+            a/=2;
+        }
+        return result;
+    }
+
+    public static String addBinary(String a, String b) {
+        return integerToBinary(binaryToİnteger(a)+binaryToİnteger(b));
     }
 }
 
