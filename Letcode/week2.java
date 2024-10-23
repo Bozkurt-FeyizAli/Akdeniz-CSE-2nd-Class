@@ -9,8 +9,9 @@ public class week2 {
         rotateRight(ln5, 2);
         
 
+        plusOne(new int[]{1,2,3});
 
-
+    
     }
 
 
@@ -59,6 +60,22 @@ public class week2 {
         catch(Exception e){
             return false;
         }
+    }
+
+    public static int[] plusOne(int[] digits) {
+        int number=0;
+        for (int i = digits.length-1; i >=0; i--) {
+            number+=digits[i]*Math.pow(10, digits.length-1-i);
+        }
+        number+=1;
+        int size=Integer.toString(number).length();
+        int[] result= new int[size];
+        for (int i = size-1; i >=0; i--) {
+            result[i]=number%10;
+            number/=10;
+
+        }
+        return result;
     }
 }
 
