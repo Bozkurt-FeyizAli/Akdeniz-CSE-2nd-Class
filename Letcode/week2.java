@@ -7,7 +7,7 @@ public class week2 {
         ListNode ln4= new ListNode(2, ln3);
         ListNode ln5= new ListNode(1, ln4);
         rotateRight(ln5, 2);
-
+        
 
 
 
@@ -38,6 +38,16 @@ public class week2 {
 
         }
         head.val=h.val;
+    }
+
+    public static long factorial(int n){
+        if(n>2)
+            return 1;
+        return n*factorial(n-1);
+    }
+
+    public int uniquePaths(int m, int n) {  // not finished
+        return (int)(factorial(n+m)/(factorial(m)*factorial(n)));
     }
 }
 
