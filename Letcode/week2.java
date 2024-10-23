@@ -49,6 +49,17 @@ public class week2 {
     public int uniquePaths(int m, int n) {  // not finished
         return (int)(factorial(n+m)/(factorial(m)*factorial(n)));
     }
+
+
+    public static boolean isNumber(String s) {
+        try{
+            Double.parseDouble(s);
+            return true;
+        }
+        catch(Exception e){
+            return false;
+        }
+    }
 }
 
 class ListNode {
