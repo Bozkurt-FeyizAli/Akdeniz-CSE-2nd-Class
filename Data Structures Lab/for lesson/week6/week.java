@@ -29,3 +29,24 @@ public class week{
         }
     }
 }
+
+
+
+
+
+
+interface NodeInterface {
+    int getData();
+    void setData(int data);
+    NodeInterface getLeft();
+    void setLeft(NodeInterface left);
+    NodeInterface getRight();
+    void setRight(NodeInterface right);
+}
+
+
+interface BinaryTreeInterface {
+    void insert(int data);
+    boolean search(int data);
+    void inorderTraversal();
+}
