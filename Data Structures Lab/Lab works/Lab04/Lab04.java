@@ -16,8 +16,11 @@ public class Lab04 {
         // System.out.println(s);
         // generatePermutations("abc", "");
         // System.out.println(factorial(32));
+        System.out.println(betterFibonacci(5,  new int[6]));
         
     }
+
+    
 
     /*
      * 1. Write a recursive method 'static int factorial(int n)' 
@@ -57,7 +60,7 @@ public class Lab04 {
         int length =s.length();
         if(length<2)
             return true;
-        if(s.indexOf(0)==s.indexOf(length-1))
+        if(s.indexOf(0)!=s.indexOf(length-1))
             return false;
         else return isPalindrome(s.substring(1, length-1));
      }
