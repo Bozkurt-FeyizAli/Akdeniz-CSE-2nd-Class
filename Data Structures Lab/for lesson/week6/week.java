@@ -35,13 +35,51 @@ public class week{
 
 
 
-interface NodeInterface {
-    int getData();
-    void setData(int data);
-    NodeInterface getLeft();
-    void setLeft(NodeInterface left);
-    NodeInterface getRight();
-    void setRight(NodeInterface right);
+interface  NodeInterface<E> {
+    E getData();
+    void setData(E data);
+    NodeInterface<E> getLeft();
+    void setLeft(Node<E> left);
+    NodeInterface<E> getRight();
+    void setRight(Node<E> right);
+}
+
+class Node<E> implements NodeInterface<E>{
+
+    private E data;
+    private Node<E> left;
+    private Node<E> right;
+
+    @Override
+    public E getData() {
+        return data;
+    }
+
+    @Override
+    public void setData(E data) {
+        this.data=data;
+    }
+
+    @Override
+    public NodeInterface<E> getLeft() {
+        return left;
+    }
+
+    @Override
+    public void setLeft(Node<E> left) {
+        this.left=left;
+    }
+
+    @Override
+    public NodeInterface<E> getRight() {
+        return right;
+    }
+
+    @Override
+    public void setRight(Node<E> right) {
+        this.right=right;
+    }
+    
 }
 
 
