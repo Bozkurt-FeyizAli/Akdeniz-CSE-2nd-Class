@@ -71,7 +71,7 @@ class Node<E> implements NodeInterface<E>{
     }
 
     @Override
-    public NodeInterface<E> getLeft() {
+    public Node<E> getLeft() {
         return left;
     }
 
@@ -81,7 +81,7 @@ class Node<E> implements NodeInterface<E>{
     }
 
     @Override
-    public NodeInterface<E> getRight() {
+    public Node<E> getRight() {
         return right;
     }
 
@@ -106,8 +106,24 @@ class BinaryTree<E> implements BinaryTreeInterface<E>{
 
     @Override
     public void insert(E data) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+        Node<E> node= new Node<E>(data);
+        if(root==null){
+            root=node;
+            return; }
+        Node<E> r=root;
+        while(r.getLeft()!=null||r.getRight()!=null){
+            if((int)data>(int)r.getData())
+                r=r.getRight();
+            else if((int)data<(int)r.getData())
+                r=r.getRight();
+            else    
+                System.out.println("this data is already in the tree");
+        }
+        if((int)data>(int)r.getData())
+            r.setRight(node);;
+        if((int)data<(int)r.getData())
+            r.setLeft(node);
+
     }
 
     @Override
