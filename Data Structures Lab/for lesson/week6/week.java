@@ -109,6 +109,7 @@ class BinaryTree<E> implements BinaryTreeInterface<E>{
         Node<E> node= new Node<E>(data);
         if(root==null){
             root=node;
+            size++;
             return; }
         Node<E> r=root;
         while(r.getLeft()!=null||r.getRight()!=null){
@@ -123,13 +124,24 @@ class BinaryTree<E> implements BinaryTreeInterface<E>{
             r.setRight(node);;
         if((int)data<(int)r.getData())
             r.setLeft(node);
+            size++;
+        System.out.println("the data is succesfull added");
 
     }
 
     @Override
     public boolean search(E data) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'search'");
+        if(root==null)
+            return false;
+        Node<E> r=root;
+        while (r!=null) {
+            if(root.getData()==data)
+                return true;
+            if((int) data<(int)r.getData())
+                r=r.getLeft();
+            else r=r.getLeft();
+        }
+        return false;
     }
 
     @Override
