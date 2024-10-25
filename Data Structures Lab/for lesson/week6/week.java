@@ -89,6 +89,11 @@ class Node<E> implements NodeInterface<E>{
     public void setRight(Node<E> right) {
         this.right=right;
     }
+
+    @Override
+    public String toString() {
+        return data.toString();
+    }
     
 }
 
@@ -146,8 +151,17 @@ class BinaryTree<E> implements BinaryTreeInterface<E>{
 
     @Override
     public void inorderTraversal() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'inorderTraversal'");
+        if(root==null)
+            return;
+        inorderRecursive(root);
+    }
+
+    private void inorderRecursive(Node<E> root) {
+        if (root != null) {
+            inorderRecursive(root.getLeft());
+            System.out.print(root.toString() + " ");
+            inorderRecursive(root.getRight());
+        }
     }
     
 }
