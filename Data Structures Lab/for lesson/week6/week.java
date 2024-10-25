@@ -50,6 +50,16 @@ class Node<E> implements NodeInterface<E>{
     private Node<E> left;
     private Node<E> right;
 
+    public Node(E data){
+        this.data=data;
+    }
+
+    public Node(E data, Node<E> left, Node<E> right){
+        this.data=data;
+        this.left=left;
+        this.right=right;
+    }
+
     @Override
     public E getData() {
         return data;
@@ -83,8 +93,33 @@ class Node<E> implements NodeInterface<E>{
 }
 
 
-interface BinaryTreeInterface {
-    void insert(int data);
-    boolean search(int data);
+interface BinaryTreeInterface<E> {
+    void insert(E data);
+    boolean search(E data);
     void inorderTraversal();
+}
+
+class BinaryTree<E> implements BinaryTreeInterface<E>{
+
+    private Node<E> root;
+    int size;
+
+    @Override
+    public void insert(E data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+    }
+
+    @Override
+    public boolean search(E data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'search'");
+    }
+
+    @Override
+    public void inorderTraversal() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'inorderTraversal'");
+    }
+    
 }
