@@ -1,7 +1,21 @@
 public class week{
     public static void main(String[] args) {
 
-        System.out.println(pow(2, 10));
+        BinaryTree<Integer> binaryTree= new BinaryTree<>();
+        binaryTree.insert(16);
+        binaryTree.insert(32);
+        binaryTree.insert(64);
+        binaryTree.insert(128);
+        binaryTree.insert(256);
+        binaryTree.inorderTraversal();
+       
+        binaryTree.insert(8);
+        binaryTree.insert(22);
+        binaryTree.insert(40);
+        binaryTree.insert(90);
+        binaryTree.insert(200);
+        binaryTree.inorderTraversal();
+        
         
     }
 
@@ -107,32 +121,34 @@ interface BinaryTreeInterface<E> {
 class BinaryTree<E> implements BinaryTreeInterface<E>{
 
     private Node<E> root;
-    int size;
+    private int size;
 
     @Override
     public void insert(E data) {
-        Node<E> node= new Node<E>(data);
+        Node<E> newNode= new Node<>(data);
         if(root==null){
-            root=node;
-            size++;
-            return; }
-        Node<E> r=root;
-        while(r.getLeft()!=null||r.getRight()!=null){
-            if((int)data>(int)r.getData())
-                r=r.getRight();
-            else if((int)data<(int)r.getData())
-                r=r.getRight();
-            else    
-                System.out.println("this data is already in the tree");
+            root= newNode;
+            size++; return;
         }
-        if((int)data>(int)r.getData())
-            r.setRight(node);;
-        if((int)data<(int)r.getData())
-            r.setLeft(node);
-            size++;
-        System.out.println("the data is succesfull added");
-
+        Node<E> node=root;
+        while (node!=null) {
+        if((int)data>(int)node.getData()&&node.getRight()==null){
+            node.setRight(newNode); break;}
+        else if((int)data<(int)node.getData()&&node.getLeft()==null){
+            node.setLeft(newNode); break;}
+        else if((int)data>(int)node.getData()){
+            node=node.getRight();}
+        else if((int)data<(int)node.getData()){
+            node=node.getLeft(); }
+        }
+        size++;
     }
+
+    public boolean isEmpty(){
+        return size==0;
+    }
+
+
 
     @Override
     public boolean search(E data) {
@@ -163,5 +179,19 @@ class BinaryTree<E> implements BinaryTreeInterface<E>{
             inorderRecursive(root.getRight());
         }
     }
+
+    private void inorderRecursive1(Node<E> root) {
+        if (root.getLeft()!= null||root.getRight()!=null) {
+            if(root.getLeft()!= null)
+                System.out.print(root.getLeft().toString() + " ");
+            if(root.getRight()!= null)
+                System.out.print(root.getRight().toString() + " ");
+            if(root.getLeft()!= null)
+                inorderRecursive1(root.getLeft());
+            if(root.getRight()!= null)
+                inorderRecursive1(root.getRight());
+        }
+    }
+
     
 }
