@@ -43,13 +43,59 @@ interface HuffmanTreeInterface {
     String decode(String encodedString);
 }
 
- interface BinaryTreeNodeInterface {
-    int getData();
-    void setData(int data);
-    BinaryTreeNodeInterface getLeft();
-    void setLeft(BinaryTreeNodeInterface left);
-    BinaryTreeNodeInterface getRight();
-    void setRight(BinaryTreeNodeInterface right);
+ interface BinaryTreeNodeInterface<E> {
+    E getData();
+    void setData(E data);
+    BinaryTreeNodeInterface<E> getLeft();
+    void setLeft(BinaryTreeNode<E> left);
+    BinaryTreeNodeInterface<E> getRight();
+    void setRight(BinaryTreeNode<E> right);
+}
+
+class BinaryTreeNode<E> implements BinaryTreeNodeInterface<E>{
+    private E data;
+    private BinaryTreeNode<E> left;
+    private BinaryTreeNode<E> right;
+
+    public BinaryTreeNode(E data){
+        setData(data);
+    }
+    public BinaryTreeNode(E data, BinaryTreeNode<E> left, BinaryTreeNode<E> right){
+        setData(data);
+        setLeft(left);
+        setRight(right);
+    }
+
+    @Override
+    public E getData() {
+        return data;
+    }
+
+    @Override
+    public void setData(E data) {
+        this.data=data;
+    }
+
+    @Override
+    public BinaryTreeNodeInterface<E> getLeft() {
+        return left;
+    }
+
+    @Override
+    public void setLeft(BinaryTreeNode<E> left) {
+        this.left=left;
+    }
+
+    @Override
+    public BinaryTreeNodeInterface<E> getRight() {
+        return right;
+    }
+
+    @Override
+    public void setRight(BinaryTreeNode<E> right) {
+        this.right=right;
+    }
+
 }
 
 interface BSTNodeInterface {
