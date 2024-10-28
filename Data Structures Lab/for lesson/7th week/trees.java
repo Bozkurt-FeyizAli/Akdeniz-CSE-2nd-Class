@@ -48,21 +48,21 @@ interface HuffmanTreeInterface {
  interface BinaryTreeNodeInterface<E> {           // done
     E getData();
     void setData(E data);
-    BinaryTreeNode<E> getLeft();
-    void setLeft(BinaryTreeNode<E> left);
-    BinaryTreeNode<E> getRight();
-    void setRight(BinaryTreeNode<E> right);
+    BinaryTreeNodeInterface<E> getLeft();
+    void setLeft(BinaryTreeNodeInterface<E> left);
+    BinaryTreeNodeInterface<E> getRight();
+    void setRight(BinaryTreeNodeInterface<E> right);
 }
 
 class BinaryTreeNode<E> implements BinaryTreeNodeInterface<E>{         // done
     private E data;
-    private BinaryTreeNode<E> left;
-    private BinaryTreeNode<E> right;
+    private BinaryTreeNodeInterface<E> left;
+    private BinaryTreeNodeInterface<E> right;
 
     public BinaryTreeNode(E data){
         setData(data);
     }
-    public BinaryTreeNode(E data, BinaryTreeNode<E> left, BinaryTreeNode<E> right){
+    public BinaryTreeNode(E data, BinaryTreeNodeInterface<E> left, BinaryTreeNodeInterface<E> right){
         setData(data);
         setLeft(left);
         setRight(right);
@@ -84,7 +84,7 @@ class BinaryTreeNode<E> implements BinaryTreeNodeInterface<E>{         // done
     }
 
     @Override
-    public void setLeft(BinaryTreeNode<E> left) {
+    public void setLeft(BinaryTreeNodeInterface<E> left) {
         this.left=left;
     }
 
@@ -94,7 +94,7 @@ class BinaryTreeNode<E> implements BinaryTreeNodeInterface<E>{         // done
     }
 
     @Override
-    public void setRight(BinaryTreeNode<E> right) {
+    public void setRight(BinaryTreeNodeInterface<E> right) {
         this.right=right;
     }
 
@@ -103,22 +103,22 @@ class BinaryTreeNode<E> implements BinaryTreeNodeInterface<E>{         // done
 interface BSTNodeInterface<E> {  // done
     E getData();
     void setData(E data);
-    BSTNode<E> getLeft();
-    void setLeft(BSTNode<E> left);
-    BSTNode<E> getRight();
-    void setRight(BSTNode<E> right);
+    BSTNodeInterface<E> getLeft();
+    void setLeft(BSTNodeInterface<E> left);
+    BSTNodeInterface<E> getRight();
+    void setRight(BSTNodeInterface<E> right);
 }
 
 class BSTNode<E> implements BSTNodeInterface<E>{  // done
 
     private E data;
-    private BSTNode<E> left;
-    private BSTNode<E> right;
+    private BSTNodeInterface<E> left;
+    private BSTNodeInterface<E> right;
 
     public BSTNode(E data){
         setData(data);
     }
-    public BSTNode(E data, BSTNode<E> left, BSTNode<E> right){
+    public BSTNode(E data, BSTNodeInterface<E> left, BSTNodeInterface<E> right){
         setData(data);
         setLeft(left);
         setRight(right);
@@ -135,22 +135,22 @@ class BSTNode<E> implements BSTNodeInterface<E>{  // done
     }
 
     @Override
-    public BSTNode<E> getLeft() {
+    public BSTNodeInterface<E> getLeft() {
         return left;
     }
 
     @Override
-    public void setLeft(BSTNode<E> left) {
+    public void setLeft(BSTNodeInterface<E> left) {
         this.left=left;
     }
 
     @Override
-    public BSTNode<E> getRight() {
+    public BSTNodeInterface<E> getRight() {
         return right;
     }
 
     @Override
-    public void setRight(BSTNode<E> right) {
+    public void setRight(BSTNodeInterface<E> right) {
         this.right=right;
     }
     
@@ -159,24 +159,24 @@ class BSTNode<E> implements BSTNodeInterface<E>{  // done
 interface AVLTreeNodeInterface<E> {
     E getData();
     void setData(E data);
-    AVLTreeNode<E> getLeft();
-    void setLeft(AVLTreeNode<E> left);
-    AVLTreeNode<E> getRight();
-    void setRight(AVLTreeNode<E> right);
+    AVLTreeNodeInterface<E> getLeft();
+    void setLeft(AVLTreeNodeInterface<E> left);
+    AVLTreeNodeInterface<E> getRight();
+    void setRight(AVLTreeNodeInterface<E> right);
     int getHeight();
     void setHeight(int height);
 }
 
 class AVLTreeNode<E> implements AVLTreeNodeInterface<E>{
     private E data;
-    private AVLTreeNode<E> left;
-    private AVLTreeNode<E> right;
+    private AVLTreeNodeInterface<E> left;
+    private AVLTreeNodeInterface<E> right;
     private int height;
 
     public AVLTreeNode(E data){
         setData(data);
     }
-    public AVLTreeNode(E data, AVLTreeNode<E> left, AVLTreeNode<E> right){
+    public AVLTreeNode(E data, AVLTreeNodeInterface<E> left, AVLTreeNodeInterface<E> right){
         setData(data);
         setLeft(left);
         setRight(right);
@@ -190,20 +190,20 @@ class AVLTreeNode<E> implements AVLTreeNodeInterface<E>{
         this.data=data;
     }
     @Override
-    public AVLTreeNode<E> getLeft() {
+    public AVLTreeNodeInterface<E> getLeft() {
         return left;
     }
     @Override
-    public void setLeft(AVLTreeNode<E> left) {
+    public void setLeft(AVLTreeNodeInterface<E> left) {
        this.left=left;
 
     }
     @Override
-    public AVLTreeNode<E> getRight() {
+    public AVLTreeNodeInterface<E> getRight() {
        return right;
     }
     @Override
-    public void setRight(AVLTreeNode<E> right) {
+    public void setRight(AVLTreeNodeInterface<E> right) {
         this.right=right;
     }
     @Override
@@ -219,20 +219,20 @@ class AVLTreeNode<E> implements AVLTreeNodeInterface<E>{
  interface NaryTreeNodeInterface<E> {
     E getData();
     void setData(E data);
-    List<NaryTreeNode<E>> getChildren();
-    void addChild(NaryTreeNode<E> child);
+    List<NaryTreeNodeInterface<E>> getChildren();
+    void addChild(NaryTreeNodeInterface<E> child);
 }
 
 class NaryTreeNode<E> implements NaryTreeNodeInterface<E>{
     private E data;
-    private List<NaryTreeNode<E>> children;
+    private List<NaryTreeNodeInterface<E>> children;
     
 
     public NaryTreeNode(E data){
         setData(data);
         children= new ArrayList<>();
     }
-    public NaryTreeNode(E data, List<NaryTreeNode<E>> children){
+    public NaryTreeNode(E data, List<NaryTreeNodeInterface<E>> children){
         setData(data);
         this.children= new ArrayList<>();
         this.children.addAll(children);
@@ -246,11 +246,11 @@ class NaryTreeNode<E> implements NaryTreeNodeInterface<E>{
         this.data=data;
     }
     @Override
-    public List<NaryTreeNode<E>> getChildren() {
+    public List<NaryTreeNodeInterface<E>> getChildren() {
         return children;
     }
     @Override
-    public void addChild(NaryTreeNode<E> child) {
+    public void addChild(NaryTreeNodeInterface<E> child) {
         children.add(child);
     }
 }
