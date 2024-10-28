@@ -1,7 +1,9 @@
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class trees{
+    
 
 }
 
@@ -169,7 +171,7 @@ class AVLTreeNode<E> implements AVLTreeNodeInterface<E>{
     private E data;
     private AVLTreeNode<E> left;
     private AVLTreeNode<E> right;
-    int height;
+    private int height;
 
     public AVLTreeNode(E data){
         setData(data);
@@ -214,11 +216,43 @@ class AVLTreeNode<E> implements AVLTreeNodeInterface<E>{
     }
 }
 
- interface NaryTreeNodeInterface {
-    int getData();
-    void setData(int data);
-    List<NaryTreeNodeInterface> getChildren();
-    void addChild(NaryTreeNodeInterface child);
+ interface NaryTreeNodeInterface<E> {
+    E getData();
+    void setData(E data);
+    List<NaryTreeNode<E>> getChildren();
+    void addChild(NaryTreeNode<E> child);
+}
+
+class NaryTreeNode<E> implements NaryTreeNodeInterface<E>{
+    private E data;
+    private List<NaryTreeNode<E>> children;
+    
+
+    public NaryTreeNode(E data){
+        setData(data);
+        children= new ArrayList<>();
+    }
+    public NaryTreeNode(E data, List<NaryTreeNode<E>> children){
+        setData(data);
+        this.children= new ArrayList<>();
+        this.children.addAll(children);
+    }
+    @Override
+    public E getData() {
+        return data;
+    }
+    @Override
+    public void setData(E data) {
+        this.data=data;
+    }
+    @Override
+    public List<NaryTreeNode<E>> getChildren() {
+        return children;
+    }
+    @Override
+    public void addChild(NaryTreeNode<E> child) {
+        children.add(child);
+    }
 }
 
 interface HuffmanTreeNodeInterface {
