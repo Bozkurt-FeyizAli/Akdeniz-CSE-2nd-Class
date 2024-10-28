@@ -4,17 +4,125 @@ import java.util.ArrayList;
 
 public class trees{
     
-
+    public static void main(String[] args) {
+        BinaryTree<Integer> binaryTree= new BinaryTree<>();
+        binaryTree.insert(16);
+        binaryTree.insert(32);
+        binaryTree.insert(64);
+        binaryTree.insert(128);
+        binaryTree.insert(256);
+        binaryTree.insert(8);
+        binaryTree.insert(22);
+        binaryTree.insert(40);
+        binaryTree.insert(90);
+        binaryTree.insert(200);
+        //binaryTree.inorderTraversal();
+        binaryTree.postorderTraversal(binaryTree.getRoot());
+        
+    }
 }
 
-interface BinaryTreeInterface {
-    void insert(int data); 
-    boolean search(int data);
+interface BinaryTreeInterface<E> {
+    void insert(E data); 
+    boolean search(E data);
     void inorderTraversal();
-    void preorderTraversal();
-    void postorderTraversal();
+    void preorderTraversal(BinaryTreeNodeInterface<E> node);
+    void postorderTraversal(BinaryTreeNodeInterface<E> node);
 }
 
+class BinaryTree<E> implements BinaryTreeInterface<E>{
+    private BinaryTreeNodeInterface<E> root;
+    private int size;
+
+    public BinaryTree(){
+        root=null;
+    }
+    public BinaryTree(E data){
+        root=new BinaryTreeNode<>(data);
+    }
+
+    @Override
+    public void insert(E data) {
+        BinaryTreeNodeInterface<E> node= new BinaryTreeNode<>(data);
+        if(root==null)
+            root=node;
+        else{
+            BinaryTreeNodeInterface<E> r=root;
+            while(r!=null){
+                if((int)data>(int)r.getData())
+                    if(r.getRight()==null){
+                        r.setRight(node);
+                        return;
+                    }
+                    else
+                        r=r.getRight();
+                else if((int)data<(int)r.getData())
+                    if(r.getLeft()==null){
+                        r.setLeft(node);
+                        return;
+                    }
+                    else
+                        r=r.getLeft();
+                else 
+                    System.out.println("this data is already exist");
+
+            }
+        }
+        size++;
+    }
+
+    @Override
+    public boolean search(E data) {
+        return recursiveSearch(data, root);
+    }
+    public boolean recursiveSearch(E data, BinaryTreeNodeInterface<E> node){
+        if(node ==null)
+            return false;
+        if(node.getData()==data)
+            return true;
+        return recursiveSearch(data, node.getLeft())||recursiveSearch(data, node.getRight());
+    }
+
+
+    @Override
+    public void inorderTraversal() {
+        if(root==null)
+            return;
+        recursiveInorderTraversal(root);
+    }
+
+    public void recursiveInorderTraversal(BinaryTreeNodeInterface<E> node){
+        if(node!=null){
+            recursiveInorderTraversal(node.getLeft());
+            System.out.println(node.toString());
+            recursiveInorderTraversal(node.getRight());
+        }
+    }
+
+    @Override
+    public void preorderTraversal(BinaryTreeNodeInterface<E> node) {
+        if(node==null)
+            return;
+        System.out.println(node.toString());
+        preorderTraversal(node.getLeft());
+        preorderTraversal(node.getRight());
+    }
+
+    @Override
+    public void postorderTraversal(BinaryTreeNodeInterface<E> node) {
+        if(node==null)
+            return;
+        postorderTraversal(node.getLeft());
+        postorderTraversal(node.getRight());
+        System.out.println(node.toString());
+        
+    }
+
+    public BinaryTreeNodeInterface<E> getRoot() {
+        return root;
+    }
+
+}
 
 interface BSTInterface {
     void insert(int data);
@@ -96,6 +204,11 @@ class BinaryTreeNode<E> implements BinaryTreeNodeInterface<E>{         // done
     @Override
     public void setRight(BinaryTreeNodeInterface<E> right) {
         this.right=right;
+    }
+
+    @Override
+    public String toString() {
+        return data.toString();
     }
 
 }
