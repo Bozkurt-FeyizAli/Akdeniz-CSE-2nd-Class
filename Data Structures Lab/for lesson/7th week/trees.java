@@ -43,16 +43,16 @@ interface HuffmanTreeInterface {
     String decode(String encodedString);
 }
 
- interface BinaryTreeNodeInterface<E> {
+ interface BinaryTreeNodeInterface<E> {           // done
     E getData();
     void setData(E data);
-    BinaryTreeNodeInterface<E> getLeft();
+    BinaryTreeNode<E> getLeft();
     void setLeft(BinaryTreeNode<E> left);
-    BinaryTreeNodeInterface<E> getRight();
+    BinaryTreeNode<E> getRight();
     void setRight(BinaryTreeNode<E> right);
 }
 
-class BinaryTreeNode<E> implements BinaryTreeNodeInterface<E>{
+class BinaryTreeNode<E> implements BinaryTreeNodeInterface<E>{         // done
     private E data;
     private BinaryTreeNode<E> left;
     private BinaryTreeNode<E> right;
@@ -98,24 +98,120 @@ class BinaryTreeNode<E> implements BinaryTreeNodeInterface<E>{
 
 }
 
-interface BSTNodeInterface {
-    int getData();
-    void setData(int data);
-    BSTNodeInterface getLeft();
-    void setLeft(BSTNodeInterface left);
-    BSTNodeInterface getRight();
-    void setRight(BSTNodeInterface right);
+interface BSTNodeInterface<E> {  // done
+    E getData();
+    void setData(E data);
+    BSTNode<E> getLeft();
+    void setLeft(BSTNode<E> left);
+    BSTNode<E> getRight();
+    void setRight(BSTNode<E> right);
 }
 
-interface AVLTreeNodeInterface {
-    int getData();
-    void setData(int data);
-    AVLTreeNodeInterface getLeft();
-    void setLeft(AVLTreeNodeInterface left);
-    AVLTreeNodeInterface getRight();
-    void setRight(AVLTreeNodeInterface right);
+class BSTNode<E> implements BSTNodeInterface<E>{  // done
+
+    private E data;
+    private BSTNode<E> left;
+    private BSTNode<E> right;
+
+    public BSTNode(E data){
+        setData(data);
+    }
+    public BSTNode(E data, BSTNode<E> left, BSTNode<E> right){
+        setData(data);
+        setLeft(left);
+        setRight(right);
+    }
+
+    @Override
+    public E getData() {
+        return data;
+    }
+
+    @Override
+    public void setData(E data) {
+        this.data=data;
+    }
+
+    @Override
+    public BSTNode<E> getLeft() {
+        return left;
+    }
+
+    @Override
+    public void setLeft(BSTNode<E> left) {
+        this.left=left;
+    }
+
+    @Override
+    public BSTNode<E> getRight() {
+        return right;
+    }
+
+    @Override
+    public void setRight(BSTNode<E> right) {
+        this.right=right;
+    }
+    
+}
+
+interface AVLTreeNodeInterface<E> {
+    E getData();
+    void setData(E data);
+    AVLTreeNode<E> getLeft();
+    void setLeft(AVLTreeNode<E> left);
+    AVLTreeNode<E> getRight();
+    void setRight(AVLTreeNode<E> right);
     int getHeight();
     void setHeight(int height);
+}
+
+class AVLTreeNode<E> implements AVLTreeNodeInterface<E>{
+    private E data;
+    private AVLTreeNode<E> left;
+    private AVLTreeNode<E> right;
+    int height;
+
+    public AVLTreeNode(E data){
+        setData(data);
+    }
+    public AVLTreeNode(E data, AVLTreeNode<E> left, AVLTreeNode<E> right){
+        setData(data);
+        setLeft(left);
+        setRight(right);
+    }
+    @Override
+    public E getData() {
+        return data;
+    }
+    @Override
+    public void setData(E data) {
+        this.data=data;
+    }
+    @Override
+    public AVLTreeNode<E> getLeft() {
+        return left;
+    }
+    @Override
+    public void setLeft(AVLTreeNode<E> left) {
+       this.left=left;
+
+    }
+    @Override
+    public AVLTreeNode<E> getRight() {
+       return right;
+    }
+    @Override
+    public void setRight(AVLTreeNode<E> right) {
+        this.right=right;
+    }
+    @Override
+    public int getHeight() {
+        return height;
+    }
+    @Override
+    public void setHeight(int height) {
+        this.height=height;
+    }
 }
 
  interface NaryTreeNodeInterface {
