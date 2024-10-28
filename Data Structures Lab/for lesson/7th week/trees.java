@@ -255,15 +255,73 @@ class NaryTreeNode<E> implements NaryTreeNodeInterface<E>{
     }
 }
 
-interface HuffmanTreeNodeInterface {
-    char getCharacter();
-    void setCharacter(char character);
+interface HuffmanTreeNodeInterface<E> {
+    E getData();
+    void setData(E data);
     int getFrequency();
     void setFrequency(int frequency);
-    HuffmanTreeNodeInterface getLeft();
-    void setLeft(HuffmanTreeNodeInterface left);
-    HuffmanTreeNodeInterface getRight();
-    void setRight(HuffmanTreeNodeInterface right);
+    HuffmanTreeNodeInterface<E> getLeft();
+    void setLeft(HuffmanTreeNodeInterface<E> left);
+    HuffmanTreeNodeInterface<E> getRight();
+    void setRight(HuffmanTreeNodeInterface<E> right);
+}
+
+class HuffmanTreeNode<E> implements HuffmanTreeNodeInterface<E>{
+    private E data;
+    private int frequency;
+    private HuffmanTreeNodeInterface<E> left;
+    private HuffmanTreeNodeInterface<E> right;
+
+    public HuffmanTreeNode(E data){
+        setData(data);
+    }
+    public HuffmanTreeNode(E data, HuffmanTreeNodeInterface<E> left, HuffmanTreeNodeInterface<E> right){
+        setData(data);
+        setLeft(left);
+        setRight(right);
+    }
+    
+    @Override
+    public E getData() {
+        return data;
+    }
+
+    @Override
+    public void setData(E data) {
+        this.data=data;
+    }
+
+    @Override
+    public int getFrequency() {
+       return frequency;
+    }
+
+    @Override
+    public void setFrequency(int frequency) {
+        this.frequency= frequency;
+    }
+
+    @Override
+    public HuffmanTreeNodeInterface<E> getLeft() {
+        return left;
+    }
+
+    @Override
+    public void setLeft(HuffmanTreeNodeInterface<E> left) {
+       
+        this.left=left;
+    }
+
+    @Override
+    public HuffmanTreeNodeInterface<E> getRight() {
+        return right;
+    }
+
+    @Override
+    public void setRight(HuffmanTreeNodeInterface<E> right) {
+        this.right=right;
+    }
+
 }
 
 
