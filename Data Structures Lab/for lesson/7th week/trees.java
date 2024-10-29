@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class trees{
     
     public static void main(String[] args) {
-        BinaryTree<Integer> binaryTree= new BinaryTree<>();
+        BTS<Integer> binaryTree= new BTS<>();
         binaryTree.insert(16);
         binaryTree.insert(32);
         binaryTree.insert(64);
@@ -16,8 +16,9 @@ public class trees{
         binaryTree.insert(40);
         binaryTree.insert(90);
         binaryTree.insert(200);
+        System.out.println(binaryTree.search(8));
         //binaryTree.inorderTraversal();
-        binaryTree.postorderTraversal(binaryTree.getRoot());
+        //binaryTree.postorderTraversal(binaryTree.getRoot());
         
     }
 }
@@ -78,9 +79,11 @@ class BinaryTree<E> implements BinaryTreeInterface<E>{
     public boolean recursiveSearch(E data, BinaryTreeNodeInterface<E> node){
         if(node ==null)
             return false;
-        if(node.getData()==data)
+        if(node.getData().equals(data))
             return true;
-        return recursiveSearch(data, node.getLeft())||recursiveSearch(data, node.getRight());
+        if((int)node.getData()>(int)data)
+        return recursiveSearch(data, node.getLeft());
+        return recursiveSearch(data, node.getRight());
     }
 
 
@@ -124,13 +127,108 @@ class BinaryTree<E> implements BinaryTreeInterface<E>{
 
 }
 
-interface BSTInterface {
-    void insert(int data);
-    boolean search(int data);
-    void delete(int data);
+interface BSTInterface<E> {
+    void insert(E data);
+    boolean search(E data);
+    void delete(E data);
     void inorderTraversal();
 }
 
+class BTS<E> implements BSTInterface<E>{
+    private BSTNodeInterface<E> root;
+    private int size;
+
+    public BTS(E data){
+        root= new BSTNode<>(data);
+        size=0;
+    }
+    public BTS(){
+        root=null;
+        size=0;
+    }
+
+    @Override
+    public void insert(E data) {
+        BSTNodeInterface<E> node= new BSTNode<>(data);
+        BSTNodeInterface<E> r=root;
+        recursiveInsert(node, r);
+        /* 
+        if(root==null)
+            root=node;
+        else{
+            BSTNodeInterface<E> r=root;
+            while (r!=null) {
+                if((int)r.getData()>(int)data){
+                    if(r.getLeft()==null){
+                        r.setLeft(r);
+                        break;
+                    }
+                    else 
+                        r=r.getLeft();
+                }
+                else if(data.equals(r.getData())){
+                    System.out.println("data is exist");
+                }
+                else{
+                    if(r.getRight()==null){
+                        r.setRight(node);
+                        break;
+                    }
+                    else 
+                        r=r.getRight();
+                }   
+            }
+        }
+            */
+        size++;
+        
+    }
+
+    public void recursiveInsert(BSTNodeInterface<E> node, BSTNodeInterface<E> r ){
+        if(r==null)
+            r=node;
+        else if(r.getData().equals(node.getData()))
+            System.out.println("data is exist");
+        else if((int)r.getData()>(int)node.getData())
+            recursiveInsert(node.getLeft(), r);
+        else 
+            recursiveInsert(node.getRight(), r);
+    }
+
+
+    @Override
+    public boolean search(E data) {
+
+        return recursiveSearch(data, root);
+/* 
+        if(root==null)
+            return false;
+        if(root.getData().equals(data))
+            return true;
+        BSTNodeInterface<E> r=root;
+        while (r!=null) {
+            if(data.equals(r.getData()))
+                return true;
+            else if((int)r.getData()>(int)data)
+                r=r.getLeft();
+            else 
+                r=r.getRight();
+        }
+        return false;
+        */
+    }
+
+    public boolean recursiveSearch(E data, BSTNodeInterface<E> node){
+        if(node==null)
+            return false;
+        if(node.getData().equals(data))
+            return true;
+        if((int)node.getData()>(int)data)
+            return recursiveSearch(data, node.getLeft());
+            return recursiveSearch(data, node.getRight());
+    }
+
+    @Override
 interface AVLTreeInterface {
     void insert(int data);
     boolean search(int data);
