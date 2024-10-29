@@ -229,6 +229,36 @@ class BTS<E> implements BSTInterface<E>{
     }
 
     @Override
+    public void delete(E data) {
+        if(root==null)
+            return;
+        BSTNodeInterface<E> r=root;
+        while (r!=null) {
+            if(data.equals(r.getData()))
+                r=null;
+            else if((int)r.getData()>(int)data)
+              r.getRight();
+            else r=r.getLeft();
+        }
+    }
+
+    @Override
+    public void inorderTraversal() {
+        if(root==null)
+            return ;
+        recursiveInorderTraversal(root);
+    }
+
+    public void recursiveInorderTraversal(BSTNodeInterface<E> node){
+        if(node!=null){
+            recursiveInorderTraversal(node.getLeft());
+            System.out.println(node.toString());
+            recursiveInorderTraversal(node.getRight());
+        }
+    }
+    
+}
+
 interface AVLTreeInterface {
     void insert(int data);
     boolean search(int data);
