@@ -30,3 +30,21 @@ public class Solution {
     }
 }
 
+
+import java.io.*;
+import java.util.*;
+
+class Solution1 {
+
+  //  public static void main(String[] args) {
+        /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution. */
+//        Scanner s= new Scanner(System.in);
+      //  int i=s.nextInt();
+     //   double d=s.nextDouble();
+      //  s.nextLine();
+    //    String st=s.nextLine();
+     //   System.out.println("String: "+st);
+     //   System.out.println("Double: "+d);
+      //  System.out.println("Int: "+i);
+    //}
+}
