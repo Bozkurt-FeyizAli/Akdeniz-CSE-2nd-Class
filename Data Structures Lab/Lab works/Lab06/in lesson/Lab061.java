@@ -12,7 +12,7 @@ public class Lab061 {
         TreeNode<Integer> r4= new TreeNode<Integer>(1, null);
         r.addChild(r4);
         System.out.println(t.getDepth(r4));
-
+	// RG)S*6uEmO:GyfG+
     }
 }
 

@@ -112,9 +112,10 @@ public class Lab06 {
             return;
         
         for (var p : node.getChildren()) {
-            System.out.println(p.getData());
+            
             postorder(p);
         }
+        System.out.println(p.getData());
     }
 
     public TreeNode<E> getRoot() {
