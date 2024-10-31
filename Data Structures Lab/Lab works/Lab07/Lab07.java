@@ -18,7 +18,13 @@ import java.util.ArrayList;
  */
 public class Lab07 {
     public static void main(String[] args) {
-        
+        BinaryTree<Integer> b= new BinaryTree<>(new BFS<>());
+        for (int i = 0; i < 3; i++) {
+            b.insert(i);
+        }
+        System.out.println(b);
+        b.delete(1);
+        System.out.println(b);
     }
 }
 
@@ -176,15 +182,49 @@ class BinaryTree <T> implements IBinaryTree <T> {
 
     @Override
     public void insert(T value) {
-        Node<T> node= new Node<>(value);
+        Node<T> newNode=new Node<>(value);
         if(root==null)
-            root=node;
+            root=newNode;
         else{
-
+        Queue<BinaryTree.Node<T>> queue= new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            BinaryTree.Node<T> node=queue.poll();
+            if(node.getLeft()==null){
+                node.setLeft(newNode);
+                break;
+            }
+            else    
+                queue.add(node.getLeft());
+            if(node.getRight()==null){
+                node.setRight(newNode);
+                break;
+            }
+            else    
+                queue.add(node.getRight());
+        }
         }
         size++;
+    }
+
+    private boolean deleteLastNode(Node<T> root, Node<T> target){
+        if(root==null)
+        return false;
+        if(root.getLeft()==target){
+            root.setLeft(null);
+            return true;}
+        if(root.getRight()==target){
+            root.setRight(null);
+            return true;
+        }
+            if(!(deleteLastNode(root.getLeft(), target)))
+            return deleteLastNode(root.getRight(), target);
+            return true;
+        
         
     }
+
+        
 
     private List<T> inorder(Node<T> node){
         
@@ -250,6 +290,27 @@ class BinaryTree <T> implements IBinaryTree <T> {
         return result;
     }
 
+    public Node<T> lastNode(Node<T> root){
+        if(root==null)
+            return null;
+            int last=0;
+            Queue<BinaryTree.Node<T>> queue= new LinkedList<>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                if(last+1==size)
+                    break;
+                BinaryTree.Node<T> node=queue.poll();
+                if(node.getLeft()!=null)
+                    queue.add(node);
+                if(node.getRight()!=null)
+                    queue.add(node.getRight());
+                    last++;
+            }
+
+            return queue.poll();
+
+    }
+
     
 
     
@@ -267,26 +328,22 @@ class BinaryTree <T> implements IBinaryTree <T> {
             if(node.getData()==value){
                 return true;
             }
-            recursiveDelete(value, node.getLeft());
-            recursiveDelete(value, node.getRight());
+            recursiveContains(value, node.getLeft());
+            recursiveContains(value, node.getRight());
         }
         return false;
     }
 
     @Override
     public boolean delete(T value) {
-        return recursiveDelete(value, root);
-    }
-    public boolean recursiveDelete(T value, Node<T> node) {
-        if(node!=null){
-            if(node.getData()==value){
-                node=null;
-                return true;
-            }
-            recursiveDelete(value, node.getLeft());
-            recursiveDelete(value, node.getRight());
-        }
+        if(!traversalStrategy.contains(root, value))
         return false;
+        Node<T> target=traversalStrategy.get(root, value);
+        Node<T> last=lastNode(root);
+        T temp=target.getData();
+        target.data=last.getData();
+        last.data=temp;
+        return deleteLastNode(root, last);
     }
 
     @Override
@@ -321,56 +378,12 @@ class BinaryTree <T> implements IBinaryTree <T> {
             case 3:
                  postorder(root); 
                   break;
-                  case 4:
+                  default:
                   levelorder(root); 
                    break;
         
-            default:
-                break;
-        }
-    }
-
-}
-
-class DFS<T> implements Search<T>{
-
-    @Override
-    public boolean contains(BinaryTree.Node<T> root, T value) {
-
-        if(root==null)
-            return false;
-        Stack<BinaryTree.Node<T>> s= new Stack<>();
-        s.add(root);
-        while (!s.isEmpty()) {
-            BinaryTree.Node<T> node= s.pop();
-            if(node.getData().equals(value))
-                return false;
-            if(root.getLeft()!=null)
-                s.add(root.getLeft());
-            if(root.getRight()!=null)
-                s.add(root.getRight());
-        }
-        return false;
- 
         
-    }
-
-    @Override
-    public BinaryTree.Node<T> get(BinaryTree.Node<T> root, T value) {
-        if(root==null)
-            return null;
-        Stack<BinaryTree.Node<T>> s= new Stack<>();
-        s.add(root);
-        while (!s.isEmpty()) {
-            BinaryTree.Node<T> node= s.pop();
-            if(node.getData().equals(value))
-                return node;
-            if(root.getLeft()!=null)
-                s.add(root.getLeft());
-            if(root.getRight()!=null)
-                s.add(root.getRight());
         }
-        return null;
     }
 
 }
@@ -381,19 +394,18 @@ class BFS<T> implements Search<T>{
     public boolean contains(BinaryTree.Node<T> root, T value) {
         if(root==null)
             return false;
-        Queue<T> queue= new LinkedList<>();
-        queue.add(root.getData());
-
+        Queue<BinaryTree.Node<T>> queue= new LinkedList<>();
+        queue.add(root);
         while (!queue.isEmpty()) {
-            T t=queue.poll();
-            if(t.equals(value))
+            BinaryTree.Node<T> node=queue.poll();
+            if(node.getData().equals(value))
                 return true;
-            if(root.getLeft()!=null)
-                queue.add(root.getLeft().getData());
-            if(root.getRight()!=null)
-                queue.add(root.getRight().getData());
-        }
+            if(node.getLeft()!=null)
+                queue.add(node.getLeft());
+            if(node.getRight()!=null)
+                queue.add(node.getRight());
 
+        }
         return false;
     }
 
@@ -403,18 +415,59 @@ class BFS<T> implements Search<T>{
             return null;
         Queue<BinaryTree.Node<T>> queue= new LinkedList<>();
         queue.add(root);
-
         while (!queue.isEmpty()) {
-            BinaryTree.Node<T> node =queue.poll();
+            BinaryTree.Node<T> node=queue.poll();
             if(node.getData().equals(value))
                 return node;
-            if(root.getLeft()!=null)
-                queue.add(root.getLeft());
-            if(root.getRight()!=null)
-                queue.add(root.getRight());
-        }
+            if(node.getLeft()!=null)
+                queue.add(node.getLeft());
+            if(node.getRight()!=null)
+                queue.add(node.getRight());
 
+        }
         return null;
+    }
+    
+}
+
+class DFS<T> implements Search<T>{
+
+    @Override
+    public boolean contains(BinaryTree.Node<T> root, T value) {
+        if(root==null)
+            return false;
+        Stack<BinaryTree.Node<T>> queue= new Stack<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            BinaryTree.Node<T> node=queue.pop();
+            if(node.getData().equals(value))
+                return true;
+            if(node.getLeft()!=null)
+                queue.add(node.getLeft());
+            if(node.getRight()!=null)
+                queue.add(node.getRight());
+
+        }
+        return false;
+    }
+
+    @Override
+    public BinaryTree.Node<T> get(BinaryTree.Node<T> root, T value) {
+            if(root==null)
+                return null;
+            Stack<BinaryTree.Node<T>> queue= new Stack<>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                BinaryTree.Node<T> node=queue.pop();
+                if(node.getData().equals(value))
+                    return node;
+                if(node.getLeft()!=null)
+                    queue.add(node.getLeft());
+                if(node.getRight()!=null)
+                    queue.add(node.getRight());
+    
+            }
+            return null;
     }
     
 }
