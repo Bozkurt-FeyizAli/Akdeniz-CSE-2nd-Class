@@ -8,7 +8,7 @@ public class Solution5 {
         Scanner s= new Scanner(System.in);
         int t=s.nextInt();
         
-        for (int i = 0; ; i++) {
+        while (true) {
             if(!s.hasNext())
                 break;
             int a=s.nextInt();

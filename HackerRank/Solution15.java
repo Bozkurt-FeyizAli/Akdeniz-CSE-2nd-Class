@@ -1,5 +1,3 @@
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.Scanner;
 
 class Solution{
@@ -8,7 +6,7 @@ class Solution{
         Scanner in = new Scanner(System.in);
         while(in.hasNext()){
             String IP = in.next();
-            System.out.println(IP.matches(new MyRegex().pattern));
+            //System.out.println(IP.matches(new MyRegex().pattern));
         }
 
     }
