@@ -3,7 +3,10 @@ import java.util.Stack;
 
 public class forMiddterm{
     public static void main(String[] args) {
-        System.out.println(parantezKontrol("(((null)))"));
+        ArrayList<Integer> a= asalÇarpanlar(21);
+        for (Integer integer : a) {
+            System.out.println(integer);
+        }
     }
 
     public static String reverse(int number, int i){
@@ -59,5 +62,22 @@ public class forMiddterm{
 
 
         return characters.isEmpty();
+    }
+
+    public static ArrayList<Integer> asalÇarpanlar(int num){
+        ArrayList<Integer> result= new ArrayList<>();
+        int i=2;
+        while(num!=1){
+            if(num%i!=0){
+                i++;
+                continue;
+            }
+            else{
+                if(!result.contains(i))
+                    result.add(i);
+                num=num/i;
+            }
+        }
+        return result;
     }
 }
