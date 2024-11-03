@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class forMiddterm{
     public static void main(String[] args) {
         System.out.println(5/2);
@@ -29,5 +31,16 @@ public class forMiddterm{
         System.out.println(Integer.toString(number%10)) ;
         betterNumReversse1(number/10);
         }
+    }
+
+    public static ArrayList<Integer> findDublicate(int[] arr){
+        ArrayList<Integer> result= new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i+1; j < arr.length; j++) {
+                if(arr[i]==arr[j])
+                    result.add(arr[i]);
+            }
+        }
+        return result;
     }
 }
