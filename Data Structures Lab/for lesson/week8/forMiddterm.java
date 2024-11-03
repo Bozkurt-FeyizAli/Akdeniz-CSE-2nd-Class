@@ -1,11 +1,9 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class forMiddterm{
     public static void main(String[] args) {
-        System.out.println(5/2);
-        System.out.println(reverse(100000, 0));
-        System.out.println(betterNumReversse(100000));
-        betterNumReversse1(1000000);
+        System.out.println(parantezKontrol("(((null)))"));
     }
 
     public static String reverse(int number, int i){
@@ -42,5 +40,24 @@ public class forMiddterm{
             }
         }
         return result;
+    }
+
+    public static boolean parantezKontrol(String s){
+        Stack<Character> characters= new Stack<>();
+        char[] c=s.toCharArray();
+        String open="({[";
+        String close=")}]";
+        for (char d : c) {
+            if(open.indexOf(d)!=-1)
+                characters.add(d);
+            else if(close.indexOf(d)!=-1)
+            if(characters.isEmpty())
+                return false;
+            else if(open.indexOf(characters.peek())==close.indexOf(d))
+                characters.pop();
+        }
+
+
+        return characters.isEmpty();
     }
 }
