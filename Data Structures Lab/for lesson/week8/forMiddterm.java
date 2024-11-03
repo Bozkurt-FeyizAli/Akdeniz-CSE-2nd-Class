@@ -3,10 +3,7 @@ import java.util.Stack;
 
 public class forMiddterm{
     public static void main(String[] args) {
-        ArrayList<Integer> a= asalÇarpanlar(21);
-        for (Integer integer : a) {
-            System.out.println(integer);
-        }
+        System.out.println(palindromiksayı(1211));
     }
 
     public static String reverse(int number, int i){
@@ -79,5 +76,18 @@ public class forMiddterm{
             }
         }
         return result;
+    }
+
+    public static boolean palindromiksayı(int i){
+        int[] arr= new int[(int)Math.log10(i)+1];
+        for (int j = 0; i!=0; j++) {
+            arr[j]=i%10;
+            i=i/10;
+        }
+        for (int j = 0; j < arr.length/2; j++) {
+            if(arr[j]!=arr[arr.length-1-j])
+                return false;
+        }
+        return true;
     }
 }
