@@ -3,7 +3,8 @@ import java.util.Stack;
 
 public class forMiddterm{
     public static void main(String[] args) {
-        System.out.println(palindromiksayı(1211));
+        int[][] a= {{1,2,3}, {1,2,3}, {1,2,3}, {1,2,3}};
+        System.out.println(sum2DArray(a, 1, 3));
     }
 
     public static String reverse(int number, int i){
@@ -101,5 +102,19 @@ public class forMiddterm{
             }
         }
         return result;
+    }
+
+    public static int sum2DArray(int[][] array, int i, int j){
+        if(i<0||j<0)
+            return 0;
+        else if(i==0&&j==0)
+            return array[0][0];
+        else if(i==0){
+            int a=array[j][i];
+            i=array[0].length-1;
+            j--;
+            return a+sum2DArray(array, i, j);
+        }
+        return array[j][i]+sum2DArray(array, i-1, j);
     }
 }
