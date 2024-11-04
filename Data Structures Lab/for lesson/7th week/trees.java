@@ -1,6 +1,8 @@
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class trees{
     
@@ -259,14 +261,107 @@ class BTS<E> implements BSTInterface<E>{
     
 }
 
-interface AVLTreeInterface {
-    void insert(int data);
-    boolean search(int data);
-    void delete(int data);
+interface AVLTreeInterface<E> {
+    void insert(E data);
+    boolean search(E data);
+    void delete(E data);
     void inorderTraversal();
     int height();
     boolean isBalanced();
 }
+
+class AVLTree<E> implements AVLTreeInterface<E>{
+    private AVLTreeNodeInterface<E> root;
+
+    public AVLTree(){
+        root=null;
+    }
+    public AVLTree(E data){
+        root=new AVLTreeNode<>(data);
+    }
+
+    @Override
+    public void insert(E data) {
+        AVLTreeNode<E> node=new AVLTreeNode<>(data);;
+        if(root==null){
+            root=node;
+            return;
+        }
+        Queue<AVLTreeNodeInterface<E>> queue= new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            AVLTreeNodeInterface<E> pop=queue.poll();
+            if(pop.getLeft()!=null){
+                pop.setLeft(node);
+                return;
+            }
+            else queue.add(pop.getLeft());
+            if(pop.getRight()!=null){
+                pop.setRight(node);
+                return;
+            }
+            else queue.add(pop.getRight());
+        }
+        
+
+
+
+    }
+
+    
+
+    @Override
+    public boolean search(E data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'search'");
+    }
+
+    public boolean recursiveSearch(E data, AVLTreeNodeInterface<E> root) {
+        if(root!=null){
+            if(root.getData()==data)
+                return true;
+            if(root.getLeft()!=null)
+                return recursiveSearch(data, root.getLeft());
+            if(root.getRight()!=null)
+                return recursiveSearch(data, root.getRight());
+        }
+        return false;
+    }
+
+
+
+    @Override
+    public void delete(E data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public void inorderTraversal() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'inorderTraversal'");
+    }
+    public void recursiveInorderTraversal(AVLTreeNodeInterface<E> root) {
+        if(root.getLeft()!=null)
+            recursiveInorderTraversal(root.getLeft());
+        System.out.println(root.getData().toString());
+        if(root.getRight()!=null)
+            recursiveInorderTraversal(root.getRight());
+    }
+
+    @Override
+    public int height() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'height'");
+    }
+
+    @Override
+    public boolean isBalanced() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isBalanced'");
+    }
+    
+} 
 
 interface NaryTreeInterface {
     void insert(int parentData, int data);
