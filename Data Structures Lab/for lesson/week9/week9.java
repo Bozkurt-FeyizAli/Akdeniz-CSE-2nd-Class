@@ -1,7 +1,8 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 public class week9{
-
+    public static void main(String[] args) {
+        
+    }
 }
 
 interface IPriorityQueue<T>{
