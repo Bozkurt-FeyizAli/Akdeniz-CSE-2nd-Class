@@ -25,6 +25,18 @@ interface IPriorityQueue<T>{
             this.priority = priority;
             this.insertionOrder = insertionOrder;
         }
+
+        @Override
+        public int compareTo(PriorityQueueImpl.Element<T> el) {
+            if(priority>el.priority)
+                return 1;
+            else if(priority==el.priority)
+                if(insertionOrder>el.insertionOrder)
+                    return 1;
+                if(insertionOrder==el.insertionOrder)
+                    return 0;
+            return -1;
+        }
     }
 
     private  ArrayList<Element<T>> list;
