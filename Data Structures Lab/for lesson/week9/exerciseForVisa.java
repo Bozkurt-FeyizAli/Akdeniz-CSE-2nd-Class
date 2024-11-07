@@ -46,7 +46,7 @@ interface PriorityQueueInterface<E> {
 
 
 
- class PriorityQueueNode<E> {
+ class PriorityQueueNode<E> implements Comparable<PriorityQueueNode<E>>{
     E data;
     int priority;
     PriorityQueueNode<E> next;
@@ -62,48 +62,73 @@ interface PriorityQueueInterface<E> {
         this.priority = priority;
         this.next = null;
     }
+
+    @Override
+    public int compareTo(PriorityQueueNode<E> node) {
+        return Integer.compare(priority, node.priority);
+    }
 }
 
  class PriorityQueue<E> implements PriorityQueueInterface<E> {
-    private PriorityQueue<E> tail;
+    private PriorityQueueNode<E> head;
     private int size;
 
     public PriorityQueue() {
-        this.tail = null;
+        this.head = null;
         this.size = 0;
     }
 
     @Override
     public void enqueue(E element, int priority) {
-        // Add a new element to the queue based on its priority.
-        // Higher priority elements should come before lower priority elements.
-        
+        PriorityQueueNode<E> node= new PriorityQueueNode<>(element, priority);
+        if(isEmpty()){
+            head=node;
+        }
+        PriorityQueueNode<E> t=head;
+        if(node.compareTo(head)>0){
+            node.next=head;
+            head=node;
+        }
+        else{
+            t=t.next;
+        while(t.next!=null){
+            if(node.compareTo(t.next)>0){
+                node.next=t.next;
+                t.next=node;
+                break;
+            }
+            t=t.next;
+        }
+        }
+        size++;
     }
 
     @Override
     public E dequeue() {
-        // Remove and return the element with the highest priority.
-        // If the queue is empty, throw a NoSuchElementException.
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
+        if(isEmpty())
+            return null;
+        E data=head.data;
+        if(size!=1)
+        head=head.next;
+        size--;
+        return data;
     }
 
     @Override
     public E peek() {
-        // Retrieve the element with the highest priority without removing it.
-        // If the queue is empty, throw a NoSuchElementException.
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
+        if(isEmpty())
+            return null;
+        return head.data;
     }
 
     @Override
     public int size() {
-        // Return the number of elements in the queue.
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        // Return true if the queue has no elements, otherwise false.
-        throw new UnsupportedOperationException("Unimplemented method 'enqueue'");
+        return size==0;
     }
 
     
