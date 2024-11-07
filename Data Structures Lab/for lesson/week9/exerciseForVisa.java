@@ -1,5 +1,43 @@
+import java.util.NoSuchElementException;
+
 public class exerciseForVisa {
-    
+    public static void main(String[] args) {
+        PriorityQueue<String> queue = new PriorityQueue<>();
+
+        // Test 1: Check if the queue is initially empty
+        System.out.println("Test 1: Queue should be empty initially.");
+        assert queue.isEmpty() : "Queue should be empty";
+        assert queue.size() == 0 : "Initial size should be 0";
+
+        // Test 2: Enqueue elements with varying priorities
+        System.out.println("Test 2: Adding elements to the queue.");
+        queue.enqueue("Low Priority", 1);      // Lower priority
+        queue.enqueue("High Priority", 3);     // Higher priority
+        queue.enqueue("Medium Priority", 2);   // Medium priority
+        assert queue.size() == 3 : "Queue size should be 3 after adding 3 elements";
+
+        // Test 3: Peek should return the highest priority item without removing it
+        System.out.println("Test 3: Peek should return 'High Priority'.");
+        assert queue.peek().equals("High Priority") : "Peek should return 'High Priority'";
+
+        // Test 4: Dequeue elements and check order by priority
+        System.out.println("Test 4: Dequeuing elements by priority.");
+        assert queue.dequeue().equals("High Priority") : "First dequeue should return 'High Priority'";
+        assert queue.dequeue().equals("Medium Priority") : "Second dequeue should return 'Medium Priority'";
+        assert queue.dequeue().equals("Low Priority") : "Third dequeue should return 'Low Priority'";
+        
+        // Test 5: Queue should be empty after all elements are dequeued
+        System.out.println("Test 5: Queue should be empty after removing all elements.");
+        assert queue.isEmpty() : "Queue should be empty after dequeuing all elements";
+        assert queue.size() == 0 : "Size should be 0 after removing all elements";
+
+        // Test 6: Dequeue and peek on an empty queue should return null
+        System.out.println("Test 6: Dequeue and Peek on an empty queue.");
+        assert queue.dequeue() == null : "Dequeue on empty queue should return null";
+        assert queue.peek() == null : "Peek on empty queue should return null";
+
+        System.out.println("All tests passed!");
+    }
 }
 
 interface PriorityQueueInterface<E> {
@@ -90,7 +128,7 @@ interface PriorityQueueInterface<E> {
             head=node;
         }
         else{
-            t=t.next;
+
         while(t.next!=null){
             if(node.compareTo(t.next)>0){
                 node.next=t.next;
