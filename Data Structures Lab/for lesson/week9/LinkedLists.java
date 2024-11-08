@@ -71,11 +71,104 @@ class Node<E> implements INode<E>{
     
 }
 
-class DoublyLinkedList<E> implements Doubly<E>{}
+class DoublyLinkedList<E> implements Doubly<E>{
+    int size;
+    Node<E> head;
+    Node<E> tail;
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public E first() {
+        if(head==null)
+            return null;
+        return head.getElement();
+    }
+
+    @Override
+    public E last() {
+        if(tail==null)
+            return null;
+        return tail.getElement();
+    }
+
+    @Override
+    public void addFirst(E e) {
+        Node<E> newNode= new Node<>(e, head);
+        if(isEmpty()){
+            head=tail=newNode;
+            head.setNext(tail);
+            tail.setPrev(newNode);
+        }
+        else{
+            head.setPrev(newNode);
+        }
+        size++;
+    }
+
+    @Override
+    public void addLast(E e) {
+        if(isEmpty()){
+            addFirst(e);
+        }
+        else{
+            Node<E> newNode= new Node<>(e, null, tail);
+            tail.setNext(newNode);
+            size++;
+        }
+    }
+
+    @Override
+    public E removeFirst() {
+        if(isEmpty())
+            return null;
+        else{
+            E remove=head.getElement();
+            head=head.getNext();
+            if(size==1){
+                tail=head=null;
+                size--;
+                return remove;
+            }
+            head.getNext().setPrev(null);
+            head=head.getNext();
+            size--;
+            return remove;
+        }
+    }
+
+    @Override
+    public E removeLast() {
+        if(isEmpty())
+            return null;
+        if(size==1)
+            return removeFirst();
+        else{
+            E remoeve=tail.getElement();
+            tail.getPrev().setNext(null);
+            tail=tail.getPrev();
+            size--;
+            return remoeve;
+        }
+    }}
 
 class CircularLinkedList<E> implements List<E>, Circlular{
+
     int size;
     Node<E> tail;
+    
+    CircularLinkedList(){
+        size=0;
+        tail=null;
+    }
     @Override
     public void rotate() {
         if(size>1)
