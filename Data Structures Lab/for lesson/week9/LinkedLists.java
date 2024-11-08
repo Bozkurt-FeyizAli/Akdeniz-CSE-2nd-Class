@@ -73,7 +73,73 @@ class Node<E> implements INode<E>{
 
 class DoublyLinkedList<E> implements Doubly<E>{}
 
-class CircularLinkedList<E> implements List<E>, Circlular{}
+class CircularLinkedList<E> implements List<E>, Circlular{
+    int size;
+    Node<E> tail;
+    @Override
+    public void rotate() {
+        if(size>1)
+        tail=tail.getNext();
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public E first() {
+        if(isEmpty())
+            return  null;
+        return tail.getNext().getElement();
+    }
+
+    @Override
+    public E last() {
+        return tail.getElement();
+    }
+
+    @Override
+    public void addFirst(E e) {
+        Node<E> newNode= new Node<>(e, tail, null);
+        if(isEmpty()){
+            tail=newNode;
+            tail.setNext(newNode);
+        }
+        else{
+            newNode.setNext(tail.getNext().getNext());
+            tail.getNext().setPrev(newNode);
+            tail.setNext(newNode);
+            newNode.setPrev(tail);
+        }
+        size++;
+    }
+
+    @Override
+    public void addLast(E e) {
+            addFirst(e);
+            tail=tail.getNext();
+            return;
+
+    }
+
+    @Override
+    public E removeFirst() {
+        if(isEmpty())
+            return null;
+        else{
+            E remove=tail.getNext().getElement();
+            tail.setNext(tail.getNext().getNext());
+            tail.getNext().getNext().setPrev(tail);
+            size--;
+            return remove;
+        }
+    }}
 
 class SinglyLinkedList<E> implements List<E>{
     int size;
