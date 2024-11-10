@@ -25,4 +25,14 @@ public class work{
         }
         return result;
     }
+
+    public static boolean sumOfTwoIntegersInArray(int[] arr, int n){
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i; j < arr.length; j++) {
+                if((arr[i]+arr[j])==n)
+                    return true;
+            }
+        }
+        return false;
+    }
 }
