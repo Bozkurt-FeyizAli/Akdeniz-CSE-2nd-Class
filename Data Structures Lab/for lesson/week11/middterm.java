@@ -1,3 +1,23 @@
+public class middterm {
+
+    public static void main(String[] args) {
+        //int[] array = {1, 9, 3, 7, 5};
+        //int maxElement = findMax(array, array.length);
+        //System.out.println("The maximum element in the array is: " + maxElement);
+        int[][] arr={{1,2,3}, {1,2,3},{1,2,3},{1,2,3}};
+        clear2DArray(arr);
+        System.out.println(sum3DArray(arr, 2, 3));
+    
+    
+    }
+
+    public static int findMax(int[] A, int n) {
+        if (n == 1) {
+            return A[0];
+        }
+        int maxInRest = findMax(A, n - 1);
+        return Math.max(maxInRest, A[n - 1]);
+    }
 
     
 
