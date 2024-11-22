@@ -152,3 +152,158 @@ class BinaryTree<T> implements Tree<T> {
             recInorder(list, arr, 2*i+1);
         }
     }
+
+    @Override
+    public void preorder(List<T> list) {
+        if(!isEmpty()){
+            recPreorder(list, array, 0);;
+        }
+    }
+
+    public void recPreorder(List<T> list, T[] arr, int i){
+        if(i<size){
+            if(arr[i]!=null)
+                list.add(arr[i]);
+            recInorder(list, arr, 2*i+1);
+            recInorder(list, arr, 2*i+2);
+        }
+    }
+
+    @Override
+    public void postorder(List<T> list) {
+        if(!isEmpty()){
+            recPostOrder(list, array, 0);
+        }
+    }
+
+    public void recPostOrder(List<T> list, T[] arr, int i){
+        if(i<size){
+            recInorder(list, arr, 2*i+1);
+            recInorder(list, arr, 2*i+2);
+            if(arr[i]!=null)
+                list.add(arr[i]);
+        }
+    }
+
+    /*
+     * Constructor(int capacity)
+     */
+}
+
+class TreeNode<T> {
+    T element;
+    TreeNode<T> left, right;
+
+    public TreeNode(T element) {
+        this.element = element;
+    }
+
+    public T getElement() {
+        return element;
+    }
+    public TreeNode<T> getLeft() {
+        return left;
+    }
+    public TreeNode<T> getRight() {
+        return right;
+    }
+    public void setElement(T element) {
+        this.element = element;
+    }
+    public void setLeft(TreeNode<T> left) {
+        this.left = left;
+    }
+    public void setRight(TreeNode<T> right) {
+        this.right = right;
+    }
+}
+
+/*
+ * Node-based BST implementation
+ */
+class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
+    private TreeNode<T> root;
+    private int size;
+    public BSTNode(){
+        root=null;
+        size=0;
+    }
+
+    public TreeNode<T> getRoot() {
+        // Convenience method for me
+        return root;
+    }
+
+    @Override
+    public int size() {
+       return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public void insert(T element) {
+        insertRec(root, element);
+    }
+    private TreeNode<T> insertRec(TreeNode<T> node, T element) {
+        if (node == null) {
+            size++;
+            return new TreeNode<>(element);
+        }
+        if (element.compareTo(node.element) < 0) {
+            node.left = insertRec(node.left, element);
+        }
+        else if (element.compareTo(node.element) > 0) {
+            node.right = insertRec(node.right, element);
+        }
+        return node;
+    }
+
+    @Override
+    public boolean remove(T element) {
+        // TODO Auto-generated method stub
+        if(contains(element)){
+            root = removeRec(root, element);
+            size--;
+            return true;
+        }
+        return false;
+    }
+    private T findMin(TreeNode<T> node) {
+        while (node.left != null) {
+            node = node.left;
+        }
+        return (T) node.element;
+    }
+    private T findMax(TreeNode<T> node) {
+        while (node.right != null) {
+            node = node.right;
+        }
+        return (T) node.element;
+    }
+    //ödev var
+    private TreeNode<T> removeRec(TreeNode<T> node, T element) {
+        if (node == null) {
+            return null;
+        }
+        if (element.compareTo(node.element) < 0) {
+            node.left = removeRec(node.left, element);
+        } else if (element.compareTo(node.element) > 0) {
+            node.right = removeRec(node.right, element);
+        } else {
+            if(node.left==null)return node.right;
+            if(node.right==null)return node.left;
+
+            T minValue=(T) findMin(node.right);
+            T maxValue=(T) findMin(node.left);
+            node.element=minValue;
+            node.right=removeRec(node.right, minValue);
+        }
+        return node;
+    }
+
+
+
