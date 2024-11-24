@@ -346,3 +346,57 @@ class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
         return recCont(element, root);
     }
 
+    public boolean recCont(T t, TreeNode<T> node){
+        if(node!=null){
+            if(node==t)
+                return true;
+            if(t.compareTo(node.getElement())<0)
+                return recCont(t, node.getLeft());
+            if(t.compareTo(node.getElement())>0)
+                return recCont(t, node.getRight());
+        }
+        return false;
+    }
+
+    @Override
+    public void levelorder(List<T> list) {
+        if(!isEmpty()){
+            Queue<TreeNode<T>> queue= new LinkedList<>();
+            queue.add(root);
+            while(!queue.isEmpty()){
+                TreeNode<T> n=queue.poll();
+                list.add(n.getElement());
+                if(n.getLeft()!=null)
+                    queue.add(n.getLeft());
+                if(n.getRight()!=null)
+                    queue.add(n.getRight());
+            }
+        }
+    }
+
+    @Override
+    public void inorder(List<T> list) {
+        recInorder(list, root);
+    }
+
+    public void recInorder(List<T> list, TreeNode<T> node){
+        if(node!=null){
+            recInorder(list, node.getLeft());
+            list.add(node.getElement());
+            recInorder(list, node.getRight());
+        }
+    }
+
+    @Override
+    public void preorder(List<T> list) {
+        // TODO Auto-generated method stub
+        preorderRec(root, list);
+    }
+    private void preorderRec(TreeNode<T> node, List<T> list) {
+        if (node != null) {
+            list.add(node.element);
+            preorderRec(node.left, list);
+            preorderRec(node.right, list);
+        }
+    }
+
