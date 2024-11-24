@@ -237,6 +237,19 @@ class TreeNode<T> {
     public void setRight(TreeNode<T> right) {
         this.right = right;
     }
+
+    @Override
+    public String toString() {
+        String result="";
+        if(element!=null){
+            result+=element.toString()+"\n";
+            if(left!=null)
+                result+=left;
+            if(right!=null)
+                result+=right;
+        }
+        return result;
+    }
 }
 
 /*
@@ -267,7 +280,7 @@ class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
 
     @Override
     public void insert(T element) {
-        insertRec(root, element);
+        root=insertRec(root, element);
     }
     private TreeNode<T> insertRec(TreeNode<T> node, T element) {
         if (node == null) {
@@ -327,4 +340,9 @@ class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
     }
 
 
+
+    @Override
+    public boolean contains(T element) {
+        return recCont(element, root);
+    }
 
