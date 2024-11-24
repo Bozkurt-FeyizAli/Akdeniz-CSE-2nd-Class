@@ -388,6 +388,19 @@ class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
     }
 
     @Override
+    public void preorder(List<T> list) {
+        // TODO Auto-generated method stub
+        preorderRec(root, list);
+    }
+    private void preorderRec(TreeNode<T> node, List<T> list) {
+        if (node != null) {
+            list.add(node.element);
+            preorderRec(node.left, list);
+            preorderRec(node.right, list);
+        }
+    }
+
+    @Override
     public void postorder(List<T> list) {
         // TODO Auto-generated method stub
         postorderRec(root, list);
