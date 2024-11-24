@@ -388,6 +388,65 @@ class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
     }
 
     @Override
+    public void postorder(List<T> list) {
+        // TODO Auto-generated method stub
+        postorderRec(root, list);
+    }
+    private void postorderRec(TreeNode<T> node, List<T> list) {
+        if (node != null) {
+            postorderRec(node.left, list);
+            postorderRec(node.right, list);
+            list.add(node.element);
+        }
+    }
+
+    @Override
+    public String toString() {
+        if(root==null)
+            return "tree is empty";
+        return root.toString();
+    }
+
+    /*
+     * Constructor()
+     */
+}
+
+/*
+ * Array-based BST implementation
+ */
+class BSTArray <T extends Comparable<? super T>> extends BinaryTree<T>{
+    public T[] array;
+    int size;
+    public BSTArray(int capacity) {
+        super(capacity);
+        array = (T[]) new Comparable[capacity];
+        size=0;
+    }
+    @Override
+    public T[] getArray() {
+        // TODO Auto-generated method stub
+        return super.getArray();
+    }
+    @Override
+    public void inorder(List<T> list) {
+        // TODO Auto-generated method stub
+        recInorder(list, array[0], 0);
+    }
+
+    public void recInorder(List<T> list, T t, int i){
+        if(t!=null&&i<size){
+            recInorder(list, array[2*i+1], i*2+1);
+            list.add(t);
+            recInorder(list, array[2*i+2], i*2+2);
+        }
+    }
+    @Override
+    public void insert(T element) {
+        // TODO Auto-generated method stub
+        recInsert(element, 0);
+    }
+    @Override
     public void preorder(List<T> list) {
         // TODO Auto-generated method stub
         preorderRec(root, list);
