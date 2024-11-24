@@ -496,6 +496,39 @@ class BSTArray <T extends Comparable<? super T>> extends BinaryTree<T>{
         }
         return false;
     }
+    @Override
+    public void recInorder(List<T> list, T[] arr, int i) {
+        // TODO Auto-generated method stub
+        super.recInorder(list, arr, i);
+    }
+    @Override
+    public void recPostOrder(List<T> list, T[] arr, int i) {
+        // TODO Auto-generated method stub
+        super.recPostOrder(list, arr, i);
+    }
+    @Override
+    public void recPreorder(List<T> list, T[] arr, int i) {
+        // TODO Auto-generated method stub
+        super.recPreorder(list, arr, i);
+    }
+    @Override
+    public boolean remove(T element) {
+        // TODO Auto-generated method stub
+        return super.remove(element);
+    }
+    @Override
+    public void resize() {
+        // TODO Auto-generated method stub
+        super.resize();
+    }
+    @Override
+    public int size() {
+        // TODO Auto-generated method stub
+        return super.size();
+    }
+
+
+}
         }
     }
 
