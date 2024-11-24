@@ -22,7 +22,28 @@ public class Lab08_20220808073 {
         bt.levelorder(l);
         for (Integer integer : l) {
             System.out.println(integer);
+        // SortedPriorityQueue<Integer, Integer> sp= new SortedPriorityQueue<>();
+        // sp.insert(1, 1);
+        // sp.insert(2, 2);
+        // sp.insert(3, null);
+        // BinaryTree<Integer> bt= new BinaryTree<>(12);
+        // bt.insert(1);
+        // bt.insert(2);
+        // bt.insert(3);
+        // bt.insert(4);
+        // bt.insert(5);
+        // bt.insert(6);
+        // List<Integer> l= new ArrayList<>();
+        // bt.levelorder(l);
+        // for (Integer integer : l) {
+        //     System.out.println(integer);
+        // }
+
+        BSTNode<Integer> bst= new BSTNode<>();
+        for (int i = 0; i < 16; i++) {
+            bst.insert(i*i);
         }
+        System.out.println(bst);
     }
 }
 
