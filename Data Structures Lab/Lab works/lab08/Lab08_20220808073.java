@@ -7,21 +7,6 @@ import java.util.Queue;
 
 public class Lab08_20220808073 {
     public static void main(String[] args) {
-        SortedPriorityQueue<Integer, Integer> sp= new SortedPriorityQueue<>();
-        sp.insert(1, 1);
-        sp.insert(2, 2);
-        sp.insert(3, null);
-        BinaryTree<Integer> bt= new BinaryTree<>(12);
-        bt.insert(1);
-        bt.insert(2);
-        bt.insert(3);
-        bt.insert(4);
-        bt.insert(5);
-        bt.insert(6);
-        List<Integer> l= new ArrayList<>();
-        bt.levelorder(l);
-        for (Integer integer : l) {
-            System.out.println(integer);
         // SortedPriorityQueue<Integer, Integer> sp= new SortedPriorityQueue<>();
         // sp.insert(1, 1);
         // sp.insert(2, 2);
@@ -497,13 +482,20 @@ class BSTArray <T extends Comparable<? super T>> extends BinaryTree<T>{
     @Override
     public void preorder(List<T> list) {
         // TODO Auto-generated method stub
-        preorderRec(root, list);
+        super.preorder(list);
     }
-    private void preorderRec(TreeNode<T> node, List<T> list) {
-        if (node != null) {
-            list.add(node.element);
-            preorderRec(node.left, list);
-            preorderRec(node.right, list);
+    @Override
+    public boolean recContains(T[] arr, int i, T el) {
+        if(i<size){
+            if(arr[i]==el)
+                return true;
+            if(el.compareTo(arr[i])<0)
+                return recContains(arr, 2*i+1, el);
+            if(el.compareTo(arr[i])>0)
+                return recContains(arr, 2*i+1, el);
+        }
+        return false;
+    }
         }
     }
 
