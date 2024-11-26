@@ -120,3 +120,52 @@ class MinHeap<T extends Comparable<? super T>, U> implements Heap<T, U>{
         recHDown(0);
         return rem;
     }
+    public void recHDown(int i){
+        if(indexLeft(i)!=1){
+            if(array[i].getKey().compareTo(array[indexLeft(i)].getKey())>0)
+                swap(i, indexLeft(i));
+        }
+        if(indexRight(i)!=0)
+            if(array[i].getKey().compareTo(array[indexRight(i)].getKey())>0)
+                swap(i, indexRight(i));
+    }
+    @Override
+    public Entry<T, U> peek() {
+        return array[0];
+    }
+
+    public void levelorder() {
+        for (Entry<T,U> entry : array) {
+            if(entry==null)
+                System.out.println("null");
+            else
+            System.out.println( entry.getValue().toString());
+        }
+    }
+
+    public void swap(int i, int j){
+        if(i<size&&i>=0&&j<size&&j>=0){
+        Entry<T, U> swap=array[i];
+        array[i]=array[j];
+        array[j]=swap;
+        }
+        else{
+            System.out.println(i+", "+j);
+            System.out.println( "problem in swap method");
+        }
+    }
+
+    public int indexRight(int i){ return (2*i+2<size)? 2*i+2: -1;}
+    public int indexLeft(int i){ return (2*i+2<size)? 2*i+1: -1;}
+    public int indexParent(int i){ 
+        System.out.println( "index: "+i);
+        if(i==0)
+            return -1;
+        else
+        return ((i-1)/2<size&&(i-1)/2>-1)? (i-1)/2: -1;}
+    public Entry<T, U> getRight(int i){return indexRight(i)==-1? null: array[indexRight(i)];}
+    public Entry<T, U> getLeft(int i){return indexLeft(i)==-1? null: array[indexLeft(i)];}
+    public Entry<T, U> getParent(int i){return indexParent(i)==-1? null: array[indexParent(i)];}
+    
+} 
+
