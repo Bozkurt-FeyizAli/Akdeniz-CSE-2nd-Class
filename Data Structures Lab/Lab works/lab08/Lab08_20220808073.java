@@ -631,3 +631,80 @@ class SortedPriorityQueue <P extends Comparable<? super P>, E> extends AbstractP
         }
     }
 
+    @Override
+    public E peek() {
+        return list.get(0).getValue();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+}
+
+/*
+ * Unsorted PQ implementation
+ */
+class UnsortedPriorityQueue <P extends Comparable<? super P>, E> extends AbstractPriorityQueue <P, E> {
+    private ListNode<Entry<P,E>> head;
+    //private ListNode<Entry<P,E>> tail;
+    private int size;
+    public UnsortedPriorityQueue(){
+        head=null;
+        //tail=null;
+        size=0;
+    }
+    @Override
+    public void insert(P priority, E element) {
+        Entry<P,E> ent= new Entry<>(priority, element);
+        ListNode<Entry<P,E>> lNode= new ListNode<>(ent, null);
+        if(isEmpty()){
+            head=lNode;
+        }
+        else{
+            ListNode<Entry<P,E>> h=head;
+            while(h.getNext()!=null)
+                h=h.getNext();
+            h.setNext(lNode);
+        }
+        size++;
+    }
+
+    @Override
+    public E remove() {
+        if(isEmpty()){
+            return null;
+        }
+        else{
+            ListNode<Entry<P,E>> m=head;
+            ListNode<Entry<P,E>> h=head;
+            while(h.getNext()!=null){
+                if(h.getData().getKey().compareTo(h.getData().getKey())>0){
+                    m=h;
+                }
+                h=h.getNext();
+            }
+            
+            if(m==head){
+                head=head.getNext();
+            }
+            else{
+                h=head;
+                while(h.getNext()!=null){
+                    if(h==m){
+                        h.setNext(h.getNext());
+                    }
+                    h=h.getNext();
+                }
+            }
+            size--;
+            return m.getData().getValue();
+        }
+        
+    }
