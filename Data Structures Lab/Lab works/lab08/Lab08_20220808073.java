@@ -529,6 +529,50 @@ class BSTArray <T extends Comparable<? super T>> extends BinaryTree<T>{
 
 
 }
+
+class ListNode <T> {
+    private T data;
+    private ListNode<T> next;
+
+    public ListNode(T data, ListNode<T> next) {
+        this.data = data;
+        this.next = next;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public ListNode<T> getNext() {
+        return next;
+    }
+
+    public void setNext(ListNode<T> next) {
+        this.next = next;
+    }
+}
+
+class Entry <K extends Comparable<? super K>, V> {
+    /*
+     * key-value data fields
+     * Constructor(K, V)
+     * getKey()
+     * getValue()
+     */
+    private K key;
+    private V value;
+    public Entry(K k, V v){
+        key=k;
+        value=v;
+    }
+    public K getKey() {
+        return key;
+    }
+    public V getValue() {
+        return value;
+    }
+}
+
         }
     }
 
