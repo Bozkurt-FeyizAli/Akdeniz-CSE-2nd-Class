@@ -573,6 +573,61 @@ class Entry <K extends Comparable<? super K>, V> {
     }
 }
 
+interface IPriorityQueue <P extends Comparable<? super P>, E> {
+    void insert(P priority, E element);
+    E remove();
+    E peek();
+    boolean isEmpty();
+    int size();
+}
+
+abstract class AbstractPriorityQueue <P extends Comparable<? super P>, E> implements IPriorityQueue<P, E> {
+    private ListNode<Entry<P, E>> head;
+
+    public ListNode<Entry<P, E>> getHead() {
+        // Convenience for me
+        return head;
+    }
+
+    public AbstractPriorityQueue() {
+        head = null;
+    }
+}
+
+/*
+ * Sorted PQ implementation
+ */
+class SortedPriorityQueue <P extends Comparable<? super P>, E> extends AbstractPriorityQueue <P, E> {
+    private ArrayList<Entry<P,E>> list;
+    private int size;
+    public SortedPriorityQueue(){
+        list= new ArrayList<>();
+        size=0;
+    }
+    @Override
+    public void insert(P priority, E element) {
+        Entry<P,E> ent= new Entry<>(priority, element);
+        if(isEmpty()){
+            list.add(ent);
+        }
+        else{
+            for (int i = 0; i < list.size(); i++) {
+                if(priority.compareTo(list.get(i).getKey())>0){
+                    list.add(i, ent);
+                    break;
+                }
+            }
+        }
+        size++;
+    }
+
+    @Override
+    public E remove() {
+        if(isEmpty())
+            return null;
+        else{
+            size--;
+            return list.remove(0).getValue();
         }
     }
 
