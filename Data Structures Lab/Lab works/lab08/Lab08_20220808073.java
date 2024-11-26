@@ -708,3 +708,20 @@ class UnsortedPriorityQueue <P extends Comparable<? super P>, E> extends Abstrac
         }
         
     }
+
+    @Override
+    public E peek() {
+        return head.getData().getValue();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+    
+}
