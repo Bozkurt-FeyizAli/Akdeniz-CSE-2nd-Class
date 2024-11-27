@@ -40,3 +40,36 @@ class HeapNode <T> {
     }
 }
 
+class Entry <K extends Comparable<? super K>, V> {
+    /*
+     * key-value data fields
+     * Constructor(K, V)
+     * getKey()
+     * getValue()
+     */
+    private K key;
+    private V value;
+    public Entry(K k, V v){
+        key=k;
+        value=v;
+    }
+    public K getKey() {
+        return key;
+    }
+    public V getValue() {
+        return value;
+    }
+
+
+    
+}
+
+interface Heap<T extends Comparable<? super T>, U> {
+    void insert(T element, U u); // Eleman ekler
+    Entry<T, U> remove();             // Kök elemanı çıkarır
+    Entry<T, U> peek();               // Kök elemanı görüntüler
+    boolean isEmpty();      // Heap'in boş olup olmadığını kontrol eder
+    int size();             // Heap'teki eleman sayısını döndürür
+}
+
+
