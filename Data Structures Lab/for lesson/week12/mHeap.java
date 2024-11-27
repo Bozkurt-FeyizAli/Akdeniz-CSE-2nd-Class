@@ -2,14 +2,13 @@ import java.util.*;
 
 public class mHeap{
     public static void main(String[] args) {
-        MinHeap<Integer, Integer> mh= new MinHeap<>(12);
-        System.out.println(-1/2);
-        for (int i = 0; i < 4; i++) {
-            mh.insert(i, i*i);
-        }
-        mh.insert(-1, -1);
-        mh.insert(3, 3);
-        mh.insert(5, 5);
+        Mineap<Integer, Character> mh= new Mineap<>();
+        // for (int i = 0; i < 4; i++) {
+        //     mh.insert(i, i*i);
+        // }
+        // mh.insert(-1, -1);
+        // mh.insert(3, 3);
+        // mh.insert(5, 5);
         mh.levelorder();
     }
 }
@@ -69,14 +68,18 @@ interface Heap<T extends Comparable<? super T>, U> {
 }
 
 
-class MinHeap<T extends Comparable<? super T>, U> implements Heap<T, U>{
+class Mineap<T extends Comparable<? super T>, U> implements Heap<T, U>{
 
     private int size;
     private Entry<T, U>[] array;
 
-    public MinHeap(int capacity){
+    public Mineap(int c){
         size=0;
-        array= new Entry[capacity];
+        array= (Entry[])new Object[c];
+    }
+    public Mineap(){
+        size=0;
+        array= (Entry[])new Object[10];
     }
     @Override
     public void insert(T t, U u) {
@@ -92,13 +95,10 @@ class MinHeap<T extends Comparable<? super T>, U> implements Heap<T, U>{
     }
 
     public void recHUp(int i) {
-        int indexP=indexParent(i);
-        if(indexP==-1)
-            return;
-        else{
-            if(array[i].getKey().compareTo(array[indexP].getKey())<0)
-                swap(i, indexP);
-            recHUp(indexP);
+        while(hasParent(i)){
+            if(array[0].getKey().compareTo(array[i].getKey())<0)
+            break;
+            swap(i, indexParent(i));
         }
     }
     
@@ -163,9 +163,9 @@ class MinHeap<T extends Comparable<? super T>, U> implements Heap<T, U>{
             return -1;
         else
         return ((i-1)/2<size&&(i-1)/2>-1)? (i-1)/2: -1;}
-    public Entry<T, U> getRight(int i){return indexRight(i)==-1? null: array[indexRight(i)];}
-    public Entry<T, U> getLeft(int i){return indexLeft(i)==-1? null: array[indexLeft(i)];}
-    public Entry<T, U> getParent(int i){return indexParent(i)==-1? null: array[indexParent(i)];}
+    public boolean hasRight(int i){return indexRight(i)>=0&&indexRight(i)<size;}
+    public boolean hasLeft(int i){return indexLeft(i)>=0&&indexLeft(i)<size;}
+    public boolean hasParent(int i){return indexParent(i)>=0&&indexParent(i)<size;}
     
 } 
 
