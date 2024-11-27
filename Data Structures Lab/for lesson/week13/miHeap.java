@@ -73,3 +73,43 @@ interface Heap<T extends Comparable<? super T>, U> {
 }
 
 
+class minimumHeap<T extends Comparable<? super T>, U> implements Heap<T, U>{
+
+    private int size;
+    private Entry<T, U>[] array;
+
+    public minimumHeap(int c){
+        size=0;
+        array= new Entry[c];
+    }
+    public minimumHeap(){
+        size=0;
+        array= new Entry[10];
+    }
+    @Override
+    public void insert(T t, U u) {
+        resize();
+        array[size++]=new Entry<>(t, u);
+        recHUp(size-1);
+    }
+
+    public void resize(){
+        if(size==array.length){
+            array= Arrays.copyOf(array, size+size/2);
+        }
+    }
+
+    public void recHUp(int i) {
+        while(i>0){
+            if(array[indexParent(i)].getKey().compareTo(array[i].getKey())<0)
+                break;
+            swap(i, indexParent(i));
+            i=indexParent(i);
+        }
+    }
+    
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
