@@ -209,3 +209,71 @@ class NodeHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K,
         }
     }
     
+
+     /* finds the location of last node to remove
+      * node findLastNode()
+      */
+    
+      /* finds the first parrent with available location for insertion
+       * node findParrent()
+       */
+    public TreeNode<Entry<K, V>> findParrent(TreeNode<Entry<K, V>> root){
+        if(root==null)
+            return null;
+        Queue<TreeNode<Entry<K, V>>> qe= new LinkedList<>();
+        qe.add(root);
+        while (!qe.isEmpty()) {
+            TreeNode<Entry<K, V>> node=qe.poll();
+            if(node.left==null||node.right==null)
+                return node;
+            qe.add(node.left);
+            qe.add(node.right);
+        }
+        return null;
+    }
+
+
+
+    private void swap(TreeNode<Entry<K, V>> node, TreeNode<Entry<K, V>> otherNode) {
+        Entry<K, V> tempEntry = node.entry;
+        node.entry = otherNode.entry;
+        otherNode.entry = tempEntry;
+    }
+
+    private boolean deleteLastNode(TreeNode<Entry<K, V>> root, TreeNode<Entry<K, V>> target){
+        if(root==null)
+        return false;
+        if(root.left==target){
+            root.left=null;
+            return true;}
+        if(root.right==target){
+            root.right=null;
+            return true;
+        }
+            if(!(deleteLastNode(root.left, target)))
+            return deleteLastNode(root.right, target);
+            return true;
+        
+        
+    }
+
+    public TreeNode<Entry<K, V>> lastNode(TreeNode<Entry<K, V>> root){
+        if(root==null)
+            return null;
+            int last=0;
+            Queue<TreeNode<Entry<K, V>>> queue= new LinkedList<>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                if(last+1==size)
+                    break;
+                    TreeNode<Entry<K, V>> node=queue.poll();
+                if(node.left!=null)
+                    queue.add(node);
+                if(node.right!=null)
+                    queue.add(node.right);
+                    last++;
+            }
+
+            return queue.poll();
+
+    }
