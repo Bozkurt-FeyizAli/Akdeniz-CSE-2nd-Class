@@ -341,3 +341,17 @@ class NodeHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K,
     /*  merges 2 heaps with given new entry
      * static <K extends Comparable<? super K>, V> NodeHeap<K, V> merge(NodeHeap<K, V> heap1, NodeHeap<K, V> heap2, K priority, V value)
      */
+    public static <K extends Comparable<? super K>, V> NodeHeap<K, V> merge(NodeHeap<K, V> heap1, NodeHeap<K, V> heap2, K priority, V value){
+        NodeHeap<K, V> newHeap=new NodeHeap<>();
+        TreeNode<Entry<K, V>> newRoot=new TreeNode<>(new Entry<>(priority, value));
+        newRoot.left=heap1.root;
+        newRoot.right=heap2.root;
+        newHeap.root=newRoot;
+        newHeap.heapifyDown(newHeap.root);
+        return newHeap;
+    }
+
+    /* prints the heap BFS
+     * levelorder()
+     */
+}
