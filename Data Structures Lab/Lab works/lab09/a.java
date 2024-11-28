@@ -153,3 +153,59 @@ class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K
 /*
  * Node-based Min-heapimplementation
  */
+class NodeHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K, V> {
+    int size;
+    TreeNode<Entry<K, V>> root;
+    public TreeNode<Entry<K, V>> getRoot() {
+        // Convenience method
+        return root;
+    }
+
+    public NodeHeap(){
+        root=null;
+        size=0;
+    }
+
+    /*
+     * Constructor()
+     */
+
+     /*
+      * heapifyUp(node)
+      */
+    public void heapifyUp(TreeNode<Entry<K, V>> node){
+        while(node.parrent!=null){
+            //TreeNode<Entry<K, V>> small;
+            if(node.entry.getKey().compareTo(node.parrent.entry.getKey())<0)
+                swap(node, node.parrent);
+            node=node.parrent;
+        }
+    }
+
+
+    /*
+     * heapifyDown(node)
+     */
+    public void heapifyDown(TreeNode<Entry<K, V>> node){
+        while(node.left!=null||node.right!=null){
+            TreeNode<Entry<K, V>> small=findLess(node);
+            if(small==null)
+                break;
+            swap(node, small);
+            node=small;
+        }
+    }
+    public TreeNode<Entry<K, V>> findLess(TreeNode<Entry<K, V>> node){
+        if(node==null||(node.left==null&&node.right==null))
+            return null;
+        if(node.left==null)
+            return node.right;
+        else if(node.right==null)
+            return node.left;
+        else{
+            if(node.right.entry.getKey().compareTo(node.left.entry.getKey())<0)
+                return node.right;
+            else return node.left;
+        }
+    }
+    
