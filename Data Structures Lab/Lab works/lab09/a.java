@@ -100,3 +100,56 @@ class TreeNode <T> {
     }
 
 }
+
+interface List <T> {
+    int size();
+    boolean isEmpty();
+}
+
+interface PriorityQueue <P, E> extends List <E> {
+    E remove();
+    E peek();
+    void insert(P priority, E element);
+}
+
+/*
+ * Array-based Min-heap implementation
+ */
+class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K, V> {
+
+    public Entry<K, V>[] getHeap() {
+        // Convenience method
+        return heap;
+    }
+
+    /*
+     * Constructor(int capacity)
+     */
+
+    /*
+     * heapifyUp(index)
+     */
+
+     /*
+      * heapifyDown(index)
+      */
+
+    /* merge two given heaps
+     * static <K extends Comparable<? super K>, V> ArrayHeap<K, V> merge(ArrayHeap<K, V> heap1, ArrayHeap<K, V> heap2)
+     */
+
+    private void swap(int index, int otherIndex) {
+        Entry<K, V> temp = heap[index];
+        heap[index] = heap[otherIndex];
+        heap[otherIndex] = temp;
+    }
+
+    /*
+    * prints the heap BFS
+     * levelorder()
+     */
+}
+
+/*
+ * Node-based Min-heapimplementation
+ */
