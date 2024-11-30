@@ -424,3 +424,48 @@ class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K
         }
     }
 
+    /* merge two given heaps
+     * static <K extends Comparable<? super K>, V> ArrayHeap<K, V> merge(ArrayHeap<K, V> heap1, ArrayHeap<K, V> heap2)
+     */
+    public static <K extends Comparable<? super K>, V> ArrayHeap<K, V> merge(ArrayHeap<K, V> heap1, ArrayHeap<K, V> heap2){
+        ArrayHeap<K, V> mergeHeap= new ArrayHeap<>(heap1.size()+heap2.size());
+        for (var en : heap1.getHeap()) {
+            mergeHeap.insert(en.getKey(), en.getValue());
+        }
+        for (var en : heap2.getHeap()) {
+            mergeHeap.insert(en.getKey(), en.getValue());
+        }
+        return mergeHeap;
+    }
+    private void swap(int index, int otherIndex) {
+        Entry<K, V> temp = heap[index];
+        heap[index] = heap[otherIndex];
+        heap[otherIndex] = temp;
+    }
+
+    /*
+    * prints the heap BFS
+     * levelorder()
+     */
+    public void levelorder(){
+        for (Entry<K,V> entry : heap) {
+            System.out.println(entry.getValue());
+        }
+    }
+
+     public int indexRight(int i){ return (2*i+2<heap.length)? 2*i+2: -1;}
+    public int indexLeft(int i){ return (2*i+1<heap.length)? 2*i+1: -1;}
+    public int indexParent(int i){
+        if(i==0)
+            return -1;
+        else
+        return ((i-1)/2<size&&(i-1)/2>-1)? (i-1)/2: -1;}
+    public boolean hasRight(int i){return indexRight(i)>0&&indexRight(i)<size;}
+    public boolean hasLeft(int i){return indexLeft(i)>0&&indexLeft(i)<size;}
+    public boolean hasParent(int i){return indexParent(i)>=0&&indexParent(i)<size;}
+
+    @Override
+    public int size() {
+        return size;
+    }
+
