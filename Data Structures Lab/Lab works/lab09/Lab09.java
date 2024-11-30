@@ -469,3 +469,52 @@ class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K
         return size;
     }
 
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public V remove() {
+        if(isEmpty())
+            return null;
+        V rem=heap[0].getValue();
+        swap(0, --size);
+        heap[size]=null;
+        if (size > 0) {
+            heapifyDown(0);
+        }
+        return rem;
+    }
+
+    @Override
+    public V peek() {
+        if(heap[0]==null)
+            return null;
+        return heap[0].getValue();
+    }
+
+    @Override
+    public void insert(K priority, V element) {
+        ensureCapacity();
+        heap[size++]=new Entry<K, V>(priority, element);
+        heapifyUp(size-1);
+    }
+    private void ensureCapacity() {
+        if (size >= heap.length) {
+            heap = Arrays.copyOf(heap, heap.length * 2);
+        }
+    }
+    public void recInsert(Entry<K, V> en, int i){
+        if(heap[i]==null){
+            heap[i]=en;
+            return;
+        }
+        if(!hasLeft(i)){
+            recInsert(en, indexLeft(i));
+        }
+        else if(hasRight(i))
+            recInsert(en, indexRight(i));
+    }
+}
+
