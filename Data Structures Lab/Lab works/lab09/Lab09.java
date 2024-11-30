@@ -349,3 +349,27 @@ class NodeHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K,
         newHeap.size=heap1.size+heap2.size+1;
         return newHeap;
     }
+    public void levelorder(){
+    if(root!=null){
+        Queue<TreeNode<Entry<K, V>>> queue= new LinkedList<>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode<Entry<K, V>> t=queue.poll();
+            System.out.println(t.entry.getKey());
+            if(t.left != null)
+            queue.add(t.left);
+            if(t.right != null)
+            queue.add(t.right);
+
+
+    }
+}
+    }
+
+    /* prints the heap BFS
+     * levelorder()
+     */
+
+}
+
+
