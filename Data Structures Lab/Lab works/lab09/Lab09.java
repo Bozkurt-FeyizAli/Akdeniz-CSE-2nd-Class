@@ -114,3 +114,102 @@ interface PriorityQueue <P, E> extends List <E> {
     void insert(P priority, E element);
 }
 
+/*
+ * Array-based Min-heap implementation
+/*
+ * Node-based Min-heapimplementation
+ */
+class NodeHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K, V> {
+    private TreeNode<Entry<K, V>> root;
+    private int size;
+    public TreeNode<Entry<K, V>> getRoot() {
+        // Convenience method
+        return root;
+    }
+
+    /*
+     * Constructor()
+     */
+    public NodeHeap(){
+        root=null;
+        size=0;
+    }
+
+     /*
+      * heapifyUp(node)
+      */
+
+      public void heapifyUp(TreeNode<Entry<K, V>> node){
+        while(node.parrent!=null&&node.entry.getKey().compareTo(node.parrent.entry.getKey())<0){
+            swap(node, node.parrent);
+            node=node.parrent;
+        }
+    }
+
+
+    /*
+     * heapifyDown(node)
+     */
+    public void heapifyDown(TreeNode<Entry<K, V>> node){
+        while(node != null){
+            TreeNode<Entry<K, V>> schild = node;
+            if(node.left != null && node.left.entry.getKey().
+                 compareTo(schild.entry.getKey()) < 0){
+                schild=node.left;
+            }
+            if(node.right!= null && node.right.entry.getKey().
+                compareTo(schild.entry.getKey()) < 0){
+                schild = node.right;
+            }
+            if(schild== node){
+                break;
+            }
+            swap(node, schild);
+            node = schild;
+        }
+    }
+    public TreeNode<Entry<K, V>> findLess(TreeNode<Entry<K, V>> node){
+        if(node==null||(node.left==null&&node.right==null))
+            return null;
+        if(node.left==null)
+            return node.right;
+        else if(node.right==null)
+            return node.left;
+        else{
+            if(node.right.entry.getKey().compareTo(node.left.entry.getKey())<0)
+                return node.right;
+            else return node.left;
+        }
+    }
+    
+
+     /* finds the location of last node to remove
+      * node findLastNode()
+      */
+    
+      /* finds the first parrent with available location for insertion
+       * node findParrent()
+       */
+    public TreeNode<Entry<K, V>> findParrent(TreeNode<Entry<K, V>> root){
+        if(root==null)
+            return null;
+        Queue<TreeNode<Entry<K, V>>> qe= new LinkedList<>();
+        qe.add(root);
+        while (!qe.isEmpty()) {
+            TreeNode<Entry<K, V>> node=qe.poll();
+            if(node.left==null||node.right==null)
+                return node;
+            qe.add(node.left);
+            qe.add(node.right);
+        }
+        return null;
+    }
+
+
+
+    private void swap(TreeNode<Entry<K, V>> node, TreeNode<Entry<K, V>> otherNode) {
+        Entry<K, V> tempEntry = node.entry;
+        node.entry = otherNode.entry;
+        otherNode.entry = tempEntry;
+    }
+
