@@ -213,3 +213,77 @@ class NodeHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K,
         otherNode.entry = tempEntry;
     }
 
+    private boolean deleteLastNode(TreeNode<Entry<K, V>> root, TreeNode<Entry<K, V>> target){
+        if(root==null)
+        return false;
+        if(root.left==target){
+            root.left=null;
+            return true;}
+        if(root.right==target){
+            root.right=null;
+            return true;
+        }
+            if(!(deleteLastNode(root.left, target)))
+            return deleteLastNode(root.right, target);
+            return true;
+        
+        
+    }
+
+    public TreeNode<Entry<K, V>> lastNode(TreeNode<Entry<K, V>> root){
+        if(root==null)
+            return null;
+            int last=0;
+            Queue<TreeNode<Entry<K, V>>> queue= new LinkedList<>();
+            queue.add(root);
+            while (!queue.isEmpty()) {
+                if(last+1==size)
+                    break;
+                    TreeNode<Entry<K, V>> node=queue.poll();
+                    if(node.left != null)
+                    queue.add(node.left);
+                    if(node.right != null)
+                    queue.add(node.right);
+                
+                    last++;
+            }
+
+            return queue.poll();
+
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public V remove() {
+        // TODO Auto-generated method stub
+        if (root == null) {
+            return null;
+        }
+        Entry<K, V> removedEntry = root.entry;
+
+        if (size == 1) {
+            root = null;
+        } else {
+            TreeNode<Entry<K, V>> lastNode = findLastNode();
+            swap(root, lastNode);
+            if (lastNode.parrent != null) {
+                if (lastNode.parrent.left == lastNode) {
+                    lastNode.parrent.left = null;
+                } else {
+                    lastNode.parrent.right = null;
+                }
+            }
+            heapifyDown(root);
+        }
+        size--;
+        return removedEntry.getValue();
+    }
