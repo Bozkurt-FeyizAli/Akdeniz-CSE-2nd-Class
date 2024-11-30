@@ -287,3 +287,65 @@ class NodeHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K,
         size--;
         return removedEntry.getValue();
     }
+    private TreeNode<Entry<K,V>> findLastNode(){
+        Queue<TreeNode<Entry<K,V>>> queue=new LinkedList<>();
+        queue.add(root);
+        TreeNode<Entry<K,V>> lasNode=null;
+
+        while(!queue.isEmpty()){
+            lasNode=queue.poll();
+            if(lasNode.left!=null){
+                queue.add(lasNode.left);
+            }
+            if(lasNode.right!=null){
+                queue.add(lasNode.right);
+            }            
+        }
+        return lasNode;
+    }
+
+    @Override
+    public V peek() {
+        if(root==null)
+            return null;
+        else
+            return root.entry.getValue();
+    }
+
+    @Override
+    public void insert(K priority, V element) {
+        TreeNode<Entry<K, V>> child=new TreeNode<>(new Entry<>(priority, element));
+        if(root==null){
+            root= child;
+            size++;
+            return;
+        }
+        else{
+            TreeNode<Entry<K, V>> parent=findParrent(root);
+            if(parent.left==null){
+                parent.left=child;
+            }
+            else if(parent.right==null){
+                parent.right=child;
+            }
+            child.parrent=parent;
+            heapifyUp(child);
+        }
+        size++;
+    }
+
+    /*  merges 2 heaps with given new entry
+     * static <K extends Comparable<? super K>, V> NodeHeap<K, V> merge(NodeHeap<K, V> heap1, NodeHeap<K, V> heap2, K priority, V value)
+     */
+    public static <K extends Comparable<? super K>, V> NodeHeap<K, V> merge(NodeHeap<K, V> heap1, NodeHeap<K, V> heap2, K priority, V value){
+        NodeHeap<K, V> newHeap=new NodeHeap<>();
+        TreeNode<Entry<K, V>> newRoot=new TreeNode<>(new Entry<>(priority, value));
+        newRoot.left=heap1.root;
+        newRoot.right=heap2.root;
+        heap1.root.parrent=newRoot;
+        heap2.root.parrent=newRoot;
+        newHeap.root=newRoot;
+        newHeap.heapifyDown(newHeap.root);
+        newHeap.size=heap1.size+heap2.size+1;
+        return newHeap;
+    }
