@@ -54,3 +54,63 @@ public class Lab09 {
          * heap sort implementation
          */
     }
+
+    public static void heapify(int[] array, int n, int parent) {
+        /*
+         * heapify implementation
+         */
+    }
+
+    private static void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+class Entry <K extends Comparable <? super K>, V> implements Comparable<K> {
+    private K key;
+    private V value;
+
+    public Entry(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    @Override
+    public int compareTo(K o) {
+        return key.compareTo(o);
+    }
+} 
+
+class TreeNode <T> {
+    T entry;
+    TreeNode<T> left;
+    TreeNode<T> right;
+    TreeNode<T> parrent;
+
+    public TreeNode(T entry) {
+        this.entry = entry;
+    }
+
+}
+
+interface List <T> {
+    int size();
+    boolean isEmpty();
+}
+
+interface PriorityQueue <P, E> extends List <E> {
+    E remove();
+    E peek();
+    void insert(P priority, E element);
+}
+
