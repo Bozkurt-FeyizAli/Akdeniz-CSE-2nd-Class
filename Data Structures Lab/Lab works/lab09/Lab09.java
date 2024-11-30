@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -372,4 +373,54 @@ class NodeHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K,
 
 }
 
+
+class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K, V> {
+    private Entry<K, V>[] heap;
+    private int size;
+
+    public ArrayHeap(int c){
+        size=0;
+        heap= new Entry[c];
+    }
+
+    public Entry<K, V>[] getHeap() {
+        // Convenience method
+        return heap;
+    }
+
+    /*
+     * Constructor(int capacity)
+     */
+
+    /*
+     * heapifyUp(index)
+     * 
+     */
+    public void heapifyUp(int index){
+        while(index>0&&heap[index]!=null){
+            if(hasParent(index)){
+                if(heap[index].getKey().compareTo(heap[indexParent(index)].getKey())<0)
+                    swap(index, indexParent(index));
+            }
+            index=indexParent(index);
+        }
+    }
+
+     /*
+      * heapifyDown(index)
+      */
+
+    public void heapifyDown(int index){
+        while (hasLeft(index)) {
+            int iSmall=indexLeft(index);
+            if (hasRight(index) && heap[indexRight(index)].getKey().compareTo(heap[iSmall].getKey()) < 0) {
+                iSmall = indexRight(index);
+            }
+            if (heap[index].getKey().compareTo(heap[iSmall].getKey()) <= 0) {
+                break; 
+            }
+            swap(index, iSmall);
+            index = iSmall;
+        }
+    }
 
