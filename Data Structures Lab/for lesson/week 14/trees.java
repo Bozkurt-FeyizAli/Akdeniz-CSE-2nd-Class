@@ -189,3 +189,57 @@ class BinarySearchTree<K extends Comparable <? super K>, V> {
     
 }
 
+class AVLTree {
+    // Node class
+    static class Node {
+        int key, height;
+        Node left, right;
+
+        Node(int key) {
+            this.key = key;
+            height = 1; // Height is initially 1
+            left = right = null;
+        }
+    }
+
+    private Node root;
+
+    public AVLTree() {
+        root = null;
+    }
+
+    public void insert(int key) {
+        // To be implemented
+    }
+
+    public void delete(int key) {
+        // To be implemented
+    }
+
+    public Node search(int key) {
+        // To be implemented
+        return null;
+    }
+
+    private int getHeight(Node node) {
+        // To be implemented
+        return 0;
+    }
+
+    private int getBalanceFactor(Node node) {
+        // To be implemented
+        return 0;
+    }
+
+    private Node rotateLeft(Node node) {
+        // To be implemented
+        return null;
+    }
+
+    private Node rotateRight(Node node) {
+        // To be implemented
+        return null;
+    }
+}
+
+
