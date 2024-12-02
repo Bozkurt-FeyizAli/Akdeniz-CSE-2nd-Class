@@ -157,3 +157,35 @@ class BinarySearchTree<K extends Comparable <? super K>, V> {
             }
             return r;
     }
+    public TreeNode<Entry<K,V>> theLowestinRight(TreeNode<Entry<K,V>> node){
+        if(node.left==null&&node.right==null)
+            return null;
+            TreeNode<Entry<K,V>> r = node.right;
+            while (r.left != null) {
+                r = r.left;
+            }
+            return r;
+    }
+    public void swap(TreeNode<Entry<K,V>> a, TreeNode<Entry<K,V>> b){
+        if(a!=null&&b!=null){
+        Entry<K, V> a1=a.entry;
+        a.entry=b.entry;
+        b.entry=a1;
+        }
+        else{
+            System.out.println("problem so that swap");
+        }
+    }
+
+    public void inorderTraversal() {
+        recInorderTraversal(root);
+    }
+    public void recInorderTraversal(TreeNode<Entry<K,V>> r) {
+        if (r == null) return;
+        recInorderTraversal(r.left);
+        System.out.println(r.entry.getValue());
+        recInorderTraversal(r.right);
+    }
+    
+}
+
