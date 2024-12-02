@@ -111,3 +111,49 @@ class BinarySearchTree<K extends Comparable <? super K>, V> {
             }
             return r;
     }
+    private TreeNode<Entry<K,V>> findMin(TreeNode<Entry<K,V>> node) {
+        while (node.left != null) node = node.left;
+        return node;
+    }
+    private void deletChild(TreeNode<Entry<K,V>> r, TreeNode<Entry<K,V>> t) {
+        if (r == null) return;
+        if(r==t){
+            r=null;
+            if(r.parrent!=null)
+                if(r.parrent.left==t)
+                    r.parrent.left=null;
+                else r.parrent.right=null;
+            size--;
+            return;
+        }
+        if(r.entry.getKey().compareTo(t.entry.getKey())<0)
+            deletChild(r.right, t);
+        else 
+            deletChild(r.left, t);
+
+    }
+
+
+    public TreeNode<Entry<K,V>> search(V v) {
+        return recSearch(root, v);
+    }
+    public TreeNode<Entry<K,V>> recSearch(TreeNode<Entry<K,V>> r, V v){
+        if(r.entry.getValue()==v)
+            return r;
+        if(r.left!=null)
+        return recSearch(r.left, v);
+        if(r.right!=null)
+        return recSearch(r.right, v);
+        return null;
+    }
+
+    public TreeNode<Entry<K,V>> theHighrdtinLeft(TreeNode<Entry<K,V>> node){
+        if(node.left==null&&node.right==null)
+            return null;
+            if (node == null || node.left == null) return null;
+            TreeNode<Entry<K,V>> r = node.left;
+            while (r.right != null) {
+                r = r.right;
+            }
+            return r;
+    }
