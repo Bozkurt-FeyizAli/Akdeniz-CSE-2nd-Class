@@ -243,3 +243,85 @@ class AVLTree {
 }
 
 
+class SplayTree {
+    // Node class
+    static class Node {
+        int key;
+        Node left, right;
+
+        Node(int key) {
+            this.key = key;
+            left = right = null;
+        }
+    }
+
+    private Node root;
+
+    public SplayTree() {
+        root = null;
+    }
+
+    public void insert(int key) {
+        // To be implemented
+    }
+
+    public void delete(int key) {
+        // To be implemented
+    }
+
+    public Node search(int key) {
+        // To be implemented
+        return null;
+    }
+
+    private Node splay(Node root, int key) {
+        // To be implemented
+        return null;
+    }
+
+    private Node rotateLeft(Node node) {
+        // To be implemented
+        return null;
+    }
+
+    private Node rotateRight(Node node) {
+        // To be implemented
+        return null;
+    }
+}
+
+
+class Entry <K extends Comparable <? super K>, V> implements Comparable<K> {
+    private K key;
+    private V value;
+
+    public Entry(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public K getKey() {
+        return key;
+    }
+
+    public V getValue() {
+        return value;
+    }
+
+    @Override
+    public int compareTo(K o) {
+        return key.compareTo(o);
+    }
+} 
+
+class TreeNode <T> {
+    T entry;
+    TreeNode<T> left;
+    TreeNode<T> right;
+    TreeNode<T> parrent;
+
+    public TreeNode(T entry) {
+        this.entry = entry;
+    }
+
+}
