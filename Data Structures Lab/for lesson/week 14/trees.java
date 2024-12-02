@@ -52,3 +52,62 @@ public class trees{
         System.out.println("\nTest completed.");
     }
 }
+
+class BinarySearchTree<K extends Comparable <? super K>, V> {
+    // Root of the BST
+    private TreeNode<Entry<K,V>> root;
+    private int size;
+
+    public BinarySearchTree() {
+        root = null;
+    }
+
+    public void insert(K prio, V value) {
+        TreeNode<Entry<K,V>> child=new TreeNode<>(new Entry<>(prio, value));
+        if(root==null){
+            root=child;
+        }
+        else {
+            TreeNode<Entry<K, V>> current = root; 
+            TreeNode<Entry<K, V>> parent = null; 
+            
+            while (current != null) {
+                parent = current; 
+                if (child.entry.getKey().compareTo(current.entry.getKey()) < 0) {
+                    current = current.left; 
+                } else {
+                    current = current.right; 
+                }
+            }
+            if (child.entry.getKey().compareTo(parent.entry.getKey()) < 0) {
+                parent.left = child;
+            } else {
+                parent.right = child;
+            }
+            child.parrent = parent;
+        }
+        size++;
+    }
+    public void delete(TreeNode<Entry<K,V>> t) {
+        recDelete(t, t);
+    }
+    public TreeNode<Entry<K,V>> recDelete(TreeNode<Entry<K,V>> r, TreeNode<Entry<K,V>> t){
+            if(root==null){
+                return null;
+            }
+            int cmp = t.entry.getKey().compareTo(r.entry.getKey());
+            if (cmp < 0) {
+                r.left = recDelete(r.left, t);
+            } else if (cmp > 0) {
+                r.right = recDelete(r.right, t);
+            } else {
+                // Node found
+                if (r.left == null) return r.right;
+                if (r.right == null) return r.left;
+                // Replace with successor
+                TreeNode<Entry<K,V>> min = findMin(r.right);
+                r.entry = min.entry;
+                r.right = recDelete(r.right, min);
+            }
+            return r;
+    }
