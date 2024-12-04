@@ -170,3 +170,104 @@ System.out.println(evaluate("5 + )"));
          * In HTML, every opening tag (like <div>) must have a corresponding closing
          *  tag (like </div>). Write a function to check whether all the HTML tags in
          *  a given string are properly matched. A properly matched HTML string has balanced
+         *  and correctly nested tags.
+         */
+        // Your code here..
+        LinkedStack<String> tags= new LinkedStack<>();
+        int start=html.indexOf('<');
+        int finish=-1;
+        while(start!=-1){
+            finish=html.indexOf(start, '>');
+            if(finish==-1)
+                return false;
+            if(html.charAt(start+1)!='/'){
+                tags.push("/"+html.substring(start+1, finish));
+            }
+            else if(html.charAt(start+1)=='/'){
+                if(tags.top()==html.substring(start, finish));
+                    tags.pop();
+            }
+            html=html.substring(finish+1);
+            start=html.indexOf('<');
+        }
+        return tags.isEmpty();
+
+
+    }
+
+    public static int evaluate(String expression) {
+            /*
+         * Write a function to evaluate a given arithmetic expression containing integers,
+         *  parentheses, and operators. The function should correctly follow the order of
+         *  operations (precedence) and handle parentheses appropriately.
+         *  Your task is to complete the evaluate(String expression) method
+         *  which returns the result of the expression.
+         */
+        // Your code here..
+
+        ArrayStack<Integer> valStk = new ArrayStack<>();
+        ArrayStack<Character> opStk = new ArrayStack<>();
+        expression+=" $";
+
+        for (int i = 0; i < expression.length(); i++) {
+            char c= expression.charAt(i);
+            if (c==' ')
+                continue;
+            if (Character.isDigit(c)) {
+                String result="";
+                while (i< expression.length()&&Character.isDigit(expression.charAt(i)))
+                    result+=expression.charAt(i++);
+                valStk.push(Integer.parseInt(result));
+                i--; 
+            } 
+            else if (c == ')') {
+                while (!opStk.isEmpty() && opStk.top() != '(') {
+                    doOp(valStk, opStk);
+                }
+                if (!opStk.isEmpty() && opStk.top() == '(') {
+                    opStk.pop(); // Remove '('
+                }
+            }
+            else if (isOperator(c)||c=='$') {
+                repeatOps(c, valStk, opStk);
+                opStk.push(c); 
+            }
+        }
+        repeatOps('$', valStk, opStk);
+        return valStk.pop();
+    }
+
+    public static void repeatOps(char refOp, ArrayStack<Integer> valStk, ArrayStack<Character> opStk) {
+        while (valStk.size()>1&&!opStk.isEmpty()&&precedance(refOp)<=precedance(opStk.top())) {
+            if (opStk.top() == '(') {
+                opStk.pop();
+                break;
+            }
+            doOp(valStk, opStk);
+        }
+    }
+
+    public static void doOp(ArrayStack<Integer> valStk, ArrayStack<Character> opStk) {
+        int x= valStk.pop();
+        int y= valStk.pop();
+        char op= opStk.pop();
+        valStk.push(applyOp(op, y, x)); 
+    }
+
+       
+    public static int applyOp(char op, int b, int a){
+        switch(op){
+            case('-'):
+                return b-a;
+            case('+'):
+                return b+a;
+            case('*'):
+                return b*a;
+            case('/'):
+                if(a==0)
+                    throw new ArithmeticException("you can not divide by 0");
+                return b/a;
+            default: return 0;
+        }
+    }
+
