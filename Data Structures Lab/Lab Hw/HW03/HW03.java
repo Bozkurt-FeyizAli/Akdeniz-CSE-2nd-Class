@@ -483,3 +483,73 @@ class LinkedStack <E> implements IStack <E> {
     }
 }
 
+
+class ArrayQueue <E> implements IQueue <E> {
+    /*
+     * Data Fields: necessary data fields
+     * Constuctors: ArrayQueue(): default capacity = 1000, ArrayQueue(int capacity)
+     * Methods: Required methods, toString
+     */
+
+     // Your code here..
+    private E[] data;
+    int size;
+
+    public ArrayQueue(int c){
+        size=0;
+        data= (E[])new Object[c];
+    }
+    public ArrayQueue(){
+        this(1000);
+    }
+
+    public E[] getData() {
+        return data;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public void enqueue(E e) {
+        if(size<data.length){
+            data[size++]=e;
+        }
+    }
+
+    @Override
+    public E dequeue() {
+        if(isEmpty())
+            return null;
+        E first=data[0];
+        for (int i = 0; i < size-1; i++) {
+            data[i]=data[i+1];
+        }
+        data[--size] = null;
+        return first;
+    }
+
+    @Override
+    public E first() {
+        if(isEmpty())
+            return null;
+        return data[0];
+    }
+
+    @Override
+    public String toString() {
+        String result="";
+        for (E e : data) {
+            result+=" "+data+",";
+        }
+        return result;
+    }
+
+}
