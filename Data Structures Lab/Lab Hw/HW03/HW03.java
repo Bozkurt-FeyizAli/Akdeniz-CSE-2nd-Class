@@ -271,3 +271,84 @@ System.out.println(evaluate("5 + )"));
         }
     }
 
+    public static boolean isOperator(char c){
+        switch(c){
+            case '-':
+            return true;
+            case '+':
+            return true;
+            case '*':
+            return true;
+            case '/':
+            return true;
+            case '(':
+            return true;
+            case ')':
+            return true;
+            default: return false;
+        }
+    }
+
+    public static int precedance(char op){
+        switch(op){
+            case '-':
+                return 1;
+            case '+':
+                return 1;
+            case '*':
+                return 2;
+            case '/':
+                return 2;
+            default: return 0;
+        }
+    }
+
+}
+
+interface List <E> {
+    int size();
+    boolean isEmpty();
+}
+
+interface IStack <E> extends List <E> {
+    void push(E e);
+    E top();
+    E pop();
+}
+
+interface IQueue <E> extends List<E> {
+    void enqueue(E e);
+    E dequeue();
+    E first();
+}
+
+class ArrayStack <E> implements IStack <E> {
+
+        /*
+     * Data Fields: necessary data fields
+     * Constuctors: ArrayStack(): default capacity = 1000, ArrayStack(int capacity)
+     * Methods: Required methods, toString
+     */
+    private E[] data;
+    private int size;
+    public ArrayStack(int c){
+        data= (E[])new Object[c];
+        size=0;
+    }
+    public ArrayStack(){
+        this(1000);
+    }
+
+    public E[] getData() {
+         return data;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
