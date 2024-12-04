@@ -352,3 +352,73 @@ class ArrayStack <E> implements IStack <E> {
     public boolean isEmpty() {
         return size==0;
     }
+
+    @Override
+    public void push(E e) {
+        if(size==-1)
+            size=0;
+        if(size<data.length){
+            data[size++]=e;
+        }
+    }
+
+    @Override
+    public E top() {
+        if(size==-1)
+            size=0;
+        if(isEmpty())
+            return null;
+        return data[size-1];
+    }
+
+    @Override
+    public E pop() {
+        E e=data[--size];
+        data[size]=null;
+        if(size==-1)
+            size=0;
+        return e;
+    }
+
+     // Your code here..
+     @Override
+     public String toString() {
+         String result="";
+         for (E e : data) {
+            result+=e+", ";
+         }
+         return result;
+     }
+}
+
+class Node <E> {
+    private E data;
+    private Node<E> next;
+
+    public Node(E e, Node<E> n){
+        data=e;
+        next=n;
+    }
+    /*
+     * Data Fields: element, next
+     * Constuctor: Node(element, next)
+     * Methods: getElement, getNext, setNext, toString
+     */
+    public E getData() {
+        return data;
+    }
+    public Node<E> getNext() {
+        return next;
+    }
+    public void setNext(Node<E> next) {
+        this.next = next;
+    }
+    @Override
+    public String toString() {
+        return data.toString()+", "+next;
+    }
+
+     // Your code here..
+    
+}
+
