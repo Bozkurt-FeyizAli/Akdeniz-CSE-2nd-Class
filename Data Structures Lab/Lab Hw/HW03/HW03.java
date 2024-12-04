@@ -117,3 +117,56 @@ System.out.println(evaluate(""));               // 0 veya hata beklenmeli
 System.out.println(evaluate("5 + )"));  
         
     }
+
+    public static boolean isMatching(String expression) {
+            /*
+         * Given a string containing parentheses and other characters,
+         *  write a function that determines whether the parentheses
+         *  in the string are balanced. A string is said to have balanced
+         *  parentheses if every opening parenthesis ((, {, [) has a
+         *  corresponding closing parenthesis (), }, ]), and the pairs
+         *  are properly nested.
+         */
+        // Your code here..
+        String open="({[";
+        String close=")}]";
+        char[] letters=expression.toCharArray();
+        LinkedStack<Character> parantez=new LinkedStack<>();
+        for (char c : letters) {
+            if(open.indexOf(c)!=-1)
+                parantez.push(c);
+            else if(close.indexOf(c)!=-1){
+                if(parantez.isEmpty())
+                    return false;
+                int i=close.indexOf(c);
+                if(open.charAt(i)==parantez.top())
+                    parantez.pop();
+            }
+        } 
+        return parantez.isEmpty();
+        
+    }
+
+    public static String reverse(String str) {
+            /*
+         * Write a function that reverses a given string using a stack.
+         *  In this problem, you will leverage the Last-In-First-Out (LIFO)
+         *  property of a stack to reverse the order of characters in a string.
+         */
+        // Your code here..
+        LinkedStack<Character> letters= new LinkedStack<>();
+        for (char c : str.toCharArray()) {
+            letters.push(c);
+        }
+        StringBuilder result=new StringBuilder();
+        while (!letters.isEmpty()) {
+            result.append(letters.pop());
+        }
+        return result.toString();
+    }
+
+    public static boolean isHTMLMatching(String html) {
+            /*
+         * In HTML, every opening tag (like <div>) must have a corresponding closing
+         *  tag (like </div>). Write a function to check whether all the HTML tags in
+         *  a given string are properly matched. A properly matched HTML string has balanced
