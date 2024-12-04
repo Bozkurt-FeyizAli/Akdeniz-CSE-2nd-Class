@@ -422,3 +422,64 @@ class Node <E> {
     
 }
 
+class LinkedStack <E> implements IStack <E> {
+        /*
+     * Data Fields: necessary data fields
+     * Constuctor: LinkedStack()
+     * Methods: Required methods, toString
+     */
+
+     // Your code here..
+    private Node<E> top = null;
+    private int size;
+    public LinkedStack(){
+        top=null;
+        size=0;
+    }
+
+    public Node<E> getTop() {
+        return top;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public void push(E e) {
+        Node<E> node=new Node<>(e, top);
+        top=node;
+        size++;
+    }
+
+    @Override
+    public E top() {
+        if(top==null)
+            return null;
+        return top.getData();
+    }
+
+    @Override
+    public E pop() {
+        if(isEmpty())
+            return null;
+        E d=top.getData();
+        top=top.getNext();
+        size--;
+        return d;
+    }
+
+    @Override
+    public String toString() {
+        if(top==null)
+            return "stack is empty!";
+        return top.toString();
+    }
+}
+
