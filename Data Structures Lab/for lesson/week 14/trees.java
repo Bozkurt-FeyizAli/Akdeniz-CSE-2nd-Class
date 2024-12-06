@@ -193,7 +193,6 @@ class AVLTree {
     // Node class
     static class Node {
         int key, height;
-        Node left, right;
         Node left, right, parent;
 
         Node(int key) {
@@ -235,7 +234,6 @@ class AVLTree {
 
     private int getHeight(Node node) {
         // To be implemented
-        return 0;
         if(node==null)
         return 1;
         int l=-1;
