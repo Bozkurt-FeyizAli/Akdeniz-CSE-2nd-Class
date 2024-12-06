@@ -280,6 +280,8 @@ class AVLTree {
         rightRotation(root, lRigrhChild, lefthChild);
     }
     public void dRightLeft(Node root, Node rightChild, Node rLeftChild){
+        rightRotation(rightChild, rLeftChild, null);
+        leftRotation(root, rLeftChild, rightChild);
     }
 }
 
