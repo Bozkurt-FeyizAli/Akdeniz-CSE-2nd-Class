@@ -236,6 +236,15 @@ class AVLTree {
     private int getHeight(Node node) {
         // To be implemented
         return 0;
+        if(node==null)
+        return 1;
+        int l=-1;
+        int r=-1;
+        if(node.left!=null)
+            l=getHeight(node.left);
+        if(node.right!=null)
+            r=getHeight(node.right);
+        return Math.max(l, r);
     }
 
     private int getBalanceFactor(Node node) {
@@ -243,14 +252,34 @@ class AVLTree {
         return 0;
     }
 
-    private Node rotateLeft(Node node) {
-        // To be implemented
-        return null;
+    public void leftRotation(Node root, Node rigthChild, Node RRigrhChild){
+        root.right=rigthChild.left;
+        if (rightChild.left != null) 
+        rightChild.left.parent = root;
+        rigthChild.left=root;
+        if(root.parent!=null)
+            if(root.parent.right==root)
+                root.parent.right=rigthChild;
+            else root.parent.left=rigthChild;
+        rightChild.parent = root.parent;
+        root.parent=rigthChild;
     }
 
-    private Node rotateRight(Node node) {
-        // To be implemented
-        return null;
+    public void rightRotation(Node root, Node leftChild, Node LLeftChild){
+        root.left=leftChild.right;
+        leftChild.right.parent=root;
+        leftChild.right=root;
+        if(root.parent.right==root)
+            root.parent.right=leftChild;
+        else root.parent.left=leftChild;
+        root.parent=leftChild;
+    }
+
+    public void dleftRightR(Node root, Node lefthChild, Node lRigrhChild){
+        leftRotation(lefthChild, lRigrhChild, null);
+        rightRotation(root, lRigrhChild, lefthChild);
+    }
+    public void dRightLeft(Node root, Node rightChild, Node rLeftChild){
     }
 }
 
