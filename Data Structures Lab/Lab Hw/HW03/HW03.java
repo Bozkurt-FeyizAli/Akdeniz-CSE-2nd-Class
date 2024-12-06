@@ -553,3 +553,52 @@ class ArrayQueue <E> implements IQueue <E> {
     }
 
 }
+
+class LinkedQueue<E> implements IQueue<E> {
+    /*
+     * Data Fields: necessary data fields
+     * Constuctors: LinkedQueue()
+     * Methods: Required methods, toString
+     */
+
+     // Your code here..
+     private int size;
+    private Node<E> head = null;
+    private Node<E> tail = null;
+    public LinkedQueue(){
+        size=0;
+        head=null;
+        tail=null;
+    }
+
+     public Node<E> getHead() {
+         return head;
+     }
+
+     public Node<E> getTail() {
+         return tail;
+     }
+    
+    @Override
+    public int size() {
+       return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public void enqueue(E e) {
+        Node<E> node= new Node<>(e, null);
+        if(isEmpty()){
+            head=node;
+            tail=node;
+        }
+        else{
+            tail.setNext(node);
+            tail=node;
+        }
+        size++;
+    }
