@@ -602,3 +602,35 @@ class LinkedQueue<E> implements IQueue<E> {
         }
         size++;
     }
+
+    @Override
+    public E dequeue() {
+        if(isEmpty())
+            return null;
+        E e=head.getData();
+        head=head.getNext();
+        if(size==1)
+            tail=null;
+        size--;
+        return e;
+    }
+
+    @Override
+    public E first() {
+        if(head==null)
+            return null;
+        return head.getData();
+    }
+
+    @Override
+    public String toString() {
+        String result="";
+        Node<E> h=head;
+        while (h!=null) {
+                result+=" "+h.getData()+",";
+                h=h.getNext();
+        }
+        return result;
+    }
+}
+
