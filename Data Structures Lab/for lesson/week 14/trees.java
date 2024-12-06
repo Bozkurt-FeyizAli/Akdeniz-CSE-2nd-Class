@@ -194,6 +194,7 @@ class AVLTree {
     static class Node {
         int key, height;
         Node left, right;
+        Node left, right, parent;
 
         Node(int key) {
             this.key = key;
@@ -218,7 +219,18 @@ class AVLTree {
 
     public Node search(int key) {
         // To be implemented
+        return recSearvh(root, key);
+    }
+
+    public Node recSearvh(Node n, int k){
+        if(n.key==k)
+            return n;
+        else if(n.key>k)
+            return recSearvh(n.right, k);
+        else if(n.key<=k)
+            recSearvh(n.left, k);
         return null;
+        
     }
 
     private int getHeight(Node node) {
