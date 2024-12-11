@@ -257,3 +257,101 @@ class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
         }
         return null;
     }
+
+    public TreeNode<T> inorderForLeft(TreeNode<T> n){
+        if(n!=null){
+            inorderForLeft(n.right);
+            return n;
+        }
+        return null;
+    }
+
+    public TreeNode<T> findNode(TreeNode<T> n, T e){
+        if(n!=null){
+            if(n.element==e)
+                return n;
+            else if(e.compareTo(n.element)>0)
+                return findNode(n.right, e);
+                return findNode(n.left, e);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean contains(T element) {
+        return recContains(root, element);
+    }
+
+    public boolean recContains(TreeNode<T> n, T e){
+        if(n==null)
+            return false;
+        else if(n.element.equals(e)){
+            return true;
+        }
+        else if(e.compareTo(n.element)>0){
+            return recContains(n.right, e);
+        }
+        return recContains(n.left, e);
+    }
+
+    @Override
+    public void levelorder(List<T> list) {
+        if(isEmpty())
+            return ;
+        else{
+            Queue<TreeNode<T>> q= new LinkedList<>();
+            q.add(root);
+            while (!q.isEmpty()) {
+                TreeNode<T> n=q.poll();
+                list.add(n.element);
+                if(n.left!=null)
+                    q.add(n.left);
+                if(n.right!=null)
+                    q.add(n.right);
+            }
+        }
+    }
+
+    @Override
+    public void inorder(List<T> list) {
+        recInroder(list, root);
+    }
+
+    public void recInroder(List<T> list, TreeNode<T> r){
+        if(r!=null){
+            recInroder(list, r.left);
+            list.add(r.element);
+            recInroder(list, r.right);
+        }
+    }
+
+    @Override
+    public void preorder(List<T> list) {
+        recPreorder(list, root);
+    }
+
+    public void recPreorder(List<T> list, TreeNode<T> r){
+        if(r!=null){
+            list.add(r.element);
+            recInroder(list, r.left);
+            recInroder(list, r.right);
+        }
+    }
+
+    @Override
+    public void postorder(List<T> list) {
+        recPostorder(list, root);
+    }
+
+    public void recPostorder(List<T> list, TreeNode<T> r){
+        if(r!=null){
+            recInroder(list, r.left);
+            recInroder(list, r.right);
+            list.add(r.element);
+        }
+    }
+
+    /*
+     * Constructor()
+     */
+}
