@@ -143,6 +143,7 @@ public class HW03 {
     }
 
     public static void repeatOps(char refOp, LinkedStack<Integer> valStk, LinkedStack<Character> opStk) {
+        while (valStk.size()>1&&(precedance(refOp)<=precedance(opStk.top()))) {
             doOp(valStk, opStk);
         }
     }
