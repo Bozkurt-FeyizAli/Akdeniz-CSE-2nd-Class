@@ -98,3 +98,94 @@ public class HW04 {
         // inorderList.clear();
         // bst.levelorder(inorderList);
         // System.out.println("Inorder Traversal after removing 7: " + inorderList); // Expected: [5, 12, 18]
+
+        // // Test 9: Test if tree is empty after removing all nodes
+        // System.out.println("\nTest 9: Check if tree is empty after removing all nodes");
+        // bst.remove(5);
+        // bst.remove(12);
+        // bst.remove(18);
+        // System.out.println("Is tree empty? " + bst.isEmpty());  // Expected: true
+
+        // // Test 10: Test remove on an empty tree
+        // System.out.println("\nTest 10: Try to remove from an empty tree");
+        // System.out.println("Remove 10 from empty tree: " + bst.remove(10));  // Expected: false
+    
+        
+    }
+}
+
+interface Tree<T> {
+    int size();
+    boolean isEmpty();
+    void insert(T element);
+    boolean remove(T element);
+    boolean contains(T element);
+    void levelorder(List<T> list);
+    void inorder(List<T> list);
+    void preorder(List<T> list);
+    void postorder(List<T> list);
+}
+
+
+class TreeNode<T> {
+    T element;
+    TreeNode<T> left, right;
+
+    public TreeNode(T element) {
+        this.element = element;
+    }
+}
+
+/*
+ * Node-based BST implementation
+ */
+class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
+    private TreeNode<T> root;
+    private int size;
+
+    public BSTNode(){
+        root=null;
+        size=0;
+    }
+    public TreeNode<T> getRoot() {
+        // Convenience method for me
+        return root;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public void insert(T element) {
+        root=recInsert(root, element);
+        size++;
+    }
+
+    public TreeNode<T> recInsert(TreeNode<T> n, T e){
+        if(n==null){
+            return new TreeNode<>(e);
+        }
+        else if(e.compareTo(n.element)>0)
+            n.right= recInsert(n.right, e);
+        else n.left= recInsert(n.left, e);
+        return n;
+    }
+
+    @Override
+    public boolean remove(T element) {
+        if(isEmpty())
+            return false;
+        root = recRemove(root, element);
+        if (root != null) {
+            size--;
+            return true;
+        }
+        return false;
+    }
