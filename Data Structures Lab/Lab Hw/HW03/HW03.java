@@ -16,71 +16,7 @@ public class HW03 {
             System.out.println(e);
         } 
 
-        System.out.println("Stack'e eleman ekleniyor: 10, 20, 30");
-        arrayStack.push(10);
-        arrayStack.push(20);
-        arrayStack.push(30);
-        System.out.println("Stack durumu: " + arrayStack);
-
-        // Top eleman kontrolü
-        System.out.println("Stack'in en üst elemanı: " + arrayStack.top());
-
-        // Eleman çıkarma
-        System.out.println("Stack'ten eleman çıkarılıyor: " + arrayStack.pop());
-        System.out.println("Stack durumu: " + arrayStack);
-
-        // Stack dolu mu kontrolü
-        System.out.println("Stack dolu mu? " + (arrayStack.size() == 5));
-
-        // Tüm elemanları çıkarma
-        System.out.println("Tüm elemanlar çıkarılıyor...");
-        while (!arrayStack.isEmpty()) {
-            System.out.println("Çıkarılan eleman: " + arrayStack.pop());
-        }
-        System.out.println("Stack boş mu? " + arrayStack.isEmpty());
-
-        System.out.println("\n=== LinkedStack Test ===");
-        IStack<String> linkedStack = new ArrayStack<>(15);
-
-        // Eleman ekleme
-        System.out.println("Stack'e eleman ekleniyor: A, B, C");
-        linkedStack.push("A");
-        linkedStack.push("B");
-        linkedStack.push("C");
-        System.out.println("Stack durumu: " + linkedStack);
-
-        // Top eleman kontrolü
-        System.out.println("Stack'in en üst elemanı: " + linkedStack.top());
-
-        // Eleman çıkarma
-        System.out.println("Stack'ten eleman çıkarılıyor: " + linkedStack.pop());
-        System.out.println("Stack durumu: " + linkedStack);
-
-        // Eleman ekleme ve çıkarma kombinasyonu
-        linkedStack.push("D");
-        System.out.println("Stack'e eleman ekleniyor: D");
-        System.out.println("Stack durumu: " + linkedStack);
-
-        // Tüm elemanları çıkarma
-        System.out.println("Tüm elemanlar çıkarılıyor...");
-        while (!linkedStack.isEmpty()) {
-            System.out.println("Çıkarılan eleman: " + linkedStack.pop());
-            System.out.println("Stack durumu: " + linkedStack);
-
-        }
-        System.out.println("Stack boş mu? " + linkedStack.isEmpty());
-
-        System.out.println(evaluate("(15+5)*3"));
-        System.out.println(reverse("abcd"));
-
-
-        System.out.println(evaluate("3 + 5"));           // 8
-System.out.println(evaluate("(1 + 2) * 3"));     // 9
-System.out.println(evaluate("10 / (2 + 3)"));    // 2
-System.out.println(evaluate("100 + 2 * 6"));     // 112
-System.out.println(evaluate("(4 + 2) * (3 - 1)")); // 12
-System.out.println(evaluate(""));               // 0 veya hata beklenmeli
-System.out.println(evaluate("5 + )"));  
+         
         
     }
 
