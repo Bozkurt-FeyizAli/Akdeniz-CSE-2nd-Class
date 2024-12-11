@@ -130,7 +130,7 @@ public class HW03 {
                     doOp(valStk, opStk);
                 }
                 if (!opStk.isEmpty() && opStk.top() == '(') {
-                    opStk.pop(); // Remove '('
+                    opStk.pop(); 
                 }
             }
             else if (isOperator(c)||c=='$') {
@@ -142,17 +142,14 @@ public class HW03 {
         return valStk.pop();
     }
 
-    public static void repeatOps(char refOp, ArrayStack<Integer> valStk, ArrayStack<Character> opStk) {
-        while (valStk.size()>1&&!opStk.isEmpty()&&precedance(refOp)<=precedance(opStk.top())) {
-            if (opStk.top() == '(') {
-                opStk.pop();
-                break;
-            }
+    public static void repeatOps(char refOp, LinkedStack<Integer> valStk, LinkedStack<Character> opStk) {
             doOp(valStk, opStk);
         }
     }
 
-    public static void doOp(ArrayStack<Integer> valStk, ArrayStack<Character> opStk) {
+    
+
+    public static void doOp(LinkedStack<Integer> valStk, LinkedStack<Character> opStk) {
         int x= valStk.pop();
         int y= valStk.pop();
         char op= opStk.pop();
@@ -170,7 +167,7 @@ public class HW03 {
                 return b*a;
             case('/'):
                 if(a==0)
-                    throw new ArithmeticException("you can not divide by 0");
+                    throw new ArithmeticException("you cannot divide by 0");
                 return b/a;
             default: return 0;
         }
@@ -204,6 +201,12 @@ public class HW03 {
                 return 2;
             case '/':
                 return 2;
+            case ')':
+                return -2;
+            case '(':
+                return -1;
+            case '$':
+                return 0;
             default: return 0;
         }
     }
@@ -260,8 +263,6 @@ class ArrayStack <E> implements IStack <E> {
 
     @Override
     public void push(E e) {
-        if(size==-1)
-            size=0;
         if(size<data.length){
             data[size++]=e;
         }
@@ -269,8 +270,6 @@ class ArrayStack <E> implements IStack <E> {
 
     @Override
     public E top() {
-        if(size==-1)
-            size=0;
         if(isEmpty())
             return null;
         return data[size-1];
@@ -278,10 +277,10 @@ class ArrayStack <E> implements IStack <E> {
 
     @Override
     public E pop() {
+        if(isEmpty())
+            return null;
         E e=data[--size];
         data[size]=null;
-        if(size==-1)
-            size=0;
         return e;
     }
 
@@ -452,11 +451,10 @@ class ArrayQueue <E> implements IQueue <E> {
     public String toString() {
         String result="";
         for (E e : data) {
-            result+=" "+data+",";
+            result+=e+", ";
         }
         return result;
     }
-
 }
 
 class LinkedQueue<E> implements IQueue<E> {
