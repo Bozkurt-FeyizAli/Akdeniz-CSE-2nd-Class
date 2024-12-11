@@ -189,3 +189,71 @@ class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
         }
         return false;
     }
+
+    private TreeNode<T> recRemove(TreeNode<T> node, T element) {
+        if (node==null) return null;
+        else if (element.compareTo(node.element) < 0) {
+            node.left = recRemove(node.left, element);
+        } else if (element.compareTo(node.element) > 0) {
+            node.right = recRemove(node.right, element);
+        } else {
+            if (node.left==null&&node.right==null) {
+                return null; 
+            } else if (node.left==null) {
+                return node.right; 
+            } else if (node.right==null) {
+                return node.left;
+            } else {
+                TreeNode<T> inorderSuccessor=findMin(node.right); 
+                node.element=inorderSuccessor.element;
+                node.left=recRemove(node.right, inorderSuccessor.element);
+            }
+        }
+        return node;
+    }
+
+    private TreeNode<T> findMin(TreeNode<T> node) {
+        while (node!=null&&node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+    private TreeNode<T> findMax(TreeNode<T> node) {
+        while (node!=null&&node.right != null) {
+            node = node.right;
+        }
+        return node;
+    }
+
+    private boolean delete(TreeNode<T> root, TreeNode<T> target){
+        if(root!=null){
+        if(root.left==target){
+            root.left=null;
+            return true;}
+        if(root.right==target){
+            root.right=null;
+            return true;
+        }
+        if(target.element.compareTo(root.element)>0)
+            return delete(root.right, target);
+            return delete(root.left, target);
+    }
+    return false;
+        
+    }
+
+    public void swap(TreeNode<T> i, TreeNode<T> j){
+        if(i!=null&&j!=null){
+            T s=i.element;
+            i.element=j.element;
+            j.element=s;
+        }
+    }
+
+    public TreeNode<T> inorderForRight(TreeNode<T> n){
+        if(n!=null){
+            inorderForRight(n.left);
+            return n;
+        }
+        return null;
+    }
