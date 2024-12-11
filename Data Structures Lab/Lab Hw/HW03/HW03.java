@@ -43,6 +43,7 @@ public class HW03 {
                 int i=close.indexOf(c);
                 if(open.charAt(i)==parantez.top())
                     parantez.pop();
+                else return false;
             }
         } 
         return parantez.isEmpty();
@@ -79,18 +80,20 @@ public class HW03 {
         int start=html.indexOf('<');
         int finish=-1;
         while(start!=-1){
-            finish=html.indexOf(start, '>');
+            finish=html.indexOf('>', start);
             if(finish==-1)
                 return false;
-            if(html.charAt(start+1)!='/'){
-                tags.push("/"+html.substring(start+1, finish));
+            String tag=html.substring(start + 1, finish);
+            if (tag.charAt(0)!='/') {
+                tags.push(tag);
             }
-            else if(html.charAt(start+1)=='/'){
-                if(tags.top()==html.substring(start, finish));
-                    tags.pop();
+            else {
+                String closeTag=tag.substring(1);
+                if(tags.isEmpty()||!tags.pop().equals(closeTag))
+                    return false;
             }
-            html=html.substring(finish+1);
-            start=html.indexOf('<');
+            //html=html.substring(finish+1);
+            start=html.indexOf('<', finish+1);
         }
         return tags.isEmpty();
 
@@ -107,8 +110,8 @@ public class HW03 {
          */
         // Your code here..
 
-        ArrayStack<Integer> valStk = new ArrayStack<>();
-        ArrayStack<Character> opStk = new ArrayStack<>();
+        LinkedStack<Integer> valStk = new LinkedStack<>();
+        LinkedStack<Character> opStk = new LinkedStack<>();
         expression+=" $";
 
         for (int i = 0; i < expression.length(); i++) {
