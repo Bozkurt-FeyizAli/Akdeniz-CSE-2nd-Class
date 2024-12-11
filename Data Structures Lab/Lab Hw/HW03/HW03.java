@@ -1,5 +1,5 @@
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.Scanner;
 
 public class HW03 {
     public static void main(String[] args) {
@@ -16,40 +16,6 @@ public class HW03 {
             System.out.println(e);
         } 
 
-        ArrayQueue<String> queue = new ArrayQueue<>(15);
-
-        // Test: Kuyruğa eleman ekleme
-        System.out.println("Kuyruğa eleman ekleniyor...");
-        queue.enqueue("Birinci");
-        queue.enqueue("İkinci");
-        queue.enqueue("Üçüncü");
-        System.out.println("Kuyruk: " + queue);
-
-        // Test: Kuyruğun ilk elemanını görüntüleme (çıkarmadan)
-        System.out.println("\nKuyruğun ilk elemanı: " + queue.first());
-
-        // Test: Kuyruğun ilk elemanını çıkarma
-        System.out.println("\nKuyruğun ilk elemanı çıkarılıyor: " + queue.dequeue());
-        System.out.println("\nKuyruğun ilk elemanı: " + queue.first());
-        System.out.println("Kuyruk: " + queue);
-
-        // Test: Kuyruk boş mu kontrolü
-        System.out.println("\nKuyruk boş mu? " + queue.isEmpty());
-
-        // Test: Kuyruğun boyutunu öğrenme
-        System.out.println("Kuyruğun boyutu: " + queue.size());
-
-        // Tüm elemanları çıkarma
-        System.out.println("\nKuyruktaki tüm elemanlar çıkarılıyor...");
-        while (!queue.isEmpty()) {
-            System.out.println("Çıkarılan eleman: " + queue.dequeue());
-        }
-        System.out.println("Kuyruk boş mu? " + queue.isEmpty());
-
-        System.out.println("=== ArrayStack Test ===");
-        IStack<Integer> arrayStack = new ArrayStack<>(5); // Kapasitesi 5 olan bir ArrayStack
-
-        // Eleman ekleme
         System.out.println("Stack'e eleman ekleniyor: 10, 20, 30");
         arrayStack.push(10);
         arrayStack.push(20);
