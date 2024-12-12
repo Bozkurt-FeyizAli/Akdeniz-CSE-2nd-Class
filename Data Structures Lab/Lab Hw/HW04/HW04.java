@@ -425,3 +425,70 @@ class BSTArray <T extends Comparable<? super T>> implements Tree<T> {
         }
     }
 
+    public void swapping(int index){
+        if(hasLeft(index)||hasRight(index)){
+            if(hasRight(index))
+                swap(index, IndexRight(index));
+            else swap(index, IndexLeft(index));
+        }
+        else return;
+    }
+
+    public int recIndex(T e, int i){
+        if (i>=array.length||array[i]==null) return -1;
+        if(array[i]==e)
+            return i;
+        else if(e.compareTo(array[i])>0)
+            return recIndex(e, i*2+2);
+        else return recIndex(e, i*2+1);
+    }
+
+    public int findMin(int i){
+        int left=IndexLeft(i);
+        if(i>=0&&i<array.length&&array[i]!=null)
+        {
+        if(left>=0&&left<array.length)
+        if (left<array.length&&array[left]!=null) {
+            return findMin(left);
+        }
+        return i; 
+        }
+        return -1;
+    }
+    public int findMax(int i){
+        int right=IndexRight(i);
+        if(i>=0&&i<array.length&&array[i]!=null)
+        {
+        if(right>=0&&right<array.length)
+        if (right<array.length&&array[right]!=null) {
+            return findMax(right);
+        }
+        return i;
+        }
+        return -1;
+    }
+
+    public void swap(int i, int j){
+        if(i>=0&&i<array.length&&j>=0&&j<array.length){
+            T e=array[i];
+            array[i]=array[j];
+            array[j]=e;
+        }
+    }
+
+    @Override
+    public boolean contains(T element) {
+        return recContains(0, element);
+    }
+
+    public boolean recContains(int i, T e){
+        if(i<0||i>=array.length)
+            return false;
+        else if(array[i]==null)
+            return false;
+        else if(array[i]==e)
+            return true;
+        else if(e.compareTo(array[i])>0)
+            return recContains(IndexRight(i), e);
+        else return recContains(IndexLeft(i), e);
+    }
