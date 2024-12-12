@@ -355,3 +355,73 @@ class BSTNode <T extends Comparable<? super T>> implements Tree<T> {
      * Constructor()
      */
 }
+
+/*
+ * Array-based BST implementation
+ */
+class BSTArray <T extends Comparable<? super T>> implements Tree<T> {
+    private T[] array;
+    private int size;
+
+    public T[] getArray() {
+        return array;
+    }
+
+    public BSTArray(int capacity) {
+        array = (T[]) new Comparable[capacity];
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public void insert(T element) {
+        recInsert( 0, element);
+        size++;
+    }
+
+    public void recInsert(int index, T element){
+        if (index>=array.length) return;
+        if(array[index]==null)
+            array[index]=element;
+        else if(element.compareTo(array[index])>0){
+                recInsert(index*2+2, element);
+        }
+        else{
+            recInsert(index*2+1, element);
+        }
+    } 
+
+    @Override
+    public boolean remove(T element) {
+        if(!contains(element)){
+            return false;
+        }
+        else{
+            int index=recIndex(element, 0);
+            int indexSwap=-1;
+            if(hasRight(index))
+                indexSwap=findMin(index*2+2);
+            else if(hasLeft(index))
+                indexSwap=findMax(index*2+1);   
+            if(indexSwap!=-1){
+                swap(index, indexSwap);
+                array[indexSwap]=null;
+                swapping(indexSwap);
+                size--;
+            }
+            else{
+                array[index]=null;
+                size--;
+            }
+            return true;
+        }
+    }
+
