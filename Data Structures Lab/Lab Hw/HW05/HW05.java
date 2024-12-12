@@ -50,3 +50,47 @@ public class HW05 {
             System.out.println(array[i]);
         } */
     }
+
+    public static void heapSort(int[] array) {
+        /*
+         * heap sort implementation
+         */
+    }
+
+    public static void heapify(int[] array, int n, int parent) {
+        /*
+         * heapify implementation (required for heapSort)
+         * array: whole array
+         * n: length of subarray
+         * parrent: index of parrent
+         */
+    }
+
+    private static void swap(int[] array, int i, int j) {
+        int temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+class Entry <K extends Comparable <? super K>, V> implements Comparable<K> {
+/*
+ * Constructor(K, V)
+ * getValue()
+ * getKey()
+ */
+
+    @Override
+    public int compareTo(K o) {
+        return key.compareTo(o);
+    }
+} 
+
+class TreeNode <T> {
+    /*
+     * Constructor(T entry)
+     * entry, left, right
+     */
+
+}
+
