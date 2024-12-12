@@ -642,3 +642,61 @@ abstract class AbstractPriorityQueue <P extends Comparable<? super P>, E> implem
 /*
  * Sorted PQ implementation
  */
+class SortedPriorityQueue <P extends Comparable<? super P>, E> extends AbstractPriorityQueue <P, E> {
+    private ListNode<Entry<P, E>> head;
+    private int size;
+    public SortedPriorityQueue(){
+        size=0;
+        head=null;
+    }
+    @Override
+    public void insert(P priority, E element) {
+        ListNode<Entry<P, E>> node= new ListNode<>(new Entry<>(priority, element), null);
+        if(isEmpty())
+            head=node;
+        else{
+            if(priority.compareTo(head.getData().key)<0){
+                node.setNext(head);
+                head=node;
+            }
+            else{
+            ListNode<Entry<P, E>> h=head;
+            while(h.getNext()!=null&&priority.compareTo(h.getData().key)<0)
+                h=h.getNext();
+            node.setNext(h.getNext());
+            h.setNext(node);
+            }
+        }
+        size++;
+    }
+
+    @Override
+    public E remove() {
+        E rem=head.getData().value;
+        size--;
+        head=head.getNext();
+        return rem;
+    }
+
+    @Override
+    public E peek() {
+        if(isEmpty())
+            return null;
+        return head.getData().getValue(); 
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+}
+
+/*
+ * Unsorted PQ implementation
+ */
