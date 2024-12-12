@@ -700,3 +700,79 @@ class SortedPriorityQueue <P extends Comparable<? super P>, E> extends AbstractP
 /*
  * Unsorted PQ implementation
  */
+class UnsortedPriorityQueue <P extends Comparable<? super P>, E> extends AbstractPriorityQueue <P, E> {
+    private ListNode<Entry<P, E>> head;
+    private ListNode<Entry<P, E>> tail;
+    private int size;
+    public UnsortedPriorityQueue(){
+        size=0;
+        head=null;
+    }
+    @Override
+    public void insert(P priority, E element) {
+        ListNode<Entry<P, E>> node= new ListNode<>(new Entry<>(priority, element), null);
+        if(isEmpty()){
+            head=node;
+            tail=head;
+        }
+        else{
+            tail.setNext(node);
+            tail=tail.getNext();
+        }
+        size++;
+    }
+
+    @Override
+    public E remove() {
+        if(isEmpty()){
+            return null;
+        }
+        else{
+            ListNode<Entry<P, E>> minprev=null;
+            ListNode<Entry<P, E>> min=head;
+            ListNode<Entry<P, E>> current=head.getNext();
+            while(current!=null){
+                if(current.getData().key.compareTo(min.getData().key)<0){
+                    minprev=min;
+                    min=current;
+                }
+                current=current.getNext();
+            }
+            if(minprev==null)
+                head=head.getNext();
+            else 
+                minprev.setNext(min.getNext());
+            size--;
+            return min.getData().value;
+        }
+    }
+
+    @Override
+    public E peek() {
+        if(isEmpty()){
+            return null;
+        }
+        else{
+            ListNode<Entry<P, E>> min=head;
+            ListNode<Entry<P, E>> current=head.getNext();
+            while(current!=null){
+                if(current.getData().key.compareTo(min.getData().key)<0){
+                    min=current;
+                }
+                current=current.getNext();
+            }
+            return min.getData().value;
+        }
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+    
+}
