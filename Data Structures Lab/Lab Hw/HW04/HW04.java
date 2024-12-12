@@ -492,3 +492,87 @@ class BSTArray <T extends Comparable<? super T>> implements Tree<T> {
             return recContains(IndexRight(i), e);
         else return recContains(IndexLeft(i), e);
     }
+
+    @Override
+    public void levelorder(List<T> list) {
+        for (T t : array) {
+            list.add(t);
+        }
+    }
+
+    @Override
+    public void inorder(List<T> list) {
+        recInorder(list, 0);
+    }
+
+    public void recInorder(List<T> list, int i){
+        if(i>=0&&i<array.length){
+            recInorder(list, 2*i+1);
+            list.add(array[i]);
+            recInorder(list, i*2+2);
+        }
+    }
+
+    @Override
+    public void preorder(List<T> list) {
+        recPreorder(list, 0);
+    }
+
+    public void recPreorder(List<T> list, int i){
+        if(i>=0&&i<array.length){
+            list.add(array[i]);
+            recInorder(list, 2*i+1);
+            recInorder(list, i*2+2);
+        }
+    }
+
+    @Override
+    public void postorder(List<T> list) {
+       recPostorder(list, 0);
+    }
+
+    public void recPostorder(List<T> list, int i){
+        if(i>=0&&i<array.length){
+            recInorder(list, 2*i+1);
+            recInorder(list, i*2+2);
+            list.add(array[i]);
+        }
+    }
+
+    public int IndexLeft(int i){
+        int iLeft=2*i+1;
+        if(iLeft<array.length&&iLeft>=0)
+            return iLeft;
+        return -1;
+    }
+    public boolean hasLeft(int index){
+        int ileft=IndexLeft(index);
+        if(ileft!=-1)
+        return array[ileft]!=null;
+        return false;
+    }
+    public boolean hasRight(int index){
+        int ileft=IndexRight(index);
+        if(ileft!=-1)
+        return array[ileft]!=null;
+        return false;
+    }
+    public boolean hasParent(int index){
+        int ileft=IndexParent(index);
+        if(ileft!=-1)
+        return array[ileft]!=null;
+        return false;
+    }
+    public int IndexRight(int i){
+        int iLeft=2*i+2;
+        if(iLeft<array.length&&iLeft>=0)
+            return iLeft;
+        return -1;
+    }
+    public int IndexParent(int i){
+        int iLeft=2*i-1;
+        if(iLeft<array.length&&iLeft>=0)
+            return iLeft;
+        return -1;
+    }
+}
