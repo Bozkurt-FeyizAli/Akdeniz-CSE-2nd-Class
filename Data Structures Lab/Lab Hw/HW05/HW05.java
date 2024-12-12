@@ -149,3 +149,33 @@ class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
+
+    @Override
+    public boolean isEmpty() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+    }
+
+    @Override
+    public V remove() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+    }
+
+    @Override
+    public V peek() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'peek'");
+    }
+
+    @Override
+    public void insert(K priority, V element) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+    }
+
+    /*
+    * adds elements to a list in BFS fashion
+     * levelorder(List<V> list)
+     */
+}
