@@ -155,3 +155,87 @@ public class a {
         }
         return false;
     }
+
+
+    protected Node<T> removeRec(Node<T> node, T element) {
+        if (node == null)
+            return null;
+        if (element.compareTo(node.element) < 0)
+            node.left = removeRec(node.left, element);
+        else if (element.compareTo(node.element) > 0)
+            node.right = removeRec(node.right, element);
+        else {
+            if (node.left == null)
+                return node.right;
+            if (node.right == null)
+                return node.left;
+            node.element = findMin(node.right);
+            node.right = removeRec(node.right, node.element);
+        }
+        return node;
+    }
+
+    private T findMin(Node<T> node) {
+        Node<T> current = node;
+        while (current.left != null)
+            current = current.left;
+        return current.element;
+    }
+
+    private T findMax(Node<T> node) {
+        Node<T> current = node;
+        while(current.right != null)
+            current = current.right;
+        return current.element;
+    }
+
+    @Override
+    public boolean contains(T element) {
+        return containsRec(root, element);
+    }
+
+    private boolean containsRec(Node<T> node, T element) {
+        if (node == null)
+            return false;
+        if (element.compareTo(node.element) == 0)
+            return true;
+        return element.compareTo(node.element) < 0
+                ? containsRec(node.left, element)
+                : containsRec(node.right, element);
+    }
+
+    @Override
+    public void inorder(List<T> list) {
+        inorderRec(root, list);
+    }
+
+    private void inorderRec(Node<T> node, List<T> list) {
+        if (node == null)
+            return;
+
+        inorderRec(node.left, list);
+        list.add(node.element);
+        inorderRec(node.right, list);
+    }
+
+    @Override
+    public void levelorder(List<T> list) {
+        if (root == null) {
+            return;
+        }
+    
+        Queue<Node<T>> queue = new LinkedList<>();
+        queue.add(root);
+    
+        while (!queue.isEmpty()) {
+            Node<T> current = queue.poll(); 
+            list.add(current.element);    
+            if (current.left != null) {
+                queue.add(current.left);
+            }
+            if (current.right != null) {
+                queue.add(current.right);
+            }
+        }
+    }
+ }
