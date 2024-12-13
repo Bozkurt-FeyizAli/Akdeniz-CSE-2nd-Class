@@ -337,3 +337,125 @@ public class a {
         }
         return  null;
     }
+
+    private Node<T> find(T element){
+        if(isEmpty()){
+            return null;
+        }
+        return findRec(root, element);
+    }
+
+    @Override
+    public boolean remove(T element) {
+        // TODO Auto-generated method stub
+        return(super.remove(element)&&rebalance(root)!=null);
+        
+    }
+
+    private Node<T> findRec(Node<T> node, T element){
+        if(node==null){
+            return node;
+        }
+
+        if(element.compareTo(node.element)<0){
+            return findRec(node.left, element);
+        }
+        if(element.compareTo(node.element)>0){
+            return findRec(node.right, element);
+        }
+
+        return node;
+    }
+    
+
+    public void rightRotate(T t) {
+        if(contains(t)){
+            Node<T> node=find(t);
+            if(node==root){
+                root=rightRotate(node);
+            }
+            else{
+                if(t.compareTo(node.parent.element)<0){
+                    node.parent.right= rightRotate(node);
+                }
+                else{
+                    node.parent.left=rightRotate(node);
+                }
+            }
+
+        }
+    }
+
+    @Override
+    public Node<T> leftRotate(Node<T> node) {
+        Node<T> right=node.right;
+        node.right=right.left;
+        if(right.left!=null)
+            right.left.parent=node;
+        right.parent=node.parent;
+        if(node.parent==null)
+            root=right;
+        else if(node==node.parent.left)
+            node.parent.left=right;
+        else node.parent.right=right;
+        right.left=node;
+        node.parent=right;
+        return right;
+    }
+    // @Override
+    // public Node<T> leftRotate(Node<T> node) {
+    //     // TODO Auto-generated method stub
+    //     if(node==null|| node.right==null){
+    //         return node;
+    //     }
+
+    //     Node<T> newRigth=node.right;
+    //     node.right=newRigth.left;
+    //     if(newRigth.left!=null){
+    //         newRigth.left.parent=node;
+    //     }
+    //     newRigth.parent=node.parent;
+    //     newRigth.left=node;
+    //     node.parent=newRigth;
+
+    //     updateHeight(node);
+    //     updateHeight(newRigth);
+    //     return newRigth;
+
+    // }
+
+    @Override
+    public Node<T> rightRotate(Node<T> node) {
+        Node<T> nleft=node.left;
+        node.left=nleft.right;
+        if(nleft.right!=null)
+            nleft.right.parent=node;
+        nleft.parent=node.parent;
+        if(node.parent==null)
+            root=nleft;
+        else if(node==node.parent.right)
+            node.parent.right=nleft;
+        else node.parent.left=nleft;
+        nleft.right=node;
+        node.parent=nleft;
+        return nleft;
+    }
+
+    @Override
+    public Node<T> doubleRotateLR(Node<T> node) {
+        if(node==null||node.left==null) return node;
+        node.left=leftRotate(node.left);
+        return rightRotate(node);
+    }
+
+    @Override
+    public Node<T> doubleRotateRL(Node<T> node) {
+        if(node==null||node.right==null) return node;
+        node.right=rightRotate(node.right);
+        return leftRotate(node);
+    }
+}
+
+
+
+
