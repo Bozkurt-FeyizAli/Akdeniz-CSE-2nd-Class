@@ -1,5 +1,5 @@
 import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /*
  * There might be some chanes required in the main method to test
@@ -8,7 +8,7 @@ import java.util.Queue;
 public class HW05 {
     public static void main(String[] args) {
         //NodeHeap<Integer, String> heap = new NodeHeap<>();
-        ArrayHeap<Integer, String> heap = new ArrayHeap<>(500);
+        ArrayHeap<Integer, String> heap = new ArrayHeap<>(20);
 
         // Inserting elements into the heap
         heap.insert(10, "Ten");
@@ -24,7 +24,7 @@ public class HW05 {
         heap.levelorder();
 
         //NodeHeap<Integer, String> heap2 = new NodeHeap<>();
-        ArrayHeap<Integer, String> heap2 = new ArrayHeap<>(500);
+        ArrayHeap<Integer, String> heap2 = new ArrayHeap<>(20);
 
         heap2.insert(8, "Ten");
         heap2.insert(23, "Twenty");
@@ -44,17 +44,18 @@ public class HW05 {
         heap3.levelorder();
         //System.out.println(heap3.getRoot().entry.getValue());
 
-        /* int[] array = {1, 5, 3, 2, 6, 4};
+         int[] array = {1, 5, 3, 2, 6, 4};
         heapSort(array);
         for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
-        } */
+        } 
     }
 
     public static void heapSort(int[] array) {
         /*
          * heap sort implementation
          */
+        heapify(array, array.length, 0);
     }
 
     public static void heapify(int[] array, int n, int parent) {
@@ -64,6 +65,13 @@ public class HW05 {
          * n: length of subarray
          * parrent: index of parrent
          */
+        ArrayHeap<Integer, Integer> heap= new ArrayHeap(n-parent+1);
+        for (int i = parent; i < n; i++) {
+            heap.insert(array[i], array[i]);
+        }
+        for (int i = parent; i < n; i++) {
+            array[i]=heap.remove();
+        }
     }
 
     private static void swap(int[] array, int i, int j) {
@@ -79,6 +87,20 @@ class Entry <K extends Comparable <? super K>, V> implements Comparable<K> {
  * getValue()
  * getKey()
  */
+K key;
+V value;
+public Entry(K k, V v){
+    key=k;
+    value=v;
+}
+
+public K getKey() {
+    return key;
+}
+public V getValue() {
+    return value;
+}
+
 
     @Override
     public int compareTo(K o) {
@@ -109,14 +131,14 @@ interface PriorityQueue <P, E> extends List <E> {
  * Array-based Min-heap implementation
  */
 class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K, V> {
-    Entry<K, V>[] heap;
-    int size;
+    private Entry<K, V>[] heap;
+    private int size;
 
-    
     public ArrayHeap(int c){
         size=0;
         heap= new Entry[c];
     }
+
     public Entry<K, V>[] getHeap() {
         // Convenience method
         return heap;
@@ -128,11 +150,35 @@ class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K
 
     /*
      * heapifyUp(index)
+     * 
      */
+    public void heapifyUp(int index){
+        while(index>0&&heap[index]!=null){
+            if(hasParent(index)){
+                if(heap[index].getKey().compareTo(heap[indexParent(index)].getKey())<0)
+                    swap(index, indexParent(index));
+            }
+            index=indexParent(index);
+        }
+    }
 
      /*
       * heapifyDown(index)
       */
+
+    public void heapifyDown(int index){
+        while (hasLeft(index)) {
+            int iSmall=indexLeft(index);
+            if (hasRight(index) && heap[indexRight(index)].getKey().compareTo(heap[iSmall].getKey()) < 0) {
+                iSmall = indexRight(index);
+            }
+            if (heap[index].getKey().compareTo(heap[iSmall].getKey()) <= 0) {
+                break; 
+            }
+            swap(index, iSmall);
+            index = iSmall;
+        }
+    }
 
     /* merge two given heaps
      * static <K extends Comparable<? super K>, V> ArrayHeap<K, V> merge(ArrayHeap<K, V> heap1, ArrayHeap<K, V> heap2)
