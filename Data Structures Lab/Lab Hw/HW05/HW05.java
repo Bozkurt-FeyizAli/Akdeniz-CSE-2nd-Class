@@ -183,35 +183,75 @@ class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K
     /* merge two given heaps
      * static <K extends Comparable<? super K>, V> ArrayHeap<K, V> merge(ArrayHeap<K, V> heap1, ArrayHeap<K, V> heap2)
      */
-
+    public static <K extends Comparable<? super K>, V> ArrayHeap<K, V> merge(ArrayHeap<K, V> heap1, ArrayHeap<K, V> heap2){
+        ArrayHeap<K, V> mergeHeap= new ArrayHeap<>(heap1.size()+heap2.size());
+        for (var en : heap1.getHeap()) {
+            if(en!=null)
+            mergeHeap.insert(en.getKey(), en.getValue());
+        }
+        for (var en : heap2.getHeap()) {
+            if(en!=null)
+            mergeHeap.insert(en.getKey(), en.getValue());
+        }
+        return mergeHeap;
+    }
     private void swap(int index, int otherIndex) {
         Entry<K, V> temp = heap[index];
         heap[index] = heap[otherIndex];
         heap[otherIndex] = temp;
     }
 
+    /*
+    * prints the heap BFS
+     * levelorder()
+     */
+    public void levelorder(){
+        for (Entry<K,V> entry : heap) {
+            if(entry!=null)
+            System.out.println(entry.getValue());
+            else System.out.println("null");
+        }
+    }
+
+     public int indexRight(int i){ return (2*i+2<heap.length)? 2*i+2: -1;}
+    public int indexLeft(int i){ return (2*i+1<heap.length)? 2*i+1: -1;}
+    public int indexParent(int i){
+        if(i==0)
+            return -1;
+        else
+        return ((i-1)/2<size&&(i-1)/2>-1)? (i-1)/2: -1;}
+    public boolean hasRight(int i){return indexRight(i)>=0&&indexRight(i)<size;}
+    public boolean hasLeft(int i){return indexLeft(i)>=0&&indexLeft(i)<size;}
+    public boolean hasParent(int i){return indexParent(i)>=0&&indexParent(i)<size;}
+
     @Override
     public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'isEmpty'");
+        return size==0;
     }
 
     @Override
     public V remove() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        if(isEmpty())
+            return null;
+        V rem=heap[0].getValue();
+        swap(0, --size);
+        heap[size]=null;
+        if (size > 0) {
+            heapifyDown(0);
+        }
+        return rem;
     }
 
     @Override
     public V peek() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'peek'");
+        if(heap[0]==null)
+            return null;
+        return heap[0].getValue();
     }
 
     @Override
