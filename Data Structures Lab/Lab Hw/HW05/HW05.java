@@ -256,12 +256,24 @@ class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K
 
     @Override
     public void insert(K priority, V element) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+        ensureCapacity();
+        heap[size++]=new Entry<K, V>(priority, element);
+        heapifyUp(size-1);
     }
-
-    /*
-    * adds elements to a list in BFS fashion
-     * levelorder(List<V> list)
-     */
+    private void ensureCapacity() {
+        if (size >= heap.length) {
+            heap = Arrays.copyOf(heap, heap.length * 2);
+        }
+    }
+    public void recInsert(Entry<K, V> en, int i){
+        if(heap[i]==null){
+            heap[i]=en;
+            return;
+        }
+        if(!hasLeft(i)){
+            recInsert(en, indexLeft(i));
+        }
+        else if(!hasRight(i))
+            recInsert(en, indexRight(i));
+    }
 }
