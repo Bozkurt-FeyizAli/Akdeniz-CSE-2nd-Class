@@ -217,3 +217,95 @@ public class Lab10 {
         list.add(node.element);
         inorderRec(node.right, list);
     }
+
+    @Override
+    public void levelorder(List<T> list) {
+        if (root == null) {
+            return;
+        }
+    
+        Queue<Node<T>> queue = new LinkedList<>();
+        queue.add(root);
+    
+        while (!queue.isEmpty()) {
+            Node<T> current = queue.poll(); 
+            list.add(current.element);    
+            if (current.left != null) {
+                queue.add(current.left);
+            }
+            if (current.right != null) {
+                queue.add(current.right);
+            }
+        }
+    }
+ }
+
+ class AVL<T extends Comparable<? super T>> extends BST<T> implements IAVL<T> {
+
+    private int height(Node<T> node) {
+        return node == null ? 0 : node.height;
+    }
+
+    private int getBalanceFactor(Node<T> node) {
+        return node == null ? 0 : height(node.left) - height(node.right);
+    }
+
+    private void updateHeight(Node<T> node) {
+        if (node != null) {
+            node.height = 1 + Math.max(height(node.left), height(node.right));
+        }
+    }
+    
+    
+
+    @Override
+    public Node<T> rebalance(Node<T> node) {
+        if(node==null)
+            return node;
+            updateHeight(node);
+        int getBalanceFactor=getBalanceFactor(node);
+        if(getBalanceFactor>1&&getBalanceFactor(node.left)<=0)
+            return rightRotate(node);
+        if(getBalanceFactor>1&&getBalanceFactor(node.right)>0){
+                return doubleRotateLR(node);
+            }
+        if(getBalanceFactor<-1&&getBalanceFactor(node.right)<=0){
+                return leftRotate(node);
+            }
+        if(getBalanceFactor<-1&&getBalanceFactor(node.left)>0){
+                return doubleRotateRL(node);
+            }
+        //if(getBalanceFactor<-1&&getBalanceFactor(node.left))
+          //  rebalance(node)
+        return node;
+    }
+    @Override
+    protected Node<T> insertRec(Node<T> node, T element){
+        node=super.insertRec(node, element);
+        return rebalance(node);
+    }
+    @Override
+    protected Node<T> removeRec(Node<T> node, T element){
+        node=super.removeRec(node, element);
+        if(node==null){
+            return null;
+        }
+        return rebalance(node);
+    }
+
+    @Override
+    public void insert(T element) {
+        // TODO Auto-generated method stub
+        super.insert(element);
+        rebalance(root);
+
+    }
+
+    public Node<T> fintNode(Node<T> node, T t){
+        if(root==null||root.element==t) 
+        return root;
+        if(t.compareTo(root.element)<0)
+            return fintNode(root.left, t);
+        return fintNode(node.right, t);
+        //return recFinfNode(root, t);
+    }
