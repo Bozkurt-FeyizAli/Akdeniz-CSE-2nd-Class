@@ -85,12 +85,22 @@ private static void printArray(int[] array) {
          * n: length of subarray
          * parrent: index of parrent
          */
-        for (int i = parent; i < n; i++) {
-            heap.insert(array[i], array[i]);
-        }
-        for (int i = parent; i < n; i++) {
-            array[i]=heap.remove();
-        }
+    int smallest = i;  
+    int left = 2 * i + 1; 
+    int right = 2 * i + 2;
+    
+    if (left < n && array[left] < array[smallest]) {
+        smallest = left;
+    }
+    
+    if (right < n && array[right] < array[smallest]) {
+        smallest = right;
+    }
+
+    if (smallest != i) {
+        swap(array, i, smallest);
+        heapify(array, n, smallest);
+    }
     }
 
     private static void swap(int[] array, int i, int j) {
@@ -106,8 +116,8 @@ class Entry <K extends Comparable <? super K>, V> implements Comparable<K> {
  * getValue()
  * getKey()
  */
-K key;
-V value;
+private K key;
+private V value;
 public Entry(K k, V v){
     key=k;
     value=v;
@@ -232,6 +242,14 @@ class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K
         }
     }
 
+    public void levelorder(java.util.List<V> list){
+        for (Entry<K,V> entry : heap) {
+            if(entry!=null)
+            list.add(entry.getValue());
+            else list.add(null);
+        }
+    }
+
      public int indexRight(int i){ return (2*i+2<heap.length)? 2*i+2: -1;}
     public int indexLeft(int i){ return (2*i+1<heap.length)? 2*i+1: -1;}
     public int indexParent(int i){
@@ -275,7 +293,8 @@ class ArrayHeap <K extends Comparable<? super K>, V> implements PriorityQueue <K
 
     @Override
     public void insert(K priority, V element) {
-        ensureCapacity();
+        if(size==heap.length) return;
+        //ensureCapacity();
         heap[size++]=new Entry<K, V>(priority, element);
         heapifyUp(size-1);
     }
