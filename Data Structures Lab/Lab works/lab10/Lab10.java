@@ -309,3 +309,80 @@ public class Lab10 {
         return fintNode(node.right, t);
         //return recFinfNode(root, t);
     }
+    private Node<T> recFinfNode(Node<T> root, T t) {
+       if(root.element==t)
+        return root;
+        if(root.left!=null)
+            return recFinfNode(root.left, t);
+        if(root.right!=null)
+            return recFinfNode(root.right, t);
+        else return null;
+    }
+
+    public Node<T> leftRotate(T t) {
+        if(!contains(t)){
+            return null;
+        }
+        else{
+            Node<T> node=find(t);
+            if(node==root){
+                root=leftRotate(root);
+            }
+            else{
+            if(t.compareTo(node.parent.element)<0)
+                node.parent.left=leftRotate(node);
+            else node.parent.right=leftRotate(node);
+            return node;
+            }
+        }
+        return  null;
+    }
+
+    private Node<T> find(T element){
+        if(isEmpty()){
+            return null;
+        }
+        return findRec(root, element);
+    }
+
+    @Override
+    public boolean remove(T element) {
+        // TODO Auto-generated method stub
+        return(super.remove(element)&&rebalance(root)!=null);
+        
+    }
+
+    private Node<T> findRec(Node<T> node, T element){
+        if(node==null){
+            return node;
+        }
+
+        if(element.compareTo(node.element)<0){
+            return findRec(node.left, element);
+        }
+        if(element.compareTo(node.element)>0){
+            return findRec(node.right, element);
+        }
+
+        return node;
+    }
+    
+
+    public void rightRotate(T t) {
+        if(contains(t)){
+            Node<T> node=find(t);
+            if(node==root){
+                root=rightRotate(node);
+            }
+            else{
+                if(t.compareTo(node.parent.element)<0){
+                    node.parent.right= rightRotate(node);
+                }
+                else{
+                    node.parent.left=rightRotate(node);
+                }
+            }
+
+        }
+    }
+
