@@ -1,4 +1,4 @@
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.*;
 
 /*
@@ -49,23 +49,42 @@ public class HW05 {
         for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
         } 
+    
+        
+
+}
+
+private static void printArray(int[] array) {
+    for (int num : array) {
+        System.out.print(num + " ");
     }
+    System.out.println();
+}
+
+
+
 
     public static void heapSort(int[] array) {
         /*
          * heap sort implementation
          */
-        heapify(array, array.length, 0);
+        int n = array.length;
+    for(int i = n / 2 - 1; i >= 0; i--) {
+        heapify(array, n, i);
+    }
+    for(int i = n - 1; i > 0; i--) {
+        swap(array, 0, i);
+        heapify(array, i, 0);
+    }
     }
 
-    public static void heapify(int[] array, int n, int parent) {
+    public static void heapify(int[] array, int n, int i) {
         /*
          * heapify implementation (required for heapSort)
          * array: whole array
          * n: length of subarray
          * parrent: index of parrent
          */
-        ArrayHeap<Integer, Integer> heap= new ArrayHeap(n-parent+1);
         for (int i = parent; i < n; i++) {
             heap.insert(array[i], array[i]);
         }
