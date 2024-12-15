@@ -386,3 +386,76 @@ public class Lab10 {
         }
     }
 
+    @Override
+    public Node<T> leftRotate(Node<T> node) {
+        Node<T> right=node.right;
+        node.right=right.left;
+        if(right.left!=null)
+            right.left.parent=node;
+        right.parent=node.parent;
+        if(node.parent==null)
+            root=right;
+        else if(node==node.parent.left)
+            node.parent.left=right;
+        else node.parent.right=right;
+        right.left=node;
+        node.parent=right;
+        return right;
+    }
+    // @Override
+    // public Node<T> leftRotate(Node<T> node) {
+    //     // TODO Auto-generated method stub
+    //     if(node==null|| node.right==null){
+    //         return node;
+    //     }
+
+    //     Node<T> newRigth=node.right;
+    //     node.right=newRigth.left;
+    //     if(newRigth.left!=null){
+    //         newRigth.left.parent=node;
+    //     }
+    //     newRigth.parent=node.parent;
+    //     newRigth.left=node;
+    //     node.parent=newRigth;
+
+    //     updateHeight(node);
+    //     updateHeight(newRigth);
+    //     return newRigth;
+
+    // }
+
+    @Override
+    public Node<T> rightRotate(Node<T> node) {
+        Node<T> nleft=node.left;
+        node.left=nleft.right;
+        if(nleft.right!=null)
+            nleft.right.parent=node;
+        nleft.parent=node.parent;
+        if(node.parent==null)
+            root=nleft;
+        else if(node==node.parent.right)
+            node.parent.right=nleft;
+        else node.parent.left=nleft;
+        nleft.right=node;
+        node.parent=nleft;
+        return nleft;
+    }
+
+    @Override
+    public Node<T> doubleRotateLR(Node<T> node) {
+        if(node==null||node.left==null) return node;
+        node.left=leftRotate(node.left);
+        return rightRotate(node);
+    }
+
+    @Override
+    public Node<T> doubleRotateRL(Node<T> node) {
+        if(node==null||node.right==null) return node;
+        node.right=rightRotate(node.right);
+        return leftRotate(node);
+    }
+}
+
+
+
+
