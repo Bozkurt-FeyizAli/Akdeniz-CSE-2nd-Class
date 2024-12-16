@@ -61,3 +61,108 @@ public class Lab10 {
 
     
 }
+
+ interface IList<T> {
+    int size();
+    boolean isEmpty();
+ } 
+
+ interface ITree<T> extends IList<T> {
+    void insert(T element);
+    boolean remove(T element);
+    boolean contains(T element);
+    void inorder(List<T> list);
+    void levelorder(List<T> list);
+ }
+
+ interface IAVL<T> extends ITree<T> {
+    Node<T> rebalance(Node<T> node);
+    Node<T> leftRotate(Node<T> node);
+    Node<T> rightRotate(Node<T> node);
+    Node<T> doubleRotateLR(Node<T> node);
+    Node<T> doubleRotateRL(Node<T> node);
+ }
+
+ class Node <T> {
+    int height;
+    T element;
+    Node<T> parent;
+    Node<T> left;
+    Node<T> right;
+
+    Node(T element) { this.element = element; }
+ }
+
+ class BST <T extends Comparable<? super T>> implements ITree<T> {
+    protected Node<T> root;
+    private int size;
+
+    public Node<T> getRoot() {
+        return root;
+    }
+
+    public BST() {}
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
+    public void insert(T element) {
+        root = insertRec(root, element);
+    }
+
+    protected Node<T> insertRec(Node<T> node, T element) {
+        if (node == null) {
+            size++;
+            return new Node<>(element);
+        }
+
+        if (element.compareTo(node.element) < 0) {
+            node.left = insertRec(node.left, element);
+            node.left.parent = node;
+        }
+
+        if (element.compareTo(node.element) > 0) {
+            node.right = insertRec(node.right, element);
+            node.right.parent = node;
+        }
+
+        return node;
+    }
+
+    @Override
+    public boolean remove(T element) {
+        if (contains(element)) {
+            root = removeRec(root, element);
+            size--;
+            return true;
+        }
+        return false;
+    }
+
+
+    protected Node<T> removeRec(Node<T> node, T element) {
+        if (node == null)
+            return null;
+        if (element.compareTo(node.element) < 0)
+            node.left = removeRec(node.left, element);
+        else if (element.compareTo(node.element) > 0)
+            node.right = removeRec(node.right, element);
+        else {
+            if (node.left == null)
+                return node.right;
+            if (node.right == null)
+                return node.left;
+            node.element = findMin(node.right);
+            node.right = removeRec(node.right, node.element);
+        }
+        return node;
+    }
+
