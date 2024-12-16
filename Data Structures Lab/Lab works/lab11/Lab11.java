@@ -77,3 +77,81 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
         size=0;
     }
  
+
+
+    public Node<T> aunt(Node<T> node) {
+        if (node == null || node.parent == null || node.parent.parent == null) {
+            return null; 
+        }
+        Node<T> grandparent = node.parent.parent;
+        return (node.parent == grandparent.left) ? grandparent.right : grandparent.left;
+    }
+
+    @Override
+    public void insert(T element) {
+        // TODO Auto-generated method stub
+        if(isEmpty()){
+            root = new Node(element, false);
+            size++;
+            return;
+        }
+        root=insertRec(root,element);
+        root.color=false;
+    }
+    
+    public Node<T> findSibling(Node<T> node) {
+        if (node == null || node.parent == null) {
+            return null; 
+        }
+        Node<T> parent = node.parent;
+        if (parent.left == node) {
+            return parent.right;
+        } 
+        return parent.left;
+    }
+
+    public Node<T> insertRec(Node<T> node, T element){
+        if(node ==null){
+            size++;
+            return new Node<>(element, true);
+        }
+        Node<T> newchild=null;
+        if (element.compareTo(node.element) < 0) {
+            node.left = insertRec(node.left, element);
+            node.left.parent = node;
+            newchild=node.left;
+        }
+        else if (element.compareTo(node.element) > 0) {
+            node.right = insertRec(node.right, element);
+            node.right.parent = node;
+            newchild=node.right;
+        }
+        if(newchild!=null&&newchild.color==true&& newchild.parent.color==true){
+            Node<T> sibling=findSibling(node);
+            if(sibling!=null&&sibling.color==true){
+               
+                recolor(node.parent);
+            }
+            else{
+                Node<T> newSubTree =reconstruction(newchild);
+                return newSubTree;
+            }
+        }return node;
+    }
+
+
+    private boolean isRed(Node<T> node) {
+        return node != null && node.color;
+    }
+    
+
+    
+    @Override
+    public boolean remove(T element) {
+        if (contains(element)) {
+            root = removeRec(root, element);
+            size--;
+            return true;
+        }
+        return false;
+    }
