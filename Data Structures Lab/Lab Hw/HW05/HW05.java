@@ -7,7 +7,7 @@ import java.util.*;
 
 public class HW05 {
     public static void main(String[] args) {
-        //NodeHeap<Integer, String> heap = new NodeHeap<>();
+    //     //NodeHeap<Integer, String> heap = new NodeHeap<>();
         ArrayHeap<Integer, String> heap = new ArrayHeap<>(20);
 
         // Inserting elements into the heap
@@ -44,7 +44,7 @@ public class HW05 {
         heap3.levelorder();
         //System.out.println(heap3.getRoot().entry.getValue());
 
-         int[] array = {1, 5, 3, 2, 6, 4};
+        int[] array = {1, 5, 3, 2, 6, 4};
         heapSort(array);
         for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
@@ -52,53 +52,44 @@ public class HW05 {
     
         
 
+  
+        
+
 }
-
-private static void printArray(int[] array) {
-    for (int num : array) {
-        System.out.print(num + " ");
-    }
-    System.out.println();
-}
-
-
 
 
     public static void heapSort(int[] array) {
         /*
          * heap sort implementation
          */
-        int n = array.length;
-    for(int i = n / 2 - 1; i >= 0; i--) {
+        int n=array.length;
+    for(int i=n/2-1; i>=0; i--) {
         heapify(array, n, i);
     }
-    for(int i = n - 1; i > 0; i--) {
+    for(int i=n-1; i>0; i--) {
         swap(array, 0, i);
         heapify(array, i, 0);
     }
     }
 
-    public static void heapify(int[] array, int n, int i) {
+    public static void heapify(int[] array, int n, int parent) {
         /*
          * heapify implementation (required for heapSort)
          * array: whole array
          * n: length of subarray
          * parrent: index of parrent
          */
-    int smallest = i;  
-    int left = 2 * i + 1; 
-    int right = 2 * i + 2;
-    
-    if (left < n && array[left] < array[smallest]) {
-        smallest = left;
+    int smallest=parent;  
+    int left=2*parent+1; 
+    int right=2*parent+2; 
+    if(left<n&&array[left]>array[smallest]){
+        smallest=left;
     }
-    
-    if (right < n && array[right] < array[smallest]) {
+    if(right<n&&array[right]>array[smallest]){
         smallest = right;
     }
-
-    if (smallest != i) {
-        swap(array, i, smallest);
+    if(smallest!=parent) {
+        swap(array, parent, smallest);
         heapify(array, n, smallest);
     }
     }
