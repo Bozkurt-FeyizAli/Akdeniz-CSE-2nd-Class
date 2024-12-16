@@ -290,3 +290,66 @@ public class Lab10 {
         rebalance(super.root);
     }
 
+    public void recUpdateHeight(Node<T> node){
+        if(node==null)
+            return;
+        if(node.left!=null)
+        recUpdateHeight(node.right);
+        if(node.right!=null)
+        recUpdateHeight(node.left);
+        updateHeight(node);
+    }
+
+    @Override
+    public Node<T> leftRotate(Node<T> node) {
+        Node<T> nright=node.right;
+        node.right=nright.left;
+        if(nright.left!=null)
+            nright.left.parent=node;
+        nright.parent=node.parent;
+        if(node.parent==null)
+            root=nright;
+        else if(node==node.parent.left)
+            node.parent.left=nright;
+        else node.parent.right=nright;
+        nright.left=node;
+        node.parent=nright;
+        updateHeight(node);
+        updateHeight(nright);
+        return nright;
+    }
+
+    @Override
+    public Node<T> rightRotate(Node<T> node) {
+        Node<T> nleft=node.left;
+        node.left=nleft.right;
+        if(nleft.right!=null)
+            nleft.right.parent=node;
+        nleft.parent=node.parent;
+        if(node.parent==null)
+            root=nleft;
+        else if(node==node.parent.right)
+            node.parent.right=nleft;
+        else node.parent.left=nleft;
+        nleft.right=node;
+        node.parent=nleft;
+        updateHeight(node);
+        updateHeight(nleft);
+        return nleft;
+    }
+
+    @Override
+    public Node<T> doubleRotateLR(Node<T> node) {
+        node.left=leftRotate(node.left);
+        return rightRotate(node);
+    }
+
+    @Override
+    public Node<T> doubleRotateRL(Node<T> node) {
+        node.right=rightRotate(node.right);
+        return leftRotate(node);
+    }
+}
+
+
+
