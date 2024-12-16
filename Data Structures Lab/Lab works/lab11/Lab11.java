@@ -155,3 +155,66 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
         }
         return false;
     }
+
+
+    protected Node<T> removeRec(Node<T> node, T element) {
+        if (node == null)
+            return null;
+        if (element.compareTo(node.element) < 0)
+            node.left = removeRec(node.left, element);
+        else if (element.compareTo(node.element) > 0)
+            node.right = removeRec(node.right, element);
+        else {
+            if (node.left == null)
+                return node.right;
+            if (node.right == null)
+                return node.left;
+            node.element = findMin(node.right);
+            node.right = removeRec(node.right, node.element);
+        }
+        return node;
+    }
+    private T findMin(Node<T> node) {
+        Node<T> current = node;
+        while (current.left != null)
+            current = current.left;
+        return current.element;
+    }
+
+    private T findMax(Node<T> node) {
+        Node<T> current = node;
+        while(current.right != null)
+            current = current.right;
+        return current.element;
+    }
+
+
+    @Override
+    public boolean contains(T element) {
+        return recContains(root, element);
+    }
+ 
+
+    public boolean recContains(Node<T> node, T e){
+        if(node!=null){
+            if(node.element==e)
+                return true;
+            if(e.compareTo(node.element)>0)
+                return recContains(node.right, e);
+            else return recContains(node.left, e);
+        }
+        return false;
+    }
+
+    @Override
+    public void inorder(List<T> list) {
+        recInorder(list, root);
+    }
+
+    public void recInorder(List<T> list, Node<T> node){
+        if(node==null)
+            return;
+        recInorder(list, node.left);
+        list.add(node.element);
+        recInorder(list, node.right);
+    }
