@@ -1,0 +1,382 @@
+import java.lang.annotation.ElementType;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
+
+public class Lab11 {
+    public static void main(String[] args) {
+        RBTree<Integer> tree = new RBTree<>();
+
+        // Test 1: Ekleme ve Level-Order Gezinti
+        System.out.println("Test 1: Ekleme ve Level-Order Gezinti");
+        tree.insert(10);
+        tree.insert(20);
+        tree.insert(5);
+        tree.insert(6);
+        tree.insert(15);
+
+        List<Integer> levelOrderList = new ArrayList<>();
+        tree.levelorder(levelOrderList);
+        System.out.println("Level-order traversal: " + levelOrderList);
+
+        // Test 2: İnorder Gezinti
+        System.out.println("\nTest 2: İnorder Gezinti");
+        List<Integer> inorderList = new ArrayList<>();
+        tree.inorder(inorderList);
+        System.out.println("Inorder traversal: " + inorderList);
+
+        // Test 3: Ağacın Boyutu ve Boş Olma Durumu
+        System.out.println("\nTest 3: Ağacın Boyutu ve Boş Olma Durumu");
+        System.out.println("Ağaç boyutu: " + tree.size());
+        System.out.println("Ağaç boş mu? " + tree.isEmpty());
+
+        // Test 4: İçerik Kontrolü (Arama)
+        System.out.println("\nTest 4: İçerik Kontrolü (Arama)");
+        System.out.println("Ağaç 15'i içeriyor mu? " + tree.contains(15));
+        System.out.println("Ağaç 100'ü içeriyor mu? " + tree.contains(100));
+
+        // Test 5: Ağaçta Renk ve Rotasyon Kurallarını Doğrulama
+        System.out.println("\nTest 5: Renk ve Rotasyon Kuralları Kontrolü");
+        System.out.println("Kök düğüm siyah mı? " + (tree.root != null && tree.root.color == false));
+        System.out.println("Kırmızı düğümlerin çocukları siyah mı? " + validateRedBlackRules(tree.root));
+
+        // Test 6: Silme İşlemi (henüz desteklenmiyor)
+        System.out.println("\nTest 6: Silme İşlemi (TODO)");
+        try {
+            System.out.println(tree.remove(10);); // Bu method şu anda UnsupportedOperationException atar.
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Silme işlemi henüz desteklenmiyor.");
+        }
+    }
+
+    // Kırmızı-Siyah ağaç kurallarını kontrol eden yardımcı bir metod.
+    public static boolean validateRedBlackRules(Node<Integer> node) {
+        if (node == null) return true;
+
+        // Eğer düğüm kırmızı ise, çocukları siyah olmalı
+        if (node.color == true) { // Red
+            if ((node.left != null && node.left.color == true) || 
+                (node.right != null && node.right.color == true)) {
+                return false;
+            }
+        }
+
+        // Sol ve sağ alt ağaçları doğrula
+        return validateRedBlackRules(node.left) && validateRedBlackRules(node.right);
+    
+        // RBTree<Integer> tree = new RBTree<>();
+        // tree.insert(4);
+        // tree.insert(2);
+        // tree.insert(7);
+        // tree.insert(6);
+    
+        // List<Integer> list = new ArrayList<>();
+        // tree.levelorder(list);
+        // for (Integer integer : list) {
+        //     System.out.print(integer + " ");
+        // }
+    }
+}
+
+interface IList<T> {
+    int size();
+    boolean isEmpty();
+}
+
+interface ITree<T> extends IList<T> {
+    void insert(T element);
+    boolean remove(T element);
+    boolean contains(T element);
+    void inorder(List<T> list);
+    void levelorder(List<T> list);
+}
+
+interface IRB<T> extends ITree<T> {
+    Node<T> leftRotate(Node<T> node);
+    Node<T> rightRotate(Node<T> node);
+    Node<T> reconstruction(Node<T> node);
+    void recolor(Node<T> node);
+}
+
+class Node<T> {
+    boolean color; // False: black, True: red
+    T element;
+    Node<T> parent;
+    Node<T> left;
+    Node<T> right;
+
+    Node(T element, boolean color) { 
+        this.element = element;
+        this.color = color;
+    }
+
+}
+
+/*
+ * Every node is red or black
+ * New insertions always red
+ * every path from root to leaf has the same # black
+ * no path can have two consecutive red
+ * every leaf (null) is considered black
+ */
+class RBTree <T extends Comparable<? super T>> implements IRB<T> {
+    Node<T> root;
+    int size;
+
+    public RBTree(){
+        root=null;
+        size++;
+    }
+
+    @Override
+    public void insert(T element) {
+        root=recInsert(root, element);
+
+        size=0;
+    }
+
+    public boolean isRed(Node<T> node){
+        if(node!=null)
+            return node.color;
+        return false;
+    }
+
+    public boolean isBlack(Node<T> node){
+        if(node!=null)
+            return !node.color;
+        return false;
+    }
+
+    public Node<T> recInsert(Node<T> node, T element){
+        if (node == null) {
+            size++;
+            return new Node<>(element, true);
+        }
+        if (element.compareTo(node.element) < 0) {
+            node.left = recInsert(node.left, element);
+            node.left.parent = node;
+        }
+        if (element.compareTo(node.element) > 0) {
+            node.right = recInsert(node.right, element);
+            node.right.parent = node;
+        }
+        node = reconstruction(node);
+        return node;
+    }
+
+
+
+    @Override
+    public boolean remove(T element) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+    }
+
+    @Override
+    public boolean contains(T element) {
+        return recContains(root, element);
+    }
+
+    public boolean recContains(Node<T> node, T e){
+        if(node!=null){
+            if(node.element==e)
+                return true;
+            if(e.compareTo(node.element)>0)
+                return recContains(node.right, e);
+            else return recContains(node.left, e);
+        }
+        return false;
+    }
+
+    @Override
+    public void inorder(List<T> list) {
+        recInorder(list, root);
+    }
+
+    public void recInorder(List<T> list, Node<T> node){
+        if(node==null)
+            return;
+        recInorder(list, node.left);
+        list.add(node.element);
+        recInorder(list, node.right);
+    }
+
+    @Override
+    public void levelorder(List<T> list) {
+        if(root==null)
+            return;
+        Queue<Node<T>> que= new LinkedList<>();
+        que.add(root);
+        while(!que.isEmpty()){
+            Node<T> n=que.poll();
+            list.add(n.element);
+            if(n.left!=null)
+                que.add(n.left);
+            if(n.right!=null)
+                que.add(n.right);
+        }
+    }
+
+    @Override
+    public int size() {
+       return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public Node<T> leftRotate(Node<T> node) {
+        Node<T> right=node.right;
+        node.right=right.left;
+        if(right.left!=null)
+            right.left.parent=node;
+        right.parent=node.parent;
+        if(node.parent==null)
+            root=right;
+        else if(node==node.parent.left)
+            node.parent.left=right;
+        else node.parent.right=right;
+        right.left=node;
+        node.parent=right;
+        return right;    
+    }
+
+    @Override
+    public Node<T> rightRotate(Node<T> node) {
+        Node<T> nleft=node.left;
+        node.left=nleft.right;
+        if(nleft.right!=null)
+            nleft.right.parent=node;
+        nleft.parent=node.parent;
+        if(node.parent==null)
+            root=nleft;
+        else if(node==node.parent.right)
+            node.parent.right=nleft;
+        else node.parent.left=nleft;
+        nleft.right=node;
+        node.parent=nleft;
+        return nleft;
+    }
+
+    @Override
+    public Node<T> reconstruction(Node<T> node) {
+        Node<T> parent = node.parent;
+    Node<T> grandparent = parent != null ? parent.parent : null;
+
+    if (grandparent != null) {
+        Node<T> uncle = (grandparent.left == parent) ? grandparent.right : grandparent.left;
+        if (isRed(parent) && isRed(uncle)) {
+            parent.color = false;  
+            if (uncle != null) uncle.color = false;
+            grandparent.color = true; 
+            return grandparent;
+        }
+        if (isRed(parent) && (uncle == null || isBlack(uncle))) {
+            if (parent == grandparent.left) {
+                if (node == parent.right) { 
+                    leftRotate(parent);
+                    node = parent; 
+                }
+                rightRotate(grandparent); 
+            } else {
+                if (node == parent.left) { 
+                    rightRotate(parent);
+                    node = parent; 
+                }
+                leftRotate(grandparent); 
+            }
+
+            parent.color = false;
+            grandparent.color = true;
+        }
+    }
+
+    return node;
+    }
+
+    @Override
+    public void recolor(Node<T> node) {
+        if (node != null) {
+            node.color = !node.color;
+        }
+    }
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+RBTree<Integer> tree = new RBTree<>();
+
+        // Test 1: Ekleme ve Level-Order Gezinti
+        System.out.println("Test 1: Ekleme ve Level-Order Gezinti");
+        tree.insert(10);
+        tree.insert(20);
+        tree.insert(5);
+        tree.insert(6);
+        tree.insert(15);
+
+        List<Integer> levelOrderList = new ArrayList<>();
+        tree.levelorder(levelOrderList);
+        System.out.println("Level-order traversal: " + levelOrderList);
+
+        // Test 2: İnorder Gezinti
+        System.out.println("\nTest 2: İnorder Gezinti");
+        List<Integer> inorderList = new ArrayList<>();
+        tree.inorder(inorderList);
+        System.out.println("Inorder traversal: " + inorderList);
+
+        // Test 3: Ağacın Boyutu ve Boş Olma Durumu
+        System.out.println("\nTest 3: Ağacın Boyutu ve Boş Olma Durumu");
+        System.out.println("Ağaç boyutu: " + tree.size());
+        System.out.println("Ağaç boş mu? " + tree.isEmpty());
+
+        // Test 4: İçerik Kontrolü (Arama)
+        System.out.println("\nTest 4: İçerik Kontrolü (Arama)");
+        System.out.println("Ağaç 15'i içeriyor mu? " + tree.contains(15));
+        System.out.println("Ağaç 100'ü içeriyor mu? " + tree.contains(100));
+
+        // Test 5: Ağaçta Renk ve Rotasyon Kurallarını Doğrulama
+        System.out.println("\nTest 5: Renk ve Rotasyon Kuralları Kontrolü");
+        System.out.println("Kök düğüm siyah mı? " + (tree.root != null && tree.root.color == false));
+       // System.out.println("Kırmızı düğümlerin çocukları siyah mı? " + validateRedBlackRules(tree.root));
+
+        // Test 6: Silme İşlemi (henüz desteklenmiyor)
+        System.out.println("\nTest 6: Silme İşlemi (TODO)");
+        try {
+            System.out.println(tree.remove(10)); // Bu method şu anda UnsupportedOperationException atar.
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Silme işlemi henüz desteklenmiyor.");
+        }
+    
+
+    // Kırmızı-Siyah ağaç kurallarını kontrol eden yardımcı bir metod.
+    // public static boolean validateRedBlackRules(Node<Integer> node) {
+    //     if (node == null) return true;
+
+    //     // Eğer düğüm kırmızı ise, çocukları siyah olmalı
+    //     if (node.color == true) { // Red
+    //         if ((node.left != null && node.left.color == true) || 
+    //             (node.right != null && node.right.color == true)) {
+    //             return false;
+    //         }
+    //     }
+
+        // Sol ve sağ alt ağaçları doğrula
+        //return validateRedBlackRules(node.left) && validateRedBlackRules(node.right);
+    
