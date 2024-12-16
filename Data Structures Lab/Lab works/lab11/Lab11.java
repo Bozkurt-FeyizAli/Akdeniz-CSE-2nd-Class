@@ -218,3 +218,95 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
         list.add(node.element);
         recInorder(list, node.right);
     }
+
+    @Override
+    public void levelorder(List<T> list) {
+        if(root==null)
+            return;
+        Queue<Node<T>> que= new LinkedList<>();
+        que.add(root);
+        while(!que.isEmpty()){
+            Node<T> n=que.poll();
+            list.add(n.element);
+            if(n.left!=null)
+                que.add(n.left);
+            if(n.right!=null)
+                que.add(n.right);
+        }
+    }
+
+    @Override
+    public int size() {
+      return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+    @Override
+    public Node<T> leftRotate(Node<T> node) {
+        Node<T> right=node.right;
+        node.right=right.left;
+        if(right.left!=null)
+            right.left.parent=node;
+        right.parent=node.parent;
+        if(node.parent==null)
+            root=right;
+        else if(node==node.parent.left)
+            node.parent.left=right;
+        else node.parent.right=right;
+        right.left=node;
+        node.parent=right;
+        return right;
+    }
+    @Override
+    public Node<T> rightRotate(Node<T> node) {
+        Node<T> nleft=node.left;
+        node.left=nleft.right;
+        if(nleft.right!=null)
+            nleft.right.parent=node;
+        nleft.parent=node.parent;
+        if(node.parent==null)
+            root=nleft;
+        else if(node==node.parent.right)
+            node.parent.right=nleft;
+        else node.parent.left=nleft;
+        nleft.right=node;
+        node.parent=nleft;
+        return nleft;
+    }
+   
+    public Node<T> reconstruction1(Node<T> nNode) {
+        if(nNode.parent.color){
+            Node<T> aunt =aunt(nNode);
+            if(aunt.color){
+                aunt.changeColor();
+                nNode.changeColor();
+                nNode.parent.changeColor();
+            }
+            else{
+                if(aunt==nNode.parent.parent.left){
+                if(nNode.parent.left==nNode){
+                    nNode.parent=rightRotate(nNode);
+                    nNode.parent=leftRotate(nNode);
+                }
+                else {
+                    nNode.parent=leftRotate(nNode);
+                }
+            }
+                else{
+                    if(aunt==nNode.parent.parent.left){
+                        if(nNode.parent.left==nNode){
+                        nNode.parent=rightRotate(nNode);
+                        }
+                        else {
+                        nNode.parent=leftRotate(nNode);
+                        nNode.parent=rightRotate(nNode);
+                        }
+                    }
+                }
+            }
+        }
+        return nNode;
+    }
