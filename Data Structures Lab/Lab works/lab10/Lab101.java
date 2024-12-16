@@ -231,4 +231,62 @@ public class Lab10 {
     }
  }
 
+ class AVL<T extends Comparable<? super T>> extends BST<T> implements IAVL<T> {
+    public AVL(){
+        super();
+    }
+
+    public Node<T> tallerChild(Node<T> node){
+        if(node==null)
+            return null;
+        int leftH=height(node.left);
+        int rightH=height(node.right);
+        if(node.left==null)
+            return node.right;
+        if(leftH>rightH)
+            return node.left;
+        else if(rightH>leftH)
+            return node.right;
+        else return node.left;
+    } 
+   
+
+    private int height(Node<T> node) {
+        return node == null ? 0 : node.height;
+    }
+
+    private int getBalanceFactor(Node<T> node) {
+        return node == null ? 0 : height(node.left) - height(node.right);
+    }
+
+    private void updateHeight(Node<T> node) {
+        if (node != null) {
+            node.height = 1 + Math.max(height(node.left), height(node.right));
+        }
+    }
+
+    @Override
+    public Node<T> rebalance(Node<T> node) {
+        updateHeight(node);
+        int oldH;
         int newH;
+        do{
+            oldH=node.height;
+            if(getBalanceFactor(node)>1||getBalanceFactor(node)<-1){
+                node=rebalance(tallerChild(tallerChild(node)));
+                updateHeight(leftRotate(node));
+                updateHeight(rightRotate(node));
+            }
+            updateHeight(node);
+            newH=node.height;
+            node=node.parent;
+        }while(oldH!=newH&&node!=null);
+        return node;
+    }
+    @Override
+    public void insert(T element) {
+        super.insert(element);
+        //recUpdateHeight(super.root);
+        rebalance(super.root);
+    }
+
