@@ -160,7 +160,7 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
     }
     
     @Override
-    public boolean remove(T element) {
+    public boolean remove(T element) {  // done
         if (contains(element)) {
             root = removeRec(root, element);
             size--;
@@ -170,61 +170,62 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
     }
 
 
-    protected Node<T> removeRec(Node<T> node, T element) {
-        if (node == null)
-            return null;
-        if (element.compareTo(node.element) < 0)
-            node.left = removeRec(node.left, element);
-        else if (element.compareTo(node.element) > 0)
-            node.right = removeRec(node.right, element);
-        else {
-            if (node.left == null)
+    protected Node<T> removeRec(Node<T> node, T element) {  // done
+        if(node==TNULL)
+            return node;
+        if(element.compareTo(node.element)<0)
+            node.left=removeRec(node.left, element);
+        else if(element.compareTo(node.element)>0)
+            node.right=removeRec(node.right, element);
+        else{
+            if(node.left==TNULL)
                 return node.right;
-            if (node.right == null)
+            if(node.right==TNULL)
                 return node.left;
-            node.element = findMin(node.right);
-            node.right = removeRec(node.right, node.element);
+            node.element=findMin(node.right);
+            node.right=removeRec(node.right, node.element);
         }
         return node;
     }
-    private T findMin(Node<T> node) {
-        Node<T> current = node;
-        while (current.left != null)
-            current = current.left;
+    private T findMin(Node<T> node) {  // done
+        Node<T> current=node;
+        while(current.left!=TNULL)
+            current=current.left;
         return current.element;
     }
 
-    private T findMax(Node<T> node) {
-        Node<T> current = node;
-        while(current.right != null)
-            current = current.right;
-        return current.element;
-    }
+    // private T findMax(Node<T> node) { // done
+    //     Node<T> current = node;
+    //     while(current.right != TNULL)
+    //         current = current.right;
+    //     return current.element;
+    // }
 
 
     @Override
-    public boolean contains(T element) {
+    public boolean contains(T element) { // done
         return recContains(root, element);
     }
  
 
-    public boolean recContains(Node<T> node, T e){
-        if(node!=null){
-            if(node.element==e)
+    public boolean recContains(Node<T> node, T e){ // done
+        if(node!=TNULL){
+            if(node.element.equals(e))
                 return true;
             if(e.compareTo(node.element)>0)
                 return recContains(node.right, e);
-            else return recContains(node.left, e);
+            else 
+                return recContains(node.left, e);
         }
         return false;
     }
 
     @Override
-    public void inorder(List<T> list) {
+    public void inorder(List<T> list) {  // done
         recInorder(list, root);
     }
 
-    public void recInorder(List<T> list, Node<T> node){
+    public void recInorder(List<T> list, Node<T> node){  // done
         if(node==null)
             return;
         recInorder(list, node.left);
@@ -233,7 +234,7 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
     }
 
     @Override
-    public void levelorder(List<T> list) {
+    public void levelorder(List<T> list) {  // done
         if(root==null)
             return;
         Queue<Node<T>> que= new LinkedList<>();
@@ -249,16 +250,16 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
     }
 
     @Override
-    public int size() {
+    public int size() {  // done
       return size;
     }
 
     @Override
-    public boolean isEmpty() {
+    public boolean isEmpty() {  // done
         return size==0;
     }
     @Override
-    public Node<T> leftRotate(Node<T> node) {
+    public Node<T> leftRotate(Node<T> node) {  // done
         Node<T> right=node.right;
         node.right=right.left;
         if(right.left!=null)
@@ -274,7 +275,7 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
         return right;
     }
     @Override
-    public Node<T> rightRotate(Node<T> node) {
+    public Node<T> rightRotate(Node<T> node) {  // done
         Node<T> nleft=node.left;
         node.left=nleft.right;
         if(nleft.right!=null)
