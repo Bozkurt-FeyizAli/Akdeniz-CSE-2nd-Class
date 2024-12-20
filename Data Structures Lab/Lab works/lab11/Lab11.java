@@ -19,7 +19,10 @@ public class Lab11 {
             System.out.print(integer + " ");
         
     }
-}
+
+    }
+
+  
 }
 
 
@@ -58,7 +61,47 @@ class Node<T> {
     public void changeColor(){
         color=!color;
     }
+    public T getElement() {
+        return element;
+    }
+    public Node<T> getLeft() {
+        return left;
+    }
+    public Node<T> getParent() {
+        return parent;
+    }
+    public Node<T> getRight() {
+        return right;
+    }
+    
+    public void setColor(boolean color) {
+        this.color = color;
+    }
+    public void setLeft(Node<T> left) {
+        this.left = left;
+    }
+    public void setParent(Node<T> parent) {
+        this.parent = parent;
+    }
+    public void setRight(Node<T> right) {
+        this.right = right;
+    }
+    
+  // Simple ASCII-based Tree Visualization
+  public static void visualizeTree(RBTree<Integer> tree) {
+    System.out.println("Visualizing Tree:");
+    printTree(tree.root, "", true);
+}
 
+public static void printTree(Node<Integer> node, String prefix, boolean isLeft) {
+    if (node == null || node.element == null) {
+        return;
+    }
+    System.out.println(prefix + (isLeft ? "├── " : "└── ") + node.element +
+                       (node.color ? " (R)" : " (B)"));
+    printTree(node.left, prefix + (isLeft ? "│   " : "    "), true);
+    printTree(node.right, prefix + (isLeft ? "│   " : "    "), false);
+}
 }
 
 /*
@@ -70,6 +113,7 @@ class Node<T> {
  */
 class RBTree <T extends Comparable<? super T>> implements IRB<T> {
     Node<T> root;
+    private final Node<T> TNULL;
     int size=0;
 
     public RBTree(){
