@@ -344,8 +344,4 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
             node.right.color=!node.right.color;
     }
 
- 
-
-
-
-}
+    }
