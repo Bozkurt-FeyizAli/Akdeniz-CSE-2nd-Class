@@ -290,35 +290,41 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
         node.parent=nleft;
         return nleft;
     }
-   
-    public Node<T> reconstruction1(Node<T> nNode) {
-        if(nNode.parent.color){
-            Node<T> aunt =aunt(nNode);
-            if(aunt.color){
-                aunt.changeColor();
-                nNode.changeColor();
-                nNode.parent.changeColor();
-            }
-            else{
-                if(aunt==nNode.parent.parent.left){
-                if(nNode.parent.left==nNode){
-                    nNode.parent=rightRotate(nNode);
-                    nNode.parent=leftRotate(nNode);
-                }
-                else {
-                    nNode.parent=leftRotate(nNode);
-                }
-            }
-                else{
-                    if(aunt==nNode.parent.parent.left){
-                        if(nNode.parent.left==nNode){
-                        nNode.parent=rightRotate(nNode);
-                        }
-                        else {
-                        nNode.parent=leftRotate(nNode);
-                        nNode.parent=rightRotate(nNode);
-                        }
+   @Override
+    public Node<T> reconstruction(Node<T> nNode) {
+        while (nNode.parent!=null&&nNode.parent.color){ 
+            Node<T> gparent=nNode.parent.parent;
+            Node<T> aunt=aunt(nNode);
+    
+            if(nNode.parent==gparent.left){ 
+                if(aunt!=null&&aunt.color){ 
+                    nNode.parent.color=false;
+                    aunt.color=false;
+                    gparent.color=true;
+                    nNode=gparent;
+                }else{ 
+                    if(nNode==nNode.parent.right){
+                        nNode=nNode.parent;
+                        leftRotate(nNode);
                     }
+                    nNode.parent.color=false;
+                    gparent.color=true;
+                    rightRotate(gparent);
+                }
+            }else{ 
+                if(aunt!=null&&aunt.color){
+                    nNode.parent.color=false;
+                    aunt.color=false;
+                    gparent.color=true;
+                    nNode=gparent;
+                }else{
+                    if(nNode==nNode.parent.left){
+                        nNode=nNode.parent;
+                        rightRotate(nNode);
+                    }
+                    nNode.parent.color=false;
+                    gparent.color=true;
+                    leftRotate(gparent);
                 }
             }
         }
