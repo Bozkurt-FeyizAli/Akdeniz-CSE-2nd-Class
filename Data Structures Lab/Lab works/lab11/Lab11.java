@@ -327,57 +327,21 @@ class RBTree <T extends Comparable<? super T>> implements IRB<T> {
                     leftRotate(gparent);
                 }
             }
+            if(nNode==root) break;
         }
+        root.color=false;
         return nNode;
     }
 
-    @Override
-public Node<T> reconstruction(Node<T> nNode) {
-    if (nNode == null || nNode.parent == null || nNode.parent.parent == null) {
-        return nNode; 
-    }
-
-    Node<T> parent = nNode.parent;
-    Node<T> grandparent = parent.parent;
-    Node<T> aunt = aunt(nNode);
-
-    if (parent.color && (aunt != null && aunt.color)) {
-        parent.changeColor();
-        aunt.changeColor();
-        grandparent.changeColor();
-        return grandparent; 
-    }
-    if (parent.color && (aunt == null || !aunt.color)) {
-        if (parent == grandparent.left) {
-            if (nNode == parent.right) {
-                leftRotate(parent);
-                nNode = nNode.left; 
-            }
-            rightRotate(grandparent);
-        } else {
-            if (nNode == parent.left) {
-                rightRotate(parent);
-                nNode = nNode.right; 
-            }
-            leftRotate(grandparent);
-        }
-        parent.changeColor();
-        grandparent.changeColor();
-    }
-
-    return nNode;
-}
-
      @Override
     public void recolor(Node<T> node) {
-       
-        node.color = !node.color;
-        if (node.left != null){
-            node.left.color = !node.left.color;
-        }
-        if (node.right != null){
-            node.right.color = !node.right.color;
-        }
+        if(node==null||node==TNULL)
+            return;
+        node.color=!node.color;
+        if(node.left!=TNULL)
+            node.left.color=!node.left.color;
+        if(node.right!=TNULL)
+            node.right.color=!node.right.color;
     }
 
  
