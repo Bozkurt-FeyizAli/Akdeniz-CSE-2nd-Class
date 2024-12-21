@@ -210,3 +210,25 @@ class Map<K, V> implements IMap<K, V> {
         return nList;
     }
 
+    @Override
+    public Iterable<V> values() {
+        List<V> nList= new LinkedList<>();
+        for (Entry<K,V> entry : list) {
+            if(entry==null)
+                continue;
+            if(entry.getValue()==null)
+                continue;
+            nList.add(entry.getValue());
+        }
+        return nList;
+    }
+
+    public int hash(K k){
+        return k.hashCode();
+    }
+
+    public int Index(K k){
+        return hash(k)%list.size();
+    }
+
+}
