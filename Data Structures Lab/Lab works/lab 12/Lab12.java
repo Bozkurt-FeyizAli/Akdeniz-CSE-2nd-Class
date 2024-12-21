@@ -107,3 +107,40 @@ class Map<K, V> implements IMap<K, V> {
         return v;
         }
     }
+
+    @Override
+    public V remove(K key) {
+        int index= hashIndex(key);
+        if(list[index]==null) return null;
+        V v= list[index].getValue();
+        list[index]= null;
+        size--;
+        return v;
+    }
+
+    @Override
+    public V get(K key) {
+        int index= hashIndex(key);
+        if(list[index]==null) return null;
+        return list[index].getValue();
+    }
+
+    @Override
+    public Iterable<Entry<K, V>> entrySet() {
+       List<Entry<K, V>> nList= new ArrayList<>();
+       for (var entry : list) {
+            if(entry!=null)
+            nList.add(entry);
+       }
+       return nList;
+    }
+
+    @Override
+    public Iterable<K> keySet() {
+        List<K> nList= new ArrayList<>();
+       for (var entry : list) {
+            if(entry!=null)
+            nList.add(entry.getKey());
+       }
+       return nList;
+    }
