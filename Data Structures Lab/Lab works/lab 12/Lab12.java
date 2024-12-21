@@ -144,3 +144,28 @@ class Map<K, V> implements IMap<K, V> {
        }
        return nList;
     }
+
+    @Override
+    public Iterable<V> values() {
+        List<V> nList= new ArrayList<>();
+       for (var entry : list) {
+            if(entry!=null)
+            nList.add(entry.getValue());
+       }
+       return nList;
+    }
+
+    public int hashIndex(K k){
+        return Math.abs(k.hashCode()%list.length);
+    }
+
+    public Map<V, K> reverse(){
+        Map<V, K> map= new Map<>(list.length);
+        for (var entry : list) {
+            if(entry!=null)
+            map.put((V)entry.getValue(), (K)entry.getKey());
+        }
+        return map;
+    }
+
+}
