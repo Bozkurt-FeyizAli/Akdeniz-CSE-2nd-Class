@@ -146,3 +146,67 @@ class Map<K, V> implements IMap<K, V> {
         size++;
         return value;
     }
+
+    @Override
+    public V remove(K key) {
+        if(isEmpty())
+            return null;
+        else{
+            int index= Index(key);
+            while(list.get(index)!=null)
+                if(list.get(index).getKey() != null&&list.get(index).getKey().equals(key)){
+                    V value=list.get(index).getValue();
+                    list.get(index).setValue(null);
+                    size--;
+                    return value;
+                }
+                index++;
+                if(index==list.size())
+                    index-=list.size();
+            }
+        return null;
+    }
+
+    @Override
+    public V get(K key) {
+        if(isEmpty())
+            return null;
+        else{
+            int index= Index(key);
+            while(list.get(index)!=null)
+            if(list.get(index).getKey() != null&&list.get(index).getKey().equals(key)){
+                    return list.get(index).getValue();
+                }
+                index++;
+                if(index>=list.size())
+                    index-=size;
+            }
+        return null;
+    }
+
+    @Override
+    public Iterable<Entry<K, V>> entrySet() {
+        List<Entry<K, V>> nList= new ArrayList<>();
+        for (Entry<K,V> entry : list) {
+            if(entry==null)
+                continue;
+            if(entry.getValue()==null)
+                continue;
+            nList.add(entry);
+        }
+        return nList;
+    }
+
+    @Override
+    public Iterable<K> keySet() {
+        List<K> nList= new ArrayList<>();
+        for (Entry<K,V> entry : list) {
+            if(entry==null)
+                continue;
+            if(entry.getValue()==null)
+                continue;
+            nList.add(entry.getKey());
+        }
+        return nList;
+    }
+
