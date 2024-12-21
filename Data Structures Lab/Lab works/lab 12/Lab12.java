@@ -58,3 +58,52 @@ class Entry<K, V> implements IEntry<K, V> {
        this.value=value;
     }
 }
+
+interface IList<T> {
+    int size();
+    boolean isEmpty();
+}
+
+interface IMap<K, V> extends IList<K> {
+    V put(K key, V value);
+    V remove(K key);
+    V get(K key);
+    Iterable<Entry<K, V>> entrySet();
+    Iterable<K> keySet();
+    Iterable<V> values();
+}
+
+class Map<K, V> implements IMap<K, V> {
+    int size;
+    Entry<K, V>[] list;
+
+    public Map(int cap){
+        size=0;
+        list= (Entry<K, V>[])new Entry[cap];
+    }
+    @Override
+    public int size() {
+        return size;
+    }
+
+
+    @Override
+    public boolean isEmpty() {
+        return size==0;
+    }
+
+    @Override
+    public V put(K key, V value) {
+        int index= hashIndex(key);
+        if(list[index]==null){
+            list[index]=new Entry<>(key, value);
+            size++;
+            return null;
+        }
+        else {
+        V v=list[index].getValue();
+        list[index].setValue(value);
+        size++;
+        return v;
+        }
+    }
