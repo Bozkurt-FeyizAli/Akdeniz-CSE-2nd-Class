@@ -117,3 +117,94 @@ public class HW05_Test {
         heap.remove();
         assertEquals("Ten", heap.peek(), "Peek should return one of the elements with priority 10");
     }
+
+    @Test
+    public void testMergeHeapIntoLargerCapacity() {
+        ArrayHeap<Integer, String> heap1 = new ArrayHeap<>(3);
+        ArrayHeap<Integer, String> heap2 = new ArrayHeap<>(10);
+
+        heap1.insert(10, "Ten");
+        heap2.insert(5, "Five");
+
+        ArrayHeap<Integer, String> mergedHeap = ArrayHeap.merge(heap1, heap2);
+        assertEquals(2, mergedHeap.size(), "Merged heap should contain all elements from both heaps");
+        assertEquals("Five", mergedHeap.peek(), "Peek should be 'Five'");
+    }
+
+    @Test
+    public void testPeekEmptyHeap() {
+        assertNull(heap.peek(), "Peek on an empty heap should return null");
+    }
+
+    @Test
+    public void testHeapifyWithDecreasingOrder() {
+        ArrayHeap<Integer, String> decreasingHeap = new ArrayHeap<>(10);
+        decreasingHeap.insert(30, "Thirty");
+        decreasingHeap.insert(20, "Twenty");
+        decreasingHeap.insert(10, "Ten");
+
+        assertEquals("Ten", decreasingHeap.peek(), "The element with the lowest key should always be at the root");
+    }
+
+    @Test
+    public void testRemoveAllElements() {
+        heap.insert(15, "Fifteen");
+        heap.insert(10, "Ten");
+        heap.insert(5, "Five");
+
+        heap.remove();
+        heap.remove();
+        heap.remove();
+
+        assertTrue(heap.isEmpty(), "Heap should be empty after removing all elements");
+        assertNull(heap.peek(), "Peek should return null on an empty heap");
+    }
+
+    @Test
+    public void testHeapSortEdgeCases() {
+        int[] array = {};
+        HW05.heapSort(array);
+        assertArrayEquals(new int[]{}, array, "Heap sort on an empty array should return an empty array");
+    
+        array = new int[]{1};
+        HW05.heapSort(array);
+        assertArrayEquals(new int[]{1}, array, "Heap sort on a single element array should return the same array");
+    
+        array = new int[]{5, 3, 8, 1, 2, 7};
+        HW05.heapSort(array);
+    
+        boolean isAscending = true;
+        boolean isDescending = true;
+    
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i] > array[i + 1]) {
+                isAscending = false;
+            }
+            if (array[i] < array[i + 1]) {
+                isDescending = false;
+            }
+        }
+    
+        assertTrue(isAscending || isDescending, "Heap sort should return an array sorted in either ascending or descending order");
+    }
+    
+
+    @Test
+    public void testHeapWithNegativeKeys() {
+        heap.insert(-10, "Minus Ten");
+        heap.insert(-20, "Minus Twenty");
+        heap.insert(5, "Five");
+
+        assertEquals("Minus Twenty", heap.peek(), "The smallest negative key should be at the root");
+    }
+
+    @Test
+    public void testHeapifyEdgeCase() {
+        heap.insert(10, "Ten");
+        heap.insert(5, "Five");
+        heap.insert(15, "Fifteen");
+        
+        heap.remove(); 
+        assertEquals("Ten", heap.peek(), "Heapify should adjust the root to 'Ten' after removal");
+    }
+}
