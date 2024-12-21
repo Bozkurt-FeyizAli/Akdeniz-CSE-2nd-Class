@@ -61,3 +61,88 @@ public class Lab11 {
         System.out.println("Is map empty? " + map1.isEmpty());
     }
 }
+
+interface IEntry<K, V> {
+    K getKey();
+    V getValue();
+    void setValue(V value);
+}
+
+class Entry<K, V> implements IEntry<K, V> {
+    K key;
+    V value;
+
+    public Entry(K k, V v){
+        key=k;
+        value=v;
+    }
+
+    @Override
+    public K getKey() {
+        return key;
+    }
+
+    @Override
+    public V getValue() {
+       return value;
+    }
+
+    @Override
+    public void setValue(V value) {
+       this.value=value;
+    }
+
+}
+
+interface IList<T> {
+    int size();
+    boolean isEmpty();
+}
+
+interface IMap<K, V> extends IList<K> {
+    V put(K key, V value);
+    V remove(K key);
+    V get(K key);
+    Iterable<Entry<K, V>> entrySet();
+    Iterable<K> keySet();
+    Iterable<V> values();
+}
+
+class Map<K, V> implements IMap<K, V> {
+    int size;
+    ArrayList<Entry<K, V>> list;
+
+    public Map(){
+        size=0;
+        list = new ArrayList<>();
+    }
+
+    @Override
+    public int size() {
+       return size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+       return size==0;
+    }
+
+    @Override
+    public V put(K key, V value) {
+        
+            Entry<K, V> nEntry= new Entry<>(key, value);
+            int index=Index(key);
+            while(list.get(index)!=null&&list.get(index).getValue()!=null){
+                if (list.get(index).getKey().equals(key)) {
+                    V oldValue = list.get(index).getValue();
+                    list.set(index, new Entry<>(key, value));
+                    return oldValue;
+                }
+                index+=1;
+                if(index==list.size())
+                    index-=list.size();
+            }
+        list.set(index, nEntry);
+        size++;
+        return value;
+    }
