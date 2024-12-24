@@ -21,3 +21,25 @@ public class one{
         else i--;
         return isVowelMore(s.substring(1), i, vowels);
     }
+
+    public static int sum2DArray(int x, int y, int[][] arr){
+        if(x==0&&y==0)
+            return arr[0][0];
+        if(x<0||x>=arr[0].length||y<0||y>=arr.length)
+            throw new IllegalArgumentException();
+        if(x==0){
+            x=arr[0].length-1;
+            y--;
+            return arr[y+1][0]+sum2DArray(x, y, arr);
+        }
+        return arr[y][x]+ sum2DArray(x-1, y, arr);
+    }
+
+    public static String reverse(String s){
+        if(s.length()<2)
+            return s;
+        else return reverse(s.substring(1))+ s.charAt(0);
+    }
+
+    
+}
