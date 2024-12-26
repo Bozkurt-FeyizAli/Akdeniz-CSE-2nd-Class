@@ -10,7 +10,7 @@ public class one{
         };
         System.out.println(sum2DArray(3, 1, arr));
 
-        System.out.println(reverse("null"));
+        System.out.println(reverseS("Hello, how are you?"));
     }
 
     public static boolean isVowelMore(String s, int i, String vowels){
@@ -39,6 +39,15 @@ public class one{
         if(s.length()<2)
             return s;
         else return reverse(s.substring(1))+ s.charAt(0);
+    }
+
+    public static String reverseS(String s){
+        if(s==null||s.length()<1)
+            return s;
+        int i=s.indexOf(" ");
+        if(i==-1)
+            return s;
+        return reverseS(s.substring(i+1))+" "+s.substring(0, i+1);
     }
 
     
